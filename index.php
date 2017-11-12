@@ -6,7 +6,7 @@ require_once 'dbconnect.php';
 // it will never let you open index(login) page if session is set
 if ( isset($_SESSION['user'])!="" ) 
 {
-    header("Location: home.php");
+    header("Location: ./account/home.php");
     exit;
 }
 
@@ -53,7 +53,7 @@ if( isset($_POST['login_btn']) )
             {
                 if($row['userPass']==$password ) {
                     $_SESSION['user'] = $row['userId'];
-                    header("Location: home.php");
+                    header("Location: ./account/home.php");
                 }
             }
         }

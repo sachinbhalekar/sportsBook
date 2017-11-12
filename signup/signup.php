@@ -112,7 +112,7 @@ if ( isset($_POST['signup_btn']) )
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 		<link rel="icon" href="../images/favicon.ico" type="image/ico" sizes="16x16" />
-		<title>SportsBook</title>
+		<title>SportsBook - Sign Up</title>
 		<link rel="stylesheet" type="text/css" href="../css/signup.css">
 		<link href="https://fonts.googleapis.com/css?family=Zilla+Slab+Highlight" rel="stylesheet">
 	</head>
