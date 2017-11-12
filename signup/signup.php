@@ -150,52 +150,52 @@ if ( isset($_POST['signup_btn']) )
                     ?>
 					<table id="login_table">
 						<tr>
-							<td>First Name</td>
-							<td><input id="firstname" name="firstname" type="text" maxlength="50" value="<?php echo $name ?>" /></td>
+							<td>First Name <span style="color:red">*</span></td>
+							<td><input id="firstname" name="firstname" type="text" maxlength="50" required value="<?php echo $name ?>" /></td>
 						</tr>
 						<tr>
 							<td>Last Name</td>
 							<td><input id="lastname" name="lastname" type="text" maxlength="50" /></td>
 						</tr>
 						<tr>
-							<td>Date of Birth</td>
-							<td><input id="dob" name="dob" type="date" /></td>
+							<td>Date of Birth <span style="color:red">*</span></td>
+							<td><input id="dob" name="dob" type="date" required /></td>
 						</tr>
 						<tr>
-							<td>E-mail</td>
-							<td><input id="username" name="username" type="text" maxlength="50" placeholder="Set your username" value="<?php echo $email ?>" /></td>
+							<td>E-mail <span style="color:red">*</span></td>
+							<td><input id="username" name="username" type="text" maxlength="50" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Set your username" value="<?php echo $email ?>" /></td>
 						</tr>
 						<tr>
-							<td>Set Password</td>
-							<td><input id="password" name="password" type="password" placeholder="Set your password" /></td>
+							<td>Set Password <span style="color:red">*</span></td>
+							<td><input id="password" name="password" type="password" required placeholder="Set your password" /></td>
 						</tr>
 						<tr>
-							<td>Confirm Password</td>
-							<td><input id="password1" name="password1" type="password" placeholder="Confirm your password" /></td>
+							<td>Confirm Password <span style="color:red">*</span></td>
+							<td><input id="password1" name="password1" type="password" required placeholder="Confirm your password" /></td>
 						</tr>
 						<tr>
-							<td>Address Line 1</td>
-							<td><input id="address1" name="address1" type="text" maxlength="50" placeholder="" /></td>
+							<td>Address Line 1 <span style="color:red">*</span></td>
+							<td><input id="address1" name="address1" type="text" maxlength="50" required placeholder="" /></td>
 						</tr>
 						<tr>
 							<td>Address Line 2</td>
 							<td><input id="address2" name="address2" type="text" maxlength="50" placeholder=""/></td>
 						</tr>
 						<tr>
-							<td>City</td>
-							<td><input id="city" name="city" type="text" maxlength="50" placeholder="" /></td>
+							<td>City <span style="color:red">*</span></td>
+							<td><input id="city" name="city" type="text" maxlength="50" required placeholder="" /></td>
 						</tr>
 						<tr>
-							<td>State</td>
-							<td><input id="state" name="state" type="text" maxlength="50" placeholder="" /></td>
+							<td>State <span style="color:red">*</span></td>
+							<td><input id="state" name="state" type="text" maxlength="50" required placeholder="" /></td>
 						</tr>
 						<tr>
-							<td>ZipCode</td>
-							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" placeholder="" /></td>
+							<td>ZipCode <span style="color:red">*</span></td>
+							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" required placeholder="" /></td>
 						</tr>
 						<tr>
 							<td colspan="2">
-								<p>Sports Interested</p>
+								<p>Sports Interested <span style="color:red">*</span></p>
 								<ul>
 									<li class="sports_list_item"><input id="football" name="football" type="checkbox" class="sports_checkbox"/><label for="football">&nbsp;Football</label></li>
 									<li class="sports_list_item"><input id="tennis" name="tennis" type="checkbox" class="sports_checkbox"/><label for="tennis">&nbsp;Tennis</label></li>
