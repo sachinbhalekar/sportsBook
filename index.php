@@ -81,12 +81,12 @@ if( isset($_POST['login_btn']) )
 	<body>
 		<header id="body_header">
 			<section id="header_title">
-				<h1><a href="index.html" class="a_header">SportsBook</a></h1>
+				<h1><a href="index.php" class="a_header">SportsBook</a></h1>
 			</section>
 			<section id="header_nav_section">
 				<ul>
 					<li class="header_nav_list_item"><a href="#main_login_section" class="header_nav_list_item_a">Login</a></li>
-					<li class="header_nav_list_item"><a href="./signup/signup.html" class="header_nav_list_item_a">Sign Up</a></li>
+					<li class="header_nav_list_item"><a href="./signup/signup.php" class="header_nav_list_item_a">Sign Up</a></li>
 					<li class="header_nav_list_item"><a href="_blnak" target="_blank" class="header_nav_list_item_a">About Us</a></li>
 				</ul>
 			</section>
@@ -111,7 +111,7 @@ if( isset($_POST['login_btn']) )
 							<td colspan="2" class="td_center"><input id="login_btn" type="submit" name="login_btn" value="Login"/></td>
 						</tr>
 						<tr>
-							<td colspan="2" class="td_center">Not a member yet? <a href="./signup/signup.html">Sign Up</a></td>
+							<td colspan="2" class="td_center">Not a member yet? <a href="./signup/signup.php">Sign Up</a></td>
 						</tr>
 					</table>
 					<?php
