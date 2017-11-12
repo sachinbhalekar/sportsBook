@@ -13,7 +13,8 @@ define('DBNAME', 'sportsbook');
 $conn = new mysqli(DBHOST,DBUSER,DBPASS,DBNAME);
 
 // Check connection
-if (!$conn) {
+if (!$conn) 
+{
     die("Connection failed: " . mysqli_connect_error());
 }
 //echo "Connected successfully";
