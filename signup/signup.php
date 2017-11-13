@@ -117,6 +117,8 @@ if ( isset($_POST['signup_btn']) )
     	
     	document.getElementById('latitude').value = vLat;
     	document.getElementById('longitude').value = vLong;
+
+    	document.getElementById('signup_btn').submit;
     }
     </script>
 	<head>
@@ -190,7 +192,7 @@ if ( isset($_POST['signup_btn']) )
 						</tr>
 						<tr>
 							<td>Address Line 1 <span style="color:red">*</span></td>
-							<td><input id="address1" name="address1" type="text" maxlength="50" required placeholder="" /><input id="latitude" name="latitude" type="text" hidden></td>
+							<td><input id="address1" name="address1" type="text" maxlength="50" required placeholder="" /><input id="latitude" name="latitude" type="text" hidden=""></td>
 						</tr>
 						<tr>
 							<td>Address Line 2</td>
@@ -206,7 +208,7 @@ if ( isset($_POST['signup_btn']) )
 						</tr>
 						<tr>
 							<td>ZipCode <span style="color:red">*</span></td>
-							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" required placeholder="" /><input id="longitude" name="longitude" type="text" hidden></td>
+							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" required placeholder="" /><input id="longitude" name="longitude" type="text" hidden=""></td>
 						</tr>
 						<tr>
 							<td colspan="2">
