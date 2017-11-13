@@ -136,7 +136,7 @@ if ( isset($_POST['signup_btn']) )
     	document.getElementById('latitude').value = vLat;
     	document.getElementById('longitude').value = vLong;
 
-    	document.getElementById('signup_btn').submit;
+    	document.getElementById('signup_btn').submit();
     }
     </script>
 	<head>
