@@ -98,6 +98,16 @@ if( isset($_POST['login_btn']) )
 			<hr>
 			<section id="main_login_section">
 				<form id="login_form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+					<?php
+                    if ( isset($errMSG) ) 
+                    {
+                    ?>
+                        <div class="form-group">
+                    		<span class="glyphicon glyphicon-info-sign"></span> <?php echo $errMSG; ?>
+                        </div>               
+                    <?php
+                    }
+                    ?>
 					<table id="login_table">
 						<tr>
 							<td>Username</td>
@@ -114,14 +124,7 @@ if( isset($_POST['login_btn']) )
 							<td colspan="2" class="td_center">Not a member yet? <a href="./signup/signup.php">Sign Up</a></td>
 						</tr>
 					</table>
-					<?php
-                    if ( isset($errMSG) ) 
-                    {
-                    ?>
-                        <p><?php echo $errMSG; ?><p>                
-                    <?php
-                    }
-                    ?>
+					
 				</form>
 			</section>
 		</section>
