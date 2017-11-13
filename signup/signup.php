@@ -119,8 +119,12 @@ if ( isset($_POST['signup_btn']) )
         var vLong = '';
     	var vAddress1 = document.getElementById('address1').value;
     	var vAddress2 = document.getElementById('address2').value;
-
-    	var address = "northridge,CA"
+    	var vCity = document.getElementById('city').value;
+    	var vState = document.getElementById('state').value;
+    	var vZipcode = document.getElementById('zipcode').value;
+    	
+    	var geocoder = new google.maps.Geocoder();
+    	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
         geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == 'OK') {
     	  alert(results[0].geometry.location);
