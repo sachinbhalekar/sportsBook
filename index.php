@@ -101,7 +101,7 @@ if( isset($_POST['login_btn']) )
 					<table id="login_table">
 						<tr>
 							<td>Username</td>
-							<td><input id="username" name="username" type="text" placeholder="Username/Email-ID" required value="<?php echo $email; ?>"/></td>
+							<td><input id="username" name="username" type="text" placeholder="Username/Email-ID" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required value="<?php echo $email; ?>"/></td>
 						</tr>
 						<tr>
 							<td>Password</td>
