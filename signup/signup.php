@@ -103,8 +103,15 @@ if ( isset($_POST['signup_btn']) )
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"
+    async defer></script>
+
+
 	<script>
     function getLatLong()
     {
@@ -112,7 +119,14 @@ if ( isset($_POST['signup_btn']) )
         var vLong = '';
     	var vAddress1 = document.getElementById('address1').value;
     	var vAddress2 = document.getElementById('address2').value;
-		
+
+    	var address = "northridge,CA"
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == 'OK') {
+    	  alert(results[0].geometry.location);
+           
+          } 
+        });
 		
     	
     	document.getElementById('latitude').value = vLat;
