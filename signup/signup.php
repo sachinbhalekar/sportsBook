@@ -28,6 +28,7 @@ if ( isset($_POST['signup_btn']) )
     $pass = htmlspecialchars($pass);
     //echo "<script type='text/javascript'>alert('$pass');</script>";
     
+    
     // basic name validation
     /*
     if (empty($name)) 
@@ -104,6 +105,20 @@ if ( isset($_POST['signup_btn']) )
 ?>
 <!DOCTYPE html>
 <html lang="en">
+	<script>
+    function getLatLong()
+    {
+        var vLat = '';
+        var vLong = '';
+    	var vAddress1 = document.getElementById('address1').value;
+    	var vAddress2 = document.getElementById('address2').value;
+		
+		
+    	
+    	document.getElementById('latitude').value = vLat;
+    	document.getElementById('longitude').value = vLong;
+    }
+    </script>
 	<head>
 		<meta charset="utf-8">
 		<meta name="description" content="SportsBook">
@@ -175,7 +190,7 @@ if ( isset($_POST['signup_btn']) )
 						</tr>
 						<tr>
 							<td>Address Line 1 <span style="color:red">*</span></td>
-							<td><input id="address1" name="address1" type="text" maxlength="50" required placeholder="" /></td>
+							<td><input id="address1" name="address1" type="text" maxlength="50" required placeholder="" /><input id="latitude" name="latitude" type="text" hidden></td>
 						</tr>
 						<tr>
 							<td>Address Line 2</td>
@@ -191,7 +206,7 @@ if ( isset($_POST['signup_btn']) )
 						</tr>
 						<tr>
 							<td>ZipCode <span style="color:red">*</span></td>
-							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" required placeholder="" /></td>
+							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" required placeholder="" /><input id="longitude" name="longitude" type="text" hidden></td>
 						</tr>
 						<tr>
 							<td colspan="2">
@@ -208,7 +223,7 @@ if ( isset($_POST['signup_btn']) )
 							<td><textarea id="bio" name="bio" maxlength="500" rows="3" placeholder="Write somthing about you to let the people know."></textarea></td>
 						</tr>
 						<tr>
-							<td colspan="2" class="td_center"><input id="signup_btn" name="signup_btn" class="input_regular" type="submit" value="Create Account"/></td>
+							<td colspan="2" class="td_center"><input id="signup_btn" name="signup_btn" class="input_regular" type="button" onclick="getLatLong()" value="Create Account"/></td>
 						</tr>
 					</table>
 				</form>
