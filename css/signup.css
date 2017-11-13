@@ -7,7 +7,7 @@ body
 #body_header
 {
 	background-color: white;
-	height: 100px;
+	display: flow-root;
 }
 
 #header_title
