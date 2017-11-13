@@ -9,7 +9,6 @@ define('DBUSER', 'sportsbook');
 define('DBPASS', 'sportsbook');
 define('DBNAME', 'sportsbook');
 
-
 $conn = new mysqli(DBHOST,DBUSER,DBPASS,DBNAME);
 
 // Check connection
