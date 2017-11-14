@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_start();
-require_once '../dbconnect.php';
+require_once '../connection/dbconnect.php';
 
 // if session is not set this will redirect to login page
 if( !isset($_SESSION['user']) ) 
@@ -34,7 +34,7 @@ $userRow=$res->fetch_assoc();
 			</section>
 			<section id="header_nav_section">
 				<ul>
-				<li class="header_nav_list_item"><a href="../location/location.php" class="header_nav_list_item_a">Location</a></li>
+					<li class="header_nav_list_item"><a href="../location/location.php" class="header_nav_list_item_a">Location</a></li>
 					<li class="header_nav_list_item"><a href="../logout.php?logout" class="header_nav_list_item_a">Log out</a></li>
 					<li class="header_nav_list_item"><a href="_blnak" target="_blank" class="header_nav_list_item_a">About Us</a></li>
 				</ul>
