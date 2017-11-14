@@ -96,7 +96,7 @@ if ( isset($_POST['signup_btn']) )
         } 
         else 
         {
-            $errTyp = "danger";
+            $errTyp = "fail";
             $errMSG = "Something went wrong, try again later...";
         }
         
@@ -107,11 +107,7 @@ if ( isset($_POST['signup_btn']) )
 <!DOCTYPE html>
 <html lang="en">
 
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"
-    async defer></script>
-
-
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap" async defer></script>
 	<script>
     function getLatLong()
     {

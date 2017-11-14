@@ -8,6 +8,8 @@ body
 {
 	background-color: white;
 	display: flow-root;
+	top: 0;
+    position: sticky;
 }
 
 #header_title

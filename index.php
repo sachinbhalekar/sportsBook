@@ -14,8 +14,6 @@ $error = false;
 
 if( isset($_POST['login_btn']) ) 
 {
-    
-    // prevent sql injections/ clear user invalid inputs
     $email = trim($_POST['username']);
     $email = strip_tags($email);
     $email = htmlspecialchars($email);
@@ -23,41 +21,52 @@ if( isset($_POST['login_btn']) )
     $pass = trim($_POST['password']);
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
-    // prevent sql injections / clear user invalid inputs
     
-    if(empty($email)){
+    // prevent sql injections / clear user invalid inputs
+    /*
+    if(empty($email))
+    {
         $error = true;
         $emailError = "Please enter your email address.";
-    } else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) {
+    } 
+    else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) 
+    {
         $error = true;
         $emailError = "Please enter valid email address.";
     }
     
-    if(empty($pass)){
+    if(empty($pass))
+    {
         $error = true;
         $passError = "Please enter your password.";
     }
+    */
     
     // if there's no error, continue to login
-    if (!$error) {
+    if (!$error) 
+    {
         
         $password = hash('sha256', $pass); // password hashing using SHA256
         
-        $res=$conn->query("SELECT userId, userName, userPass FROM users WHERE userEmail='$email'");
+        $res=$conn->query("SELECT userId, userName, userPass FROM users WHERE userEmail='$email' and userPass='$password'");
         
         $count = $res->num_rows; // if uname/pass correct it returns must be 1 row
-        echo $count;
+        //echo $count;
         if($count == 1 )
         {
             while( $row=$res->fetch_assoc())
             {
-                if($row['userPass']==$password ) {
+                if($row['userPass']==$password ) 
+                {
+                    $errTyp = "success";
                     $_SESSION['user'] = $row['userId'];
                     header("Location: ./account/home.php");
                 }
             }
         }
-        else {
+        else 
+        {
+            $errTyp = "fail";
             $errMSG = "Incorrect Credentials, Try again...";
         }
     }
@@ -83,6 +92,11 @@ if( isset($_POST['login_btn']) )
 			<section id="header_title">
 				<h1><a href="index.php" class="a_header">SportsBook</a></h1>
 			</section>
+			<!-- 
+			<section id="header_logo">
+				<img id="sportsLogo" src="./images/sports14.jpg" alt="All Sports" />
+			</section>
+			 -->
 			<section id="header_nav_section">
 				<ul>
 					<li class="header_nav_list_item"><a href="#main_login_section" class="header_nav_list_item_a">Login</a></li>
@@ -103,7 +117,9 @@ if( isset($_POST['login_btn']) )
                     {
                     ?>
                         <div class="form-group">
-                    		<span class="glyphicon glyphicon-info-sign"></span> <?php echo $errMSG; ?>
+                        	<div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
+                    			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $errMSG; ?>
+                        	</div>
                         </div>               
                     <?php
                     }
