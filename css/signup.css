@@ -125,9 +125,14 @@ input, textarea
 	width: auto !important;
 }
 
-.sports_list_item
+.list_item_regular
 {
 	list-style: none;
+}
+
+.gender_radio
+{
+	padding-left: 20px;
 }
 
 footer

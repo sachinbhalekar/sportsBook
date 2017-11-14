@@ -193,6 +193,15 @@ if ( isset($_POST['signup_btn']) )
 							<td><input id="dob" name="dob" type="date" required /></td>
 						</tr>
 						<tr>
+							<td colspan="2">
+								<p>Gender <span style="color:red">*</span></p>
+								<fieldset>
+									<input id="male" name="gender" type="radio" class="gender_radio" /><label for="male">&nbsp;Male</label><br/>
+									<input id="female" name="gender" type="radio" class="gender_radio" /><label for="female">&nbsp;Female</label><br/>
+								</fieldset>
+							</td>
+						</tr>
+						<tr>
 							<td>E-mail <span style="color:red">*</span></td>
 							<td><input id="username" name="username" type="text" maxlength="50" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Set your username" value="<?php echo $email ?>" /></td>
 						</tr>
@@ -228,9 +237,9 @@ if ( isset($_POST['signup_btn']) )
 							<td colspan="2">
 								<p>Sports Interested <span style="color:red">*</span></p>
 								<ul>
-									<li class="sports_list_item"><input id="football" name="football" type="checkbox" class="sports_checkbox"/><label for="football">&nbsp;Football</label></li>
-									<li class="sports_list_item"><input id="tennis" name="tennis" type="checkbox" class="sports_checkbox"/><label for="tennis">&nbsp;Tennis</label></li>
-									<li class="sports_list_item"><input id="cricket" name="cricket" type="checkbox" class="sports_checkbox"/><label for="cricket">&nbsp;Cricket</label></li>
+									<li class="list_item_regular"><input id="football" name="sports" type="checkbox" class="sports_checkbox"/><label for="football">&nbsp;Football</label></li>
+									<li class="list_item_regular"><input id="tennis" name="sports" type="checkbox" class="sports_checkbox"/><label for="tennis">&nbsp;Tennis</label></li>
+									<li class="list_item_regular"><input id="cricket" name="sports" type="checkbox" class="sports_checkbox"/><label for="cricket">&nbsp;Cricket</label></li>
 								</ul>
 							</td>
 						</tr>
