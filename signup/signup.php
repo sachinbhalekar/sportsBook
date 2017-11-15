@@ -155,11 +155,43 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
             document.getElementById('latitude').value = vLat;
         	document.getElementById('longitude').value = vLong;
     	}
-    	
-    	
     	//alert('before submit');
-    	
     	//document.getElementById('signup_form').submit();
+    }
+
+    function setGender()
+    {
+        //alert('setGender');
+    	if(document.getElementById('male').checked) 
+    	{
+			//Male radio button is checked
+    		document.getElementById('gender').value = 'M';
+		}
+		else if(document.getElementById('female').checked) 
+		{
+			//Female radio button is checked
+			document.getElementById('gender').value = 'F';
+		}
+		//alert(document.getElementById('gender').value);
+    }
+
+    function setSports()
+    {
+    	var vSports = '';
+    	if(document.getElementById('football').checked) 
+    	{
+    		vSports = vSports + 'football|';
+		}
+		if(document.getElementById('tennis').checked) 
+		{
+			vSports = vSports + 'tennis|';
+		}
+		if(document.getElementById('cricket').checked) 
+		{
+			vSports = vSports + 'cricket|';
+		}
+    	document.getElementById('sports').value = vSports;
+    	//alert(document.getElementById('sports').value);
     }
     </script>
 	<head>
@@ -225,9 +257,10 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 							<td colspan="2">
 								<p>Gender <span style="color:red">*</span></p>
 								<ul>
-									<li class="list_item_regular"><input id="male" name="gender" type="radio" class="gender_radio" /><label for="male">&nbsp;Male</label></li>
-									<li class="list_item_regular"><input id="female" name="gender" type="radio" class="gender_radio" /><label for="female">&nbsp;Female</label></li>
+									<li class="list_item_regular"><input id="male" name="genderR" type="radio" class="gender_radio" onclick="setGender()"/><label for="male">&nbsp;Male</label></li>
+									<li class="list_item_regular"><input id="female" name="genderR" type="radio" class="gender_radio" onclick="setGender()"/><label for="female">&nbsp;Female</label></li>
 								</ul>
+								<input id="gender" name="gender" type="text" hidden="">
 							</td>
 						</tr>
 						<tr>
@@ -244,7 +277,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 						</tr>
 						<tr>
 							<td>Address Line 1 <span style="color:red">*</span></td>
-							<td><input id="address1" name="address1" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Street Address" /><input id="latitude" name="latitude" type="text" hidden=""></td>
+							<td><input id="address1" name="address1" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Street Address" /><input id="latitude" name="latitude" type="text" hidden=""/></td>
 						</tr>
 						<tr>
 							<td>Address Line 2</td>
@@ -260,16 +293,17 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 						</tr>
 						<tr>
 							<td>ZipCode <span style="color:red">*</span></td>
-							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="" /><input id="longitude" name="longitude" type="text" hidden=""></td>
+							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="" /><input id="longitude" name="longitude" type="text" hidden=""/></td>
 						</tr>
 						<tr>
 							<td colspan="2">
 								<p>Sports Interested <span style="color:red">*</span></p>
 								<ul>
-									<li class="list_item_regular"><input id="football" name="sports" type="checkbox" class="sports_checkbox"/><label for="football">&nbsp;Football</label></li>
-									<li class="list_item_regular"><input id="tennis" name="sports" type="checkbox" class="sports_checkbox"/><label for="tennis">&nbsp;Tennis</label></li>
-									<li class="list_item_regular"><input id="cricket" name="sports" type="checkbox" class="sports_checkbox"/><label for="cricket">&nbsp;Cricket</label></li>
+									<li class="list_item_regular"><input id="football" name="football" type="checkbox" class="sports_checkbox" onclick="setSports()"/><label for="football">&nbsp;Football</label></li>
+									<li class="list_item_regular"><input id="tennis" name="tennis" type="checkbox" class="sports_checkbox" onclick="setSports()"/><label for="tennis">&nbsp;Tennis</label></li>
+									<li class="list_item_regular"><input id="cricket" name="cricket" type="checkbox" class="sports_checkbox" onclick="setSports()"/><label for="cricket">&nbsp;Cricket</label></li>
 								</ul>
+								<input id="sports" name="sports" type="text" hidden=""/>
 							</td>
 						</tr>
 						<tr>
