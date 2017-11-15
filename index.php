@@ -22,9 +22,8 @@ if( isset($_POST['login_btn']) )
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
     
-    // prevent sql injections / clear user invalid inputs
-    /*
-    if(empty($email))
+   
+   /*  if(empty($email))
     {
         $error = true;
         $emailError = "Please enter your email address.";
@@ -40,7 +39,7 @@ if( isset($_POST['login_btn']) )
         $error = true;
         $passError = "Please enter your password.";
     }
-    */
+     */
     
     // if there's no error, continue to login
     if (!$error) 

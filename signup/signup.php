@@ -1,28 +1,16 @@
 <?php
 ob_start();
 session_start();
-if( isset($_SESSION['user'])!="" )
-{
-    //header("Location: home.php");
-}
+
 include_once '../connection/dbconnect.php';
 
 $error = false;
 
-/*
-echo "<script type='text/javascript'>alert('before...');</script>";
 
-$form = $_POST['signup_form'];
-echo "<script type='text/javascript'>alert('$form');</script>";
-
-$butt = $_POST['signup_btn'];
-echo "<script type='text/javascript'>alert('$butt');</script>";
-//echo "<script type='text/javascript'>alert('before...');</script>";
-*/
 
 if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) ) 
 {
-    echo "<script type='text/javascript'>alert('inside');</script>";
+    //echo "<script type='text/javascript'>alert('inside');</script>";
     // clean user inputs to prevent sql injections
     $name = trim($_POST['firstname']);
     $name = strip_tags($name);
@@ -51,54 +39,74 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
   //  echo "<script type='text/javascript'>alert('$gender');</script>";
     
     
-    // basic name validation
-    /*
-    if (empty($name)) 
-    {
-        $error = true;
-        $nameError = "Please enter your full name.";
-    } 
-    else if (strlen($name) < 3) 
-    {
-        $error = true;
-        $nameError = "Name must have atleat 3 characters.";
-    } 
-    else if (!preg_match("/^[a-zA-Z ]+$/",$name)) 
-    {
-        $error = true;
-        $nameError = "Name must contain alphabets and space.";
-    }
-    */
+    $lastname = trim($_POST['lastname']);
+    $lastname = strip_tags($lastname);
+    $lastname = htmlspecialchars($lastname);
+    
+    $userDOB = trim($_POST['dob']);
+    $userDOB = strip_tags($userDOB);
+    $userDOB = htmlspecialchars($userDOB);
+    
+    $userbio = trim($_POST['bio']);
+    $userbio = strip_tags($userbio);
+    $userbio = htmlspecialchars($userbio);
+    
+    
+    $address1 = trim($_POST['address1']);
+    $address1 = strip_tags($address1);
+    $address1 = htmlspecialchars($address1);
+    
+    $address2 = trim($_POST['address2']);
+    $address2 = strip_tags($address2);
+    $address2 = htmlspecialchars($address2);
+    
+    $city = trim($_POST['city']);
+    $city = strip_tags($city);
+    $city = htmlspecialchars($city);
+    
+    $state = trim($_POST['state']);
+    $state = strip_tags($state);
+    $state = htmlspecialchars($state);
+    
+    $country = trim('');
+    $country = strip_tags($country);
+    $country = htmlspecialchars($country);
+    
+    $zipcode = trim($_POST['zipcode']);
+    $zipcode = strip_tags($zipcode);
+    $zipcode = htmlspecialchars($zipcode);
+    
+    $latitude = trim($_POST['latitude']);
+    $latitude = strip_tags($latitude);
+    $latitude = htmlspecialchars($latitude);
+    
+    $longitude = trim($_POST['longitude']);
+    $longitude = strip_tags($longitude);
+    $longitude = htmlspecialchars($longitude);
     
     //basic email validation
-    /*
+   
     if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) 
     {
         $error = true;
-        $emailError = "Please enter valid email address.";
+        $errTyp = "Error";
+        $message = "Please enter valid email address.";
     } 
     else 
     {
         // check email exist or not
         $query = "SELECT userEmail FROM users WHERE userEmail='$email'";
         $result = $conn->query($query);
-        
+        $count = $result->num_rows;
+        if($count==1)
+        {
+            $error = true;
+            $errTyp = "Error";
+            $message = "Email address already registered";
+        }
     }
-    */
-    
-    // password validation
-    /*
-    if (empty($pass))
-    {
-        $error = true;
-        $passError = "Please enter password.";
-    } 
-    else if(strlen($pass) < 6) 
-    {
-        $error = true;
-        $passError = "Password must have atleast 6 characters.";
-    }
-    */
+   
+  
     
     // if there's no error, continue to signup
     if( !$error ) 
@@ -109,7 +117,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
         $query = "INSERT INTO users(userName,userEmail,userPass,userLastName,userGender,userDoB,userBio) 
 VALUES('$name','$email','$password','$lastname','$gender','$userDOB','$userbio')";
         $query1 = "INSERT INTO user_address(userEmail,address1,address2,city,state,country,zipcode,latitude,longitude) 
-VALUES('$email',''$address1','$address2','$city','$state','$country','$zipcode','$latitude','$longitude')";
+VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode','$latitude','$longitude')";
         if ($conn->query($query) === TRUE && $conn->query($query1) === TRUE) 
         {
             $errTyp = "success";
@@ -150,8 +158,10 @@ VALUES('$email',''$address1','$address2','$city','$state','$country','$zipcode',
     	{
             geocoder.geocode( { 'address': address}, function(results, status) {
               if (status == 'OK') {
-        	  //alert(results[0].geometry.location);
-               
+            	  vLat=results[0].geometry.location.lat();
+        	  vLong=results[0].geometry.location.lng();
+        	   alert(vLat);
+        	   alert(vLong);
               } 
             });
 
@@ -237,7 +247,7 @@ VALUES('$email',''$address1','$address2','$city','$state','$country','$zipcode',
                     	<div class="form-group">
                         	<div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
                     			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $message; ?>
-                    			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $query; ?>
+                    			
                         	</div>
                         </div>
                     <?php
