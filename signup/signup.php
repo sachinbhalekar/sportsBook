@@ -162,7 +162,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
             $message = "Something went wrong, try again later...";
         }
         
-        //Delete inserted records if some error occurs...
+        //Delete inserted records if any error occurs...
         if( $error )
         {
             $queryD2 = "DELETE FROM user_address WHERE userEmail='$email'";
@@ -222,12 +222,12 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
     function setGender()
     {
         //alert('setGender');
-    	if(document.getElementById('male').checked) 
+    	if( document.getElementById('male').checked ) 
     	{
 			//Male radio button is checked
     		document.getElementById('gender').value = 'M';
 		}
-		else if(document.getElementById('female').checked) 
+		else if( document.getElementById('female').checked ) 
 		{
 			//Female radio button is checked
 			document.getElementById('gender').value = 'F';
