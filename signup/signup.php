@@ -43,12 +43,12 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
     $sports = trim($_POST['sports']);
     $sports = strip_tags($sports);
     $sports = htmlspecialchars($sports);
-    echo "<script type='text/javascript'>alert('$sports');</script>";
+  //  echo "<script type='text/javascript'>alert('$sports');</script>";
     
     $gender = trim($_POST['gender']);
     $gender = strip_tags($gender);
     $gender = htmlspecialchars($gender);
-    echo "<script type='text/javascript'>alert('$gender');</script>";
+  //  echo "<script type='text/javascript'>alert('$gender');</script>";
     
     
     // basic name validation
@@ -106,8 +106,11 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
         // password encrypt using SHA256();
         $password = hash('sha256', $pass);
         
-        $query = "INSERT INTO users(userName,userEmail,userPass) VALUES('$name','$email','$password')";
-        if ($conn->query($query) === TRUE) 
+        $query = "INSERT INTO users(userName,userEmail,userPass,userLastName,userGender,userDoB,userBio) 
+VALUES('$name','$email','$password','$lastname','$gender','$userDOB','$userbio')";
+        $query1 = "INSERT INTO user_address(userEmail,address1,address2,city,state,country,zipcode,latitude,longitude) 
+VALUES('$email',''$address1','$address2','$city','$state','$country','$zipcode','$latitude','$longitude')";
+        if ($conn->query($query) === TRUE && $conn->query($query1) === TRUE) 
         {
             $errTyp = "success";
             $message = "Successfully registered, you may login now!";

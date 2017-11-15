@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `users` (
-  `userId` int(11) NOT NULL,
+  
   `userName` varchar(30) NOT NULL,
   `userLastName` varchar(30) DEFAULT NULL,
   `userEmail` varchar(60) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `users` (
 --
 
 CREATE TABLE `user_address` (
-  `userId` int(11) NOT NULL,
+   `userEmail` varchar(60) NOT NULL,
   `address1` varchar(25) NOT NULL,
   `address2` varchar(25) DEFAULT NULL,
   `city` varchar(20) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `user_address` (
   `zipcode` int(10) NOT NULL,
   `latitude` float NOT NULL,
   `longitude` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -64,9 +64,9 @@ CREATE TABLE `user_address` (
 --
 
 CREATE TABLE `user_sports` (
-  `userId` int(11) NOT NULL,
+  `userEmail` varchar(60) NOT NULL,
   `sports_activity` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Indexes for dumped tables
@@ -76,30 +76,25 @@ CREATE TABLE `user_sports` (
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`userId`),
-  ADD UNIQUE KEY `userEmail` (`userEmail`);
+ 
+  ADD PRIMARY KEY `userEmail` (`userEmail`);
 
 --
 -- Indexes for table `user_address`
 --
 ALTER TABLE `user_address`
-  ADD KEY `FK_userId` (`userId`);
+  ADD KEY `Key_userEmail` (`userEmail`);
 
 --
 -- Indexes for table `user_sports`
 --
 ALTER TABLE `user_sports`
-  ADD KEY `FK_userId1` (`userId`);
+  ADD KEY `Key_userEmail` (`userEmail`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
@@ -109,13 +104,13 @@ ALTER TABLE `users`
 -- Constraints for table `user_address`
 --
 ALTER TABLE `user_address`
-  ADD CONSTRAINT `FK_userId` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
+  ADD CONSTRAINT `FK_userEmail` FOREIGN KEY (`userEmail`) REFERENCES `users` (`userEmail`);
 
 --
 -- Constraints for table `user_sports`
 --
 ALTER TABLE `user_sports`
-  ADD CONSTRAINT `FK_userId1` FOREIGN KEY (`userId`) REFERENCES `users` (`userId`);
+  ADD CONSTRAINT `FK_userEmail1` FOREIGN KEY (`userEmail`) REFERENCES `users` (`userEmail`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
