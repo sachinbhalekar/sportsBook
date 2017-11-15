@@ -9,8 +9,9 @@ if( !isset($_SESSION['user']) )
     header("Location: ../index.php");
     exit;
 }
+$userEmail = $_SESSION['user'];
 // select loggedin users detail
-$res=$conn->query("SELECT * FROM users WHERE userId=".$_SESSION['user']);
+$res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
 $userRow=$res->fetch_assoc();
 ?>
 <!DOCTYPE html>

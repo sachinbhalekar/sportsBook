@@ -47,7 +47,8 @@ if( isset($_POST['login_btn']) )
         
         $password = hash('sha256', $pass); // password hashing using SHA256
         
-        $res=$conn->query("SELECT userId, userName, userPass FROM users WHERE userEmail='$email' and userPass='$password'");
+        $query = "SELECT userEmail, userPass FROM users WHERE userEmail='$email' and userPass='$password'";
+        $res=$conn->query($query);
         
         $count = $res->num_rows; // if uname/pass correct it returns must be 1 row
         //echo $count;
@@ -55,10 +56,11 @@ if( isset($_POST['login_btn']) )
         {
             while( $row=$res->fetch_assoc())
             {
-                if($row['userPass']==$password ) 
+                //if($row['userPass']==$password ) 
                 {
                     $errTyp = "success";
-                    $_SESSION['user'] = $row['userId'];
+                    //echo "<script type='text/javascript'>alert(Query1 : '$errTyp');</script>";
+                    $_SESSION['user'] = $row['userEmail'];
                     header("Location: ./account/home.php");
                 }
             }
@@ -118,6 +120,7 @@ if( isset($_POST['login_btn']) )
                         <div class="form-group">
                         	<div id="message_div" class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
                     			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $message; ?>
+                    			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $query; ?>
                         	</div>
                         </div>               
                     <?php
