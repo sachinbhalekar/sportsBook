@@ -8,7 +8,7 @@ $error = false;
 
 if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) ) 
 {
-    echo "<script type='text/javascript'>alert('inside');</script>";
+    //echo "<script type='text/javascript'>alert('inside');</script>";
     // clean user inputs to prevent sql injections
     $name = trim($_POST['firstname']);
     $name = strip_tags($name);
