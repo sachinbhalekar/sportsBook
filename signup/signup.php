@@ -9,9 +9,20 @@ include_once '../connection/dbconnect.php';
 
 $error = false;
 
-if ( isset($_POST['signup_btn']) ) 
+/*
+echo "<script type='text/javascript'>alert('before...');</script>";
+
+$form = $_POST['signup_form'];
+echo "<script type='text/javascript'>alert('$form');</script>";
+
+$butt = $_POST['signup_btn'];
+echo "<script type='text/javascript'>alert('$butt');</script>";
+//echo "<script type='text/javascript'>alert('before...');</script>";
+*/
+
+if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) ) 
 {
-    //echo "<script type='text/javascript'>alert('inside');</script>";
+    echo "<script type='text/javascript'>alert('inside');</script>";
     // clean user inputs to prevent sql injections
     $name = trim($_POST['firstname']);
     $name = strip_tags($name);
@@ -27,6 +38,17 @@ if ( isset($_POST['signup_btn']) )
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
     //echo "<script type='text/javascript'>alert('$pass');</script>";
+    
+    
+    $sports = trim($_POST['sports']);
+    $sports = strip_tags($sports);
+    $sports = htmlspecialchars($sports);
+    echo "<script type='text/javascript'>alert('$sports');</script>";
+    
+    $gender = trim($_POST['gender']);
+    $gender = strip_tags($gender);
+    $gender = htmlspecialchars($gender);
+    echo "<script type='text/javascript'>alert('$gender');</script>";
     
     
     // basic name validation
@@ -85,19 +107,18 @@ if ( isset($_POST['signup_btn']) )
         $password = hash('sha256', $pass);
         
         $query = "INSERT INTO users(userName,userEmail,userPass) VALUES('$name','$email','$password')";
-        
         if ($conn->query($query) === TRUE) 
         {
             $errTyp = "success";
-            $errMSG = "Successfully registered, you may login now!";
+            $message = "Successfully registered, you may login now!";
             unset($name);
             unset($email);
             unset($pass);
         } 
         else 
         {
-            $errTyp = "fail";
-            $errMSG = "Something went wrong, try again later...";
+            $errTyp = "danger";
+            $message = "Something went wrong, try again later...";
         }
         
     }
@@ -111,28 +132,34 @@ if ( isset($_POST['signup_btn']) )
 	<script>
     function getLatLong()
     {
+        //alert('getLatLong');
         var vLat = '';
         var vLong = '';
-    	var vAddress1 = document.getElementById('address1').value;
-    	var vAddress2 = document.getElementById('address2').value;
-    	var vCity = document.getElementById('city').value;
-    	var vState = document.getElementById('state').value;
-    	var vZipcode = document.getElementById('zipcode').value;
+    	var vAddress1 = document.getElementById('address1').value.trim();
+    	var vAddress2 = document.getElementById('address2').value.trim();
+    	var vCity = document.getElementById('city').value.trim();
+    	var vState = document.getElementById('state').value.trim();
+    	var vZipcode = document.getElementById('zipcode').value.trim();
     	
     	var geocoder = new google.maps.Geocoder();
     	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
-        geocoder.geocode( { 'address': address}, function(results, status) {
-          if (status == 'OK') {
-    	  alert(results[0].geometry.location);
-           
-          } 
-        });
-		
-    	
-    	document.getElementById('latitude').value = vLat;
-    	document.getElementById('longitude').value = vLong;
+    	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
+    	{
+            geocoder.geocode( { 'address': address}, function(results, status) {
+              if (status == 'OK') {
+        	  //alert(results[0].geometry.location);
+               
+              } 
+            });
 
-    	document.getElementById('signup_btn').submit();
+            document.getElementById('latitude').value = vLat;
+        	document.getElementById('longitude').value = vLong;
+    	}
+    	
+    	
+    	//alert('before submit');
+    	
+    	//document.getElementById('signup_form').submit();
     }
     </script>
 	<head>
@@ -166,14 +193,16 @@ if ( isset($_POST['signup_btn']) )
 			</section>
 			<hr>
 			<section id="main_signup_section">
-				<form id="signup_form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+				<!-- <form id="signup_form" name="signup_form" method="post" action="<?php //echo htmlspecialchars($_SERVER['PHP_SELF']);?>">  -->
+				<form id="signup_form" name="signup_form" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
 					<?php
-                    if ( isset($errMSG) ) 
+                    if ( isset($message) ) 
                     {
                     ?>
                     	<div class="form-group">
                         	<div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
-                    			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $errMSG; ?>
+                    			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $message; ?>
+                    			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $query; ?>
                         	</div>
                         </div>
                     <?php
@@ -195,10 +224,10 @@ if ( isset($_POST['signup_btn']) )
 						<tr>
 							<td colspan="2">
 								<p>Gender <span style="color:red">*</span></p>
-								<fieldset>
-									<input id="male" name="gender" type="radio" class="gender_radio" /><label for="male">&nbsp;Male</label><br/>
-									<input id="female" name="gender" type="radio" class="gender_radio" /><label for="female">&nbsp;Female</label><br/>
-								</fieldset>
+								<ul>
+									<li class="list_item_regular"><input id="male" name="gender" type="radio" class="gender_radio" /><label for="male">&nbsp;Male</label></li>
+									<li class="list_item_regular"><input id="female" name="gender" type="radio" class="gender_radio" /><label for="female">&nbsp;Female</label></li>
+								</ul>
 							</td>
 						</tr>
 						<tr>
@@ -215,23 +244,23 @@ if ( isset($_POST['signup_btn']) )
 						</tr>
 						<tr>
 							<td>Address Line 1 <span style="color:red">*</span></td>
-							<td><input id="address1" name="address1" type="text" maxlength="50" required placeholder="" /><input id="latitude" name="latitude" type="text" hidden=""></td>
+							<td><input id="address1" name="address1" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Street Address" /><input id="latitude" name="latitude" type="text" hidden=""></td>
 						</tr>
 						<tr>
 							<td>Address Line 2</td>
-							<td><input id="address2" name="address2" type="text" maxlength="50" placeholder=""/></td>
+							<td><input id="address2" name="address2" type="text" maxlength="50" onblur="getLatLong();" placeholder="Apt/Unit"/></td>
 						</tr>
 						<tr>
 							<td>City <span style="color:red">*</span></td>
-							<td><input id="city" name="city" type="text" maxlength="50" required placeholder="" /></td>
+							<td><input id="city" name="city" type="text" maxlength="50" onblur="getLatLong();" required placeholder="" /></td>
 						</tr>
 						<tr>
 							<td>State <span style="color:red">*</span></td>
-							<td><input id="state" name="state" type="text" maxlength="50" required placeholder="" /></td>
+							<td><input id="state" name="state" type="text" maxlength="50" onblur="getLatLong();" required placeholder="" /></td>
 						</tr>
 						<tr>
 							<td>ZipCode <span style="color:red">*</span></td>
-							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" required placeholder="" /><input id="longitude" name="longitude" type="text" hidden=""></td>
+							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="" /><input id="longitude" name="longitude" type="text" hidden=""></td>
 						</tr>
 						<tr>
 							<td colspan="2">
@@ -248,7 +277,7 @@ if ( isset($_POST['signup_btn']) )
 							<td><textarea id="bio" name="bio" maxlength="500" rows="3" placeholder="Write somthing about you to let the people know."></textarea></td>
 						</tr>
 						<tr>
-							<td colspan="2" class="td_center"><input id="signup_btn" name="signup_btn" class="input_regular" type="button" onclick="getLatLong()" value="Create Account"/></td>
+							<td colspan="2" class="td_center"><input id="signup_btn" name="signup_btn" class="input_regular" type="submit" value="Create Account"/></td>
 						</tr>
 					</table>
 				</form>

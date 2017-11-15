@@ -66,8 +66,8 @@ if( isset($_POST['login_btn']) )
         }
         else 
         {
-            $errTyp = "fail";
-            $errMSG = "Incorrect Credentials, Try again...";
+            $errTyp = "danger";
+            $message = "Incorrect Credentials, Try again...";
         }
     }
     
@@ -113,12 +113,12 @@ if( isset($_POST['login_btn']) )
 			<section id="main_login_section">
 				<form id="login_form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 					<?php
-                    if ( isset($errMSG) ) 
+                    if ( isset($message) ) 
                     {
                     ?>
                         <div class="form-group">
                         	<div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
-                    			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $errMSG; ?>
+                    			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $message; ?>
                         	</div>
                         </div>               
                     <?php
