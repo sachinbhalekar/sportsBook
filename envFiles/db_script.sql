@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2017 at 07:18 AM
+-- Generation Time: Nov 15, 2017 at 07:37 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -29,7 +29,6 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `users` (
-  
   `userName` varchar(30) NOT NULL,
   `userLastName` varchar(30) DEFAULT NULL,
   `userEmail` varchar(60) NOT NULL,
@@ -39,6 +38,13 @@ CREATE TABLE `users` (
   `userBio` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`userName`, `userLastName`, `userEmail`, `userPass`, `userGender`, `userDoB`, `userBio`) VALUES
+('Sumit', 'Jawale', 'jawalesumit@gmail.com', 'a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3', 'M', '2017-11-08', '');
+
 -- --------------------------------------------------------
 
 --
@@ -46,16 +52,23 @@ CREATE TABLE `users` (
 --
 
 CREATE TABLE `user_address` (
-   `userEmail` varchar(60) NOT NULL,
+  `userEmail` varchar(60) NOT NULL,
   `address1` varchar(25) NOT NULL,
   `address2` varchar(25) DEFAULT NULL,
   `city` varchar(20) NOT NULL,
   `state` varchar(20) NOT NULL,
   `country` varchar(20) NOT NULL,
   `zipcode` int(10) NOT NULL,
-  `latitude` float NOT NULL,
-  `longitude` float NOT NULL
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_address`
+--
+
+INSERT INTO `user_address` (`userEmail`, `address1`, `address2`, `city`, `state`, `country`, `zipcode`, `latitude`, `longitude`) VALUES
+('jawalesumit@gmail.com', '18452 HALSTED STREET', 'UNIT 108', 'NORTHRIDGE', 'California', '', 91325, 34.244354248046875, -118.53551483154297);
 
 -- --------------------------------------------------------
 
@@ -76,8 +89,7 @@ CREATE TABLE `user_sports` (
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
- 
-  ADD PRIMARY KEY `userEmail` (`userEmail`);
+  ADD PRIMARY KEY (`userEmail`);
 
 --
 -- Indexes for table `user_address`
@@ -90,11 +102,6 @@ ALTER TABLE `user_address`
 --
 ALTER TABLE `user_sports`
   ADD KEY `Key_userEmail` (`userEmail`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
 
 --
 -- Constraints for dumped tables

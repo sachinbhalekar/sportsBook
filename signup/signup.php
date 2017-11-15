@@ -6,16 +6,29 @@ include_once '../connection/dbconnect.php';
 
 $error = false;
 
-
-
 if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) ) 
 {
-    //echo "<script type='text/javascript'>alert('inside');</script>";
+    echo "<script type='text/javascript'>alert('inside');</script>";
     // clean user inputs to prevent sql injections
     $name = trim($_POST['firstname']);
     $name = strip_tags($name);
     $name = htmlspecialchars($name);
     //echo "<script type='text/javascript'>alert('$name');</script>";
+    
+    $lastname = trim($_POST['lastname']);
+    $lastname = strip_tags($lastname);
+    $lastname = htmlspecialchars($lastname);
+    //echo "<script type='text/javascript'>alert('$lastname');</script>";
+    
+    $userDOB = trim($_POST['dob']);
+    $userDOB = strip_tags($userDOB);
+    $userDOB = htmlspecialchars($userDOB);
+    //echo "<script type='text/javascript'>alert('$userDOB');</script>";
+    
+    $gender = trim($_POST['gender']);
+    $gender = strip_tags($gender);
+    $gender = htmlspecialchars($gender);
+    //echo "<script type='text/javascript'>alert('$gender');</script>";
     
     $email = trim($_POST['username']);
     $email = strip_tags($email);
@@ -27,111 +40,138 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
     $pass = htmlspecialchars($pass);
     //echo "<script type='text/javascript'>alert('$pass');</script>";
     
-    
-    $sports = trim($_POST['sports']);
-    $sports = strip_tags($sports);
-    $sports = htmlspecialchars($sports);
-  //  echo "<script type='text/javascript'>alert('$sports');</script>";
-    
-    $gender = trim($_POST['gender']);
-    $gender = strip_tags($gender);
-    $gender = htmlspecialchars($gender);
-  //  echo "<script type='text/javascript'>alert('$gender');</script>";
-    
-    
-    $lastname = trim($_POST['lastname']);
-    $lastname = strip_tags($lastname);
-    $lastname = htmlspecialchars($lastname);
-    
-    $userDOB = trim($_POST['dob']);
-    $userDOB = strip_tags($userDOB);
-    $userDOB = htmlspecialchars($userDOB);
-    
-    $userbio = trim($_POST['bio']);
-    $userbio = strip_tags($userbio);
-    $userbio = htmlspecialchars($userbio);
-    
-    
     $address1 = trim($_POST['address1']);
     $address1 = strip_tags($address1);
     $address1 = htmlspecialchars($address1);
+    //echo "<script type='text/javascript'>alert('$address1');</script>";
     
     $address2 = trim($_POST['address2']);
     $address2 = strip_tags($address2);
     $address2 = htmlspecialchars($address2);
+    //echo "<script type='text/javascript'>alert('$address2');</script>";
     
     $city = trim($_POST['city']);
     $city = strip_tags($city);
     $city = htmlspecialchars($city);
+    //echo "<script type='text/javascript'>alert('$city');</script>";
     
     $state = trim($_POST['state']);
     $state = strip_tags($state);
     $state = htmlspecialchars($state);
+    //echo "<script type='text/javascript'>alert('$state');</script>";
     
     $country = trim('');
     $country = strip_tags($country);
     $country = htmlspecialchars($country);
+    //echo "<script type='text/javascript'>alert('$country');</script>";
     
     $zipcode = trim($_POST['zipcode']);
     $zipcode = strip_tags($zipcode);
     $zipcode = htmlspecialchars($zipcode);
+    //echo "<script type='text/javascript'>alert('$zipcode');</script>";
+    
+    $sports = trim($_POST['sports']);
+    $sports = strip_tags($sports);
+    $sports = htmlspecialchars($sports);
+    //echo "<script type='text/javascript'>alert('$sports');</script>";
+    
+    $userbio = trim($_POST['bio']);
+    $userbio = strip_tags($userbio);
+    $userbio = htmlspecialchars($userbio);
+    //echo "<script type='text/javascript'>alert('$userbio');</script>";
     
     $latitude = trim($_POST['latitude']);
     $latitude = strip_tags($latitude);
     $latitude = htmlspecialchars($latitude);
+    //echo "<script type='text/javascript'>alert('$latitude');</script>";
     
     $longitude = trim($_POST['longitude']);
     $longitude = strip_tags($longitude);
     $longitude = htmlspecialchars($longitude);
+    //echo "<script type='text/javascript'>alert('$longitude');</script>";
     
     //basic email validation
-   
     if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) 
     {
         $error = true;
-        $errTyp = "Error";
+        $errTyp = "danger";
         $message = "Please enter valid email address.";
+        echo "<script type='text/javascript'>alert('$message');</script>";
     } 
     else 
     {
         // check email exist or not
         $query = "SELECT userEmail FROM users WHERE userEmail='$email'";
+        //echo "<script type='text/javascript'>alert('$query');</script>";
         $result = $conn->query($query);
         $count = $result->num_rows;
+        //echo "<script type='text/javascript'>alert('$count');</script>";
         if($count==1)
         {
             $error = true;
-            $errTyp = "Error";
-            $message = "Email address already registered";
+            $errTyp = "danger";
+            $message = "Email address already registered.";
+            echo "<script type='text/javascript'>alert(conunt = '$message');</script>";
         }
     }
-   
-  
     
+    //echo "<script type='text/javascript'>alert(Error : '$error');</script>";
     // if there's no error, continue to signup
     if( !$error ) 
     {
+        //echo "<script type='text/javascript'>alert('inside last if...');</script>";
         // password encrypt using SHA256();
         $password = hash('sha256', $pass);
+        //echo "<script type='text/javascript'>alert('$password');</script>";
         
-        $query = "INSERT INTO users(userName,userEmail,userPass,userLastName,userGender,userDoB,userBio) 
-VALUES('$name','$email','$password','$lastname','$gender','$userDOB','$userbio')";
-        $query1 = "INSERT INTO user_address(userEmail,address1,address2,city,state,country,zipcode,latitude,longitude) 
-VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode','$latitude','$longitude')";
-        if ($conn->query($query) === TRUE && $conn->query($query1) === TRUE) 
+        $query = "INSERT INTO users(userName,userEmail,userPass,userLastName,userGender,userDoB,userBio) VALUES('$name','$email','$password','$lastname','$gender','$userDOB','$userbio')";
+        //echo "<script type='text/javascript'>alert(Query : '$query');</script>";
+        $query1 = "INSERT INTO user_address(userEmail,address1,address2,city,state,country,zipcode,latitude,longitude) VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode',$latitude,$longitude)";        
+        //echo "<script type='text/javascript'>alert(Query1 : '$query1');</script>";
+        
+        if($conn->query($query) === TRUE && $conn->query($query1) === TRUE) 
         {
-            $errTyp = "success";
-            $message = "Successfully registered, you may login now!";
-            unset($name);
-            unset($email);
-            unset($pass);
+            $arrSports = explode("|", $sports);
+            foreach ($arrSports as &$value)
+            {
+                if(!empty($value))
+                {
+                    //echo "<script type='text/javascript'>alert('$value');</script>";
+                    $query2 = "INSERT INTO user_sports(userEmail,sports_activity) VALUES('$email','$value')";
+                    if( $conn->query($query2) === FALSE )
+                    {
+                        $error = true;
+                        $errTyp = "danger";
+                        $message = "Something went wrong, try again later...";
+                        break;
+                    }
+                }
+            }
+            if( !$error )
+            {
+                $errTyp = "success";
+                $message = "Successfully registered, you may login now!";
+                unset($name);
+                unset($email);
+                unset($pass);
+            }
         } 
-        else 
+        else
         {
             $errTyp = "danger";
             $message = "Something went wrong, try again later...";
         }
         
+        //Delete inserted records if some error occurs...
+        if( $error )
+        {
+            $queryD2 = "DELETE FROM user_address WHERE userEmail='$email'";
+            $conn->query($queryD2);
+            $queryD3 = "DELETE FROM user_sports WHERE userEmail='$email'";            
+            $conn->query($queryD3);
+            $queryD1 = "DELETE FROM users WHERE userEmail='$email'";
+            $conn->query($queryD1);          
+        }
     }
 }
 ?>
@@ -144,8 +184,8 @@ VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode','
     function getLatLong()
     {
         //alert('getLatLong');
-        var vLat = '';
-        var vLong = '';
+        //var vLat = 0;
+        //var vLong = 0;
     	var vAddress1 = document.getElementById('address1').value.trim();
     	var vAddress2 = document.getElementById('address2').value.trim();
     	var vCity = document.getElementById('city').value.trim();
@@ -157,17 +197,24 @@ VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode','
     	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
     	{
             geocoder.geocode( { 'address': address}, function(results, status) {
-              if (status == 'OK') {
-            	  vLat=results[0].geometry.location.lat();
-        	  vLong=results[0].geometry.location.lng();
-        	   alert(vLat);
-        	   alert(vLong);
+              if (status == 'OK') 
+              {
+         		 //vLat = results[0].geometry.location.lat();
+         		 document.getElementById('latitude').value = results[0].geometry.location.lat();
+        	  	 //vLong = results[0].geometry.location.lng();
+        	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
+        	   	 //alert(vLat);
+        	   	 //alert( typeof vLat );
+        	   	 //alert( typeof vLat.toString() );
+        	   	 //alert(vLong);
               } 
             });
-
-            document.getElementById('latitude').value = vLat;
-        	document.getElementById('longitude').value = vLong;
     	}
+    	
+    	//document.getElementById('latitude').value = vLat;
+    	//document.getElementById('longitude').value = vLong;
+    	//alert(document.getElementById('latitude').value);
+    	//alert(document.getElementById('longitude').value);
     	//alert('before submit');
     	//document.getElementById('signup_form').submit();
     }
@@ -245,9 +292,8 @@ VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode','
                     {
                     ?>
                     	<div class="form-group">
-                        	<div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
+                        	<div id="message_div" class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
                     			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $message; ?>
-                    			
                         	</div>
                         </div>
                     <?php
@@ -290,7 +336,7 @@ VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode','
 						</tr>
 						<tr>
 							<td>Address Line 1 <span style="color:red">*</span></td>
-							<td><input id="address1" name="address1" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Street Address" /><input id="latitude" name="latitude" type="text" hidden=""/></td>
+							<td><input id="address1" name="address1" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Street Address" /><input id="latitude" name="latitude" type="number" step="any" hidden=""/></td>
 						</tr>
 						<tr>
 							<td>Address Line 2</td>
@@ -306,7 +352,7 @@ VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode','
 						</tr>
 						<tr>
 							<td>ZipCode <span style="color:red">*</span></td>
-							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="" /><input id="longitude" name="longitude" type="text" hidden=""/></td>
+							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="" /><input id="longitude" name="longitude" type="number" step="any" hidden=""/></td>
 						</tr>
 						<tr>
 							<td colspan="2">

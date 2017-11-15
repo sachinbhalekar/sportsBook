@@ -116,7 +116,7 @@ if( isset($_POST['login_btn']) )
                     {
                     ?>
                         <div class="form-group">
-                        	<div class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
+                        	<div id="message_div" class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
                     			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $message; ?>
                         	</div>
                         </div>               
