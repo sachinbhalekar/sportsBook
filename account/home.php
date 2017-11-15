@@ -23,7 +23,7 @@ $userRow=$res->fetch_assoc();
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 		<link rel="icon" href="../images/favicon.ico" type="image/ico" sizes="16x16" />
-		<title>SportsBook - <?php echo $userRow['userEmail']; ?></title>
+		<title>SportsBook - <?php echo $userRow['userName']; ?></title>
 		<link rel="stylesheet" type="text/css" href="../css/account.css">
 		<link href="https://fonts.googleapis.com/css?family=Zilla+Slab+Highlight" rel="stylesheet">
 	</head>
@@ -35,17 +35,14 @@ $userRow=$res->fetch_assoc();
 			<section id="header_nav_section">
 				<ul>
 					<li class="header_nav_list_item"><a href="../location/location.php" class="header_nav_list_item_a">Location</a></li>
+					<li class="header_nav_list_item"><a href="personalInfo.php" class="header_nav_list_item_a">My details</a></li>
 					<li class="header_nav_list_item"><a href="logout.php?logout" class="header_nav_list_item_a">Log out</a></li>
 					<li class="header_nav_list_item"><a href="_blnak" target="_blank" class="header_nav_list_item_a">About Us</a></li>
 				</ul>
 			</section>
 		</header>
 		<section id="body_main">
-			<section id="main_intro_section">
-				<h2>Join now and never play your favorite sports alone!</h2>
-			</section>
-			<hr>
-			<section id="main_login_section">
+			<section id="main_home_section">
 				
 			</section>
 		</section>
