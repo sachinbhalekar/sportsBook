@@ -112,6 +112,11 @@ input, textarea
 	width: 100%;
 }
 
+#a_loc
+{
+	text-decoration: underline;
+}
+
 #post_btn
 {
 	float: right !important;
