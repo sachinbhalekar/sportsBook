@@ -85,7 +85,7 @@ if( isset($_POST['login_btn']) )
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 		<link rel="icon" href="./images/favicon.ico" type="image/ico" sizes="16x16" />
 		<title>SportsBook</title>
-		<link rel="stylesheet" type="text/css" href="./css/login.css?Thursday 24th of April 2008 04:45:21 PM">
+		<link rel="stylesheet" type="text/css" href="./css/login.css">
 		<link href="https://fonts.googleapis.com/css?family=Zilla+Slab+Highlight" rel="stylesheet">
 	</head>
 	<body>

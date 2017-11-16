@@ -25,7 +25,7 @@ $userRow=$res->fetch_assoc();
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 		<link rel="icon" href="../images/favicon.ico" type="image/ico" sizes="16x16" />
 		<title>SportsBook - <?php echo $userRow['userName']; ?></title>
-		<link rel="stylesheet" type="text/css" href="../css/account.css?Thursday 24th of April 2008 04:45:21 PM">
+		<link rel="stylesheet" type="text/css" href="../css/account.css">
 		<link href="https://fonts.googleapis.com/css?family=Zilla+Slab+Highlight" rel="stylesheet">
 	</head>
 	<body>
@@ -44,6 +44,21 @@ $userRow=$res->fetch_assoc();
 		</header>
 		<section id="body_main">
 			<section id="main_home_section">
+				<section id="to_post_section">
+					<form id="home_form" name="home_form" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+						<fieldset>
+							<legend>Post to play</legend>
+							<section id="to_post_section_fields">
+    							<textarea id="to_post_info" name="to_post_info" maxlength="500" rows="3" placeholder="Write your post here..."></textarea>
+    							<br/>
+    							<a id="a_loc" href="_blank">Add Location</a>
+    							<br/>
+    							<input id="post_btn" name="post_btn" type="Submit" value="Post" />
+    						</section>
+						</fieldset>
+					</form>
+				</section>
+				<hr/>
 				
 			</section>
 		</section>
