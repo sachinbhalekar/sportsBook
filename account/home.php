@@ -25,7 +25,7 @@ $userRow=$res->fetch_assoc();
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
 		<link rel="icon" href="../images/favicon.ico" type="image/ico" sizes="16x16" />
 		<title>SportsBook - <?php echo $userRow['userName']; ?></title>
-		<link rel="stylesheet" type="text/css" href="../css/account.css">
+		<link rel="stylesheet" type="text/css" href="../css/account.css?Thursday 24th of April 2008 04:45:21 PM">
 		<link href="https://fonts.googleapis.com/css?family=Zilla+Slab+Highlight" rel="stylesheet">
 	</head>
 	<body>
