@@ -73,9 +73,9 @@ a.header_nav_list_item_a:hover, a.header_nav_list_item_a:active
 .main_hr
 {
 	color: white;
-	/*width: 90%;*/
 	padding-bottom: 10px;
 	padding-top: 10px;
+	border-top: 3px solid white;
 }
 
 .sub_hr
@@ -84,6 +84,7 @@ a.header_nav_list_item_a:hover, a.header_nav_list_item_a:active
 	width: 90%;
 	padding-bottom: 5px;
 	padding-top: 5px;
+	border-style: dashed;
 }
 
 legend
@@ -147,8 +148,9 @@ input, textarea
 	width: 80%;
 }
 
-#all_post_section_fields text
+#all_post_section_fields textarea
 {
+	float: left;
 	width: 50%;
 }
 
@@ -156,13 +158,12 @@ input, textarea
 {
 	width: 40%;
     border: white 2px solid;
-    float: right;
+    margin-left: 10px;
 }
 
-#all_post_section_fields all_post_info
+#all_post_section_fields input
 {
-	width: 40%;
-    float: left;
+	margin: 5px;
 }
 
 footer

@@ -65,8 +65,11 @@ $userRow=$res->fetch_assoc();
 						<section id="all_post_section_fields">
 							<textarea id="all_post_info" name="all_post_info" maxlength="500" rows="10" placeholder=""></textarea>
 							<img id="all_post_img_loc" src="../images/location_icon.png" alt="location" />
-							<hr class="sub_hr">
+							<span>Interested : 0</span>
+							<br/>
+							<input id="interested_btn" name="interested_btn" type="button" value="I'm interested" />
 						</section>
+						<hr class="sub_hr">
 					</fieldset>
 				</section>
 			</section>
