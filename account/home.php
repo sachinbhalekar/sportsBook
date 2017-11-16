@@ -51,15 +51,24 @@ $userRow=$res->fetch_assoc();
 							<section id="to_post_section_fields">
     							<textarea id="to_post_info" name="to_post_info" maxlength="500" rows="3" placeholder="Write your post here..."></textarea>
     							<br/>
-    							<img src="../images/location_icon.png" alt="" style="width: 20px"/>&nbsp;<a id="a_loc" href="_blank">Add Location</a>
+    							<img id="img_loc" src="../images/location_icon.png" alt="" />&nbsp;<a id="a_loc" href="_blank">Add Location</a>
     							<br/>
     							<input id="post_btn" name="post_btn" type="Submit" value="Post" />
     						</section>
 						</fieldset>
 					</form>
 				</section>
-				<hr/>
-				
+				<hr class="main_hr"/>
+				<section id="all_post_section">
+					<fieldset>
+						<legend>Nearby Activities</legend>
+						<section id="all_post_section_fields">
+							<textarea id="all_post_info" name="all_post_info" maxlength="500" rows="10" placeholder=""></textarea>
+							<img id="all_post_img_loc" src="../images/location_icon.png" alt="location" />
+							<hr class="sub_hr">
+						</section>
+					</fieldset>
+				</section>
 			</section>
 		</section>
 		<footer>

@@ -70,12 +70,20 @@ a.header_nav_list_item_a:hover, a.header_nav_list_item_a:active
 	background-blend-mode:lighten;
 }
 
-hr
+.main_hr
 {
 	color: white;
 	/*width: 90%;*/
 	padding-bottom: 10px;
 	padding-top: 10px;
+}
+
+.sub_hr
+{
+	color: white;
+	width: 90%;
+	padding-bottom: 5px;
+	padding-top: 5px;
 }
 
 legend
@@ -112,6 +120,11 @@ input, textarea
 	width: 100%;
 }
 
+#img_loc
+{
+	width: 20px !important;
+}
+
 #a_loc
 {
 	text-decoration: underline;
@@ -120,6 +133,36 @@ input, textarea
 #post_btn
 {
 	float: right !important;
+}
+
+#all_post_section_fields
+{
+	margin: 10px;
+	width: 60%;
+}
+
+#all_post_section_fields
+{
+	margin: 10px;
+	width: 80%;
+}
+
+#all_post_section_fields text
+{
+	width: 50%;
+}
+
+#all_post_section_fields img
+{
+	width: 40%;
+    border: white 2px solid;
+    float: right;
+}
+
+#all_post_section_fields all_post_info
+{
+	width: 40%;
+    float: left;
 }
 
 footer
