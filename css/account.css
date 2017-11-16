@@ -161,7 +161,7 @@ input, textarea
     margin-left: 10px;
 }
 
-#all_post_section_fields input
+#all_post_section_fields input, span
 {
 	margin: 5px;
 }
