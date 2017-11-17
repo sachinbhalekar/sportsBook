@@ -129,6 +129,11 @@ input
 	/*width: -webkit-fill-available;*/
 }
 
+.button
+{
+	font-weight: bold;
+}
+
 footer
 {
 	color: black;

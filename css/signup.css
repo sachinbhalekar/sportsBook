@@ -140,6 +140,11 @@ input, textarea
 	padding-left: 20px;
 }
 
+.button
+{
+	font-weight: bold;
+}
+
 footer
 {
 	color: black;

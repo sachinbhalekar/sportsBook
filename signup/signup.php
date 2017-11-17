@@ -370,7 +370,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 							<td><textarea id="bio" name="bio" maxlength="500" rows="3" placeholder="Write somthing about you to let the people know."></textarea></td>
 						</tr>
 						<tr>
-							<td colspan="2" class="td_center"><input id="signup_btn" name="signup_btn" class="input_regular" type="submit" value="Create Account"/></td>
+							<td colspan="2" class="td_center"><input id="signup_btn" name="signup_btn" class="input_regular button" type="submit" value="Create Account"/></td>
 						</tr>
 					</table>
 				</form>

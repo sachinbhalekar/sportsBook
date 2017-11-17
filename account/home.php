@@ -53,7 +53,7 @@ $userRow=$res->fetch_assoc();
     							<br/>
     							<img id="img_loc" src="../images/location_icon.png" alt="" />&nbsp;<a id="a_loc" href="_blank">Add Location</a>
     							<br/>
-    							<input id="post_btn" name="post_btn" type="Submit" value="Post" />
+    							<input id="post_btn" class="button" name="post_btn" type="Submit" value="Post" />
     						</section>
 						</fieldset>
 					</form>
@@ -63,17 +63,31 @@ $userRow=$res->fetch_assoc();
 					<fieldset>
 						<legend>Nearby Activities</legend>
 						<section id="all_post_section_fields">
-							<textarea id="all_post_info" name="all_post_info" maxlength="500" rows="10" placeholder=""></textarea>
+							<textarea id="all_post_info" name="all_post_info" maxlength="500" rows="10" placeholder="" readonly></textarea>
 							<img id="all_post_img_loc" src="../images/location_icon.png" alt="location" />
 							<br/>
 							<span>Interested : 0</span>
 							<br/>
-							<input id="interested_btn" name="interested_btn" type="button" value="I'm interested" />
+							<input id="interested_btn" class="button" name="interested_btn" type="button" value="I'm interested" />
 						</section>
 						<hr class="sub_hr">
 					</fieldset>
 				</section>
 			</section>
+			<div id="div_seperator"></div>
+			<aside>
+				<fieldset id="event_fieldset">
+					<legend>Events</legend>
+					<section id="events_section_fields">
+						<a id="" href="_blank">
+							<img id="events_img" src="../images/location_icon.png" alt="location" />
+							<br/>
+							<span>Click here</span>
+						</a>
+					</section>
+					<hr class="sub_hr">
+				</fieldset>
+			</aside>
 		</section>
 		<footer>
 			<p>&copy; SportsBook</p>

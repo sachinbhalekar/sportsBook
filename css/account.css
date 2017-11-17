@@ -68,6 +68,8 @@ a.header_nav_list_item_a:hover, a.header_nav_list_item_a:active
 	background-size: 100% 100%;
 	padding: 20px;
 	background-blend-mode:lighten;
+	float: left;
+	width: 100%;
 }
 
 .main_hr
@@ -100,6 +102,7 @@ section
 #main_home_section
 {
 	width: 70%;
+	float: left;
 }
 
 input, textarea
@@ -164,6 +167,37 @@ input, textarea
 #all_post_section_fields input, span
 {
 	margin: 5px;
+}
+
+#div_seperator
+{
+	border-right: 4px solid white;
+    height: -webkit-fill-available;
+    width: 0px;
+    float: left;
+}
+
+.button
+{
+	font-weight: bold;
+}
+
+aside
+{
+	float: right;
+    width: 28%;
+}
+
+#event_fieldset
+{
+    /*padding-left: 10px;*/
+}
+
+#events_img
+{
+	border: 1px solid white;
+	width: 90%;
+    margin: 10px;
 }
 
 footer

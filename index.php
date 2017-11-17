@@ -136,7 +136,7 @@ if( isset($_POST['login_btn']) )
 							<td><input id="password" name="password" type="password" required/></td>
 						</tr>
 						<tr>
-							<td colspan="2" class="td_center"><input id="login_btn" type="submit" name="login_btn" value="Login"/></td>
+							<td colspan="2" class="td_center button"><input id="login_btn" type="submit" name="login_btn" value="Login"/></td>
 						</tr>
 						<tr>
 							<td colspan="2" class="td_center">Not a member yet? <a href="./signup/signup.php">Sign Up</a></td>
