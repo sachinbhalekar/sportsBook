@@ -89,66 +89,75 @@ if( isset($_POST['login_btn']) )
 		<link href="https://fonts.googleapis.com/css?family=Zilla+Slab+Highlight" rel="stylesheet">
 	</head>
 	<body>
-		<header id="body_header">
-			<section id="header_title">
-				<h1><a href="index.php" class="a_header">SportsBook</a></h1>
-			</section>
-			<!-- 
-			<section id="header_logo">
-				<img id="sportsLogo" src="./images/sports14.jpg" alt="All Sports" />
-			</section>
-			 -->
-			<section id="header_nav_section">
-				<ul>
-					<li class="header_nav_list_item"><a href="#main_login_section" class="header_nav_list_item_a">Login</a></li>
-					<li class="header_nav_list_item"><a href="./signup/signup.php" class="header_nav_list_item_a">Sign Up</a></li>
-					<li class="header_nav_list_item"><a href="_blnak" target="_blank" class="header_nav_list_item_a">About Us</a></li>
-				</ul>
-			</section>
-		</header>
-		<section id="body_main">
-			<section id="main_intro_section">
-				<h2>Join now and never play your favorite sports alone!</h2>
-			</section>
-			<hr>
-			<section id="main_login_section">
-				<form id="login_form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
-					<?php
+    	<header>
+    		<nav class="navbar navbar-inverse navbar-fixed-top">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="index.php">SportsBook</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li><a href="#">About Us</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="./signup/signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                  <li><a href="#main_login_section"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+              </div>
+            </nav>
+    	</header>
+        <div class="container">
+    		<section id="main_intro_section">
+    			<h2>Join now and never play your favorite sports alone!</h2>
+    		</section>
+    		<hr>
+    		<section id="main_login_section">
+    			<form id="login_form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+    				<?php
                     if ( isset($message) ) 
                     {
                     ?>
                         <div class="form-group">
                         	<div id="message_div" class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
                     			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $message; ?>
-                    			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $query; ?>
                         	</div>
                         </div>               
                     <?php
                     }
                     ?>
-					<table id="login_table">
-						<tr>
-							<td>Username</td>
-							<td><input id="username" name="username" type="text" placeholder="Username/Email-ID" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required value="<?php echo $email; ?>"/></td>
-						</tr>
-						<tr>
-							<td>Password</td>
-							<td><input id="password" name="password" type="password" required/></td>
-						</tr>
-						<tr>
-							<td colspan="2" class="td_center button"><input id="login_btn" type="submit" name="login_btn" value="Login"/></td>
-						</tr>
-						<tr>
-							<td colspan="2" class="td_center">Not a member yet? <a href="./signup/signup.php">Sign Up</a></td>
-						</tr>
-					</table>
-					
-				</form>
-			</section>
-		</section>
-		<footer>
-			<p>&copy; SportsBook</p>
-		</footer>
+    				<table id="login_table">
+    					<tr>
+    						<td>
+    							<div class="input-group">
+    								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+    								<input id="username" name="username" class="form-control" type="text" placeholder="Username/Email-ID" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required />
+    							</div>
+    						</td>
+    					</tr>
+    					<tr>
+    						<td>
+    							<div class="input-group">
+    								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+    								<input id="password" name="password" class="form-control" type="password" placeholder="Password" required/>
+    							</div>
+    						</td>
+    					</tr>
+    					<tr>
+    						<td class="td_center">
+    							<input id="login_btn" name="login_btn" class="btn btn-primary" type="submit" value="Login">
+    						</td>
+    					</tr>
+    					<tr>
+    						<td class="td_center">
+    							<div class="well well-sm">Not a member yet? <a href="./signup/signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></div>
+    						</td>
+    					</tr>
+    				</table>
+    			</form>
+    		</section>
+        </div>
+    	<footer>
+    		<p>&copy; SportsBook</p>
+    	</footer>
 	</body>
 </html>
 <?php ob_end_flush(); ?>

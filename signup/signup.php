@@ -267,25 +267,28 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 		<link href="https://fonts.googleapis.com/css?family=Zilla+Slab+Highlight" rel="stylesheet">
 	</head>
 	<body>
-		<header id="body_header">
-			<section id="header_title">
-				<h1><a href="../index.php" class="a_header">SportsBook</a></h1>
-			</section>
-			<section id="header_nav_section">
-				<ul>
-					<li class="header_nav_list_item"><a href="../index.php" class="header_nav_list_item_a">Login</a></li>
-					<li class="header_nav_list_item"><a href="#main_signup_section" class="header_nav_list_item_a">Sign Up</a></li>
-					<li class="header_nav_list_item"><a href="_blnak" target="_blank" class="header_nav_list_item_a">About Us</a></li>
-				</ul>
-			</section>
+		<header>
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="../index.php">SportsBook</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li><a href="#">About Us</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="#main_signup_section"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                  <li><a href="../index.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                </ul>
+              </div>
+            </nav>
 		</header>
-		<section id="body_main">
+    	<div class="container">
 			<section id="main_intro_section">
 				<h2>Join now and never play your favorite sports alone!</h2>
 			</section>
 			<hr>
 			<section id="main_signup_section">
-				<!-- <form id="signup_form" name="signup_form" method="post" action="<?php //echo htmlspecialchars($_SERVER['PHP_SELF']);?>">  -->
 				<form id="signup_form" name="signup_form" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
 					<?php
                     if ( isset($message) ) 
@@ -302,80 +305,82 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 					<table id="login_table">
 						<tr>
 							<td>First Name <span style="color:red">*</span></td>
-							<td><input id="firstname" name="firstname" type="text" maxlength="50" required value="<?php echo $name ?>" /></td>
+							<td><input id="firstname" name="firstname" class="form-control" type="text" maxlength="50" required placeholder="Enter First Name" value="<?php echo $name ?>" /></td>
 						</tr>
 						<tr>
 							<td>Last Name</td>
-							<td><input id="lastname" name="lastname" type="text" maxlength="50" /></td>
+							<td><input id="lastname" name="lastname" class="form-control" type="text" maxlength="50" placeholder="Enter Last Name" /></td>
 						</tr>
 						<tr>
 							<td>Date of Birth <span style="color:red">*</span></td>
-							<td><input id="dob" name="dob" type="date" required /></td>
+							<td><input id="dob" name="dob" class="form-control datepicker" data-date-format="mm/dd/yyyy" type="date" required /></td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<p>Gender <span style="color:red">*</span></p>
-								<ul>
-									<li class="list_item_regular"><input id="male" name="genderR" type="radio" class="gender_radio" onclick="setGender()"/><label for="male">&nbsp;Male</label></li>
-									<li class="list_item_regular"><input id="female" name="genderR" type="radio" class="gender_radio" onclick="setGender()"/><label for="female">&nbsp;Female</label></li>
-								</ul>
+							<td>Gender <span style="color:red">*</span></td>
+							<td>
+								<label class="radio-inline"><input id="male" name="genderR" type="radio" class="gender_radio" onclick="setGender()"/>Male</label>
+								<label class="radio-inline"><input id="female" name="genderR" type="radio" class="gender_radio" onclick="setGender()"/>Female</label>	
 								<input id="gender" name="gender" type="text" hidden="">
 							</td>
 						</tr>
 						<tr>
 							<td>E-mail <span style="color:red">*</span></td>
-							<td><input id="username" name="username" type="text" maxlength="50" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Set your username" value="<?php echo $email ?>" /></td>
+							<td><input id="username" name="username" class="form-control" type="text" maxlength="50" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Set your username" value="<?php echo $email ?>" /></td>
 						</tr>
 						<tr>
 							<td>Set Password <span style="color:red">*</span></td>
-							<td><input id="password" name="password" type="password" required placeholder="Set your password" /></td>
+							<td><input id="password" name="password" class="form-control" type="password" required placeholder="Set your password" /></td>
 						</tr>
 						<tr>
 							<td>Confirm Password <span style="color:red">*</span></td>
-							<td><input id="password1" name="password1" type="password" required placeholder="Confirm your password" /></td>
+							<td><input id="password1" name="password1" class="form-control" type="password" required placeholder="Confirm your password" /></td>
 						</tr>
 						<tr>
 							<td>Address Line 1 <span style="color:red">*</span></td>
-							<td><input id="address1" name="address1" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Street Address" /><input id="latitude" name="latitude" type="number" step="any" hidden=""/></td>
+							<td><input id="address1" name="address1" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Street Address" /><input id="latitude" name="latitude" type="number" step="any" hidden=""/></td>
 						</tr>
 						<tr>
 							<td>Address Line 2</td>
-							<td><input id="address2" name="address2" type="text" maxlength="50" onblur="getLatLong();" placeholder="Apt/Unit"/></td>
+							<td><input id="address2" name="address2" class="form-control" type="text" maxlength="50" onblur="getLatLong();" placeholder="Enter Apt/Unit"/></td>
 						</tr>
 						<tr>
 							<td>City <span style="color:red">*</span></td>
-							<td><input id="city" name="city" type="text" maxlength="50" onblur="getLatLong();" required placeholder="" /></td>
+							<td><input id="city" name="city" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter City" /></td>
 						</tr>
 						<tr>
 							<td>State <span style="color:red">*</span></td>
-							<td><input id="state" name="state" type="text" maxlength="50" onblur="getLatLong();" required placeholder="" /></td>
+							<td><input id="state" name="state" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter State" /></td>
 						</tr>
 						<tr>
 							<td>ZipCode <span style="color:red">*</span></td>
-							<td><input id="zipcode" name="zipcode" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="" /><input id="longitude" name="longitude" type="number" step="any" hidden=""/></td>
+							<td><input id="zipcode" name="zipcode" class="form-control" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="Enter ZipCode" /><input id="longitude" name="longitude" type="number" step="any" hidden=""/></td>
 						</tr>
 						<tr>
-							<td colspan="2">
-								<p>Sports Interested <span style="color:red">*</span></p>
-								<ul>
-									<li class="list_item_regular"><input id="football" name="football" type="checkbox" class="sports_checkbox" onclick="setSports()"/><label for="football">&nbsp;Football</label></li>
-									<li class="list_item_regular"><input id="tennis" name="tennis" type="checkbox" class="sports_checkbox" onclick="setSports()"/><label for="tennis">&nbsp;Tennis</label></li>
-									<li class="list_item_regular"><input id="cricket" name="cricket" type="checkbox" class="sports_checkbox" onclick="setSports()"/><label for="cricket">&nbsp;Cricket</label></li>
-								</ul>
+							<td>Sports Interested <span style="color:red">*</span></td>
+							<td>
+								<div class="checkbox">
+									<label><input id="football" name="football" class="checkbox" type="checkbox" onclick="setSports()"/>Football</label>
+								</div>
+								<div class="checkbox">
+									<label><input id="tennis" name="tennis" class="checkbox" type="checkbox" onclick="setSports()"/>Tennis</label>
+								</div>
+								<div class="checkbox">
+									<label><input id="cricket" name="cricket" class="checkbox" type="checkbox" onclick="setSports()"/>Cricket</label>
+								</div>
 								<input id="sports" name="sports" type="text" hidden=""/>
 							</td>
 						</tr>
 						<tr>
 							<td>Bio</td>
-							<td><textarea id="bio" name="bio" maxlength="500" rows="3" placeholder="Write somthing about you to let the people know."></textarea></td>
+							<td><textarea id="bio" name="bio" class="form-control" maxlength="500" rows="4" placeholder="Write somthing about you to let the people know."></textarea></td>
 						</tr>
 						<tr>
-							<td colspan="2" class="td_center"><input id="signup_btn" name="signup_btn" class="input_regular button" type="submit" value="Create Account"/></td>
+							<td colspan="2" class="td_center"><input id="signup_btn" name="signup_btn" class="btn btn-primary" type="submit" value="Create Account"/></td>
 						</tr>
 					</table>
 				</form>
 			</section>
-		</section>
+		</div>
 		<footer>
 			<p>&copy; SportsBook</p>
 		</footer>

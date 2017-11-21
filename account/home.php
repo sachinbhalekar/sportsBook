@@ -29,7 +29,28 @@ $userRow=$res->fetch_assoc();
 		<link href="https://fonts.googleapis.com/css?family=Zilla+Slab+Highlight" rel="stylesheet">
 	</head>
 	<body>
-		<header id="body_header">
+		<header>
+			<nav class="navbar navbar-inverse navbar-fixed-top">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="../index.php">SportsBook</a>
+                </div>
+                <ul class="nav navbar-nav">
+                  <li class="active"><a href="home.php">Home</a></li>
+                  <li><a href="../location/location.php">Location</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <li><a href="personalInfo.php">My details</a></li>
+                      <li><a href="logout.php?logout">Log out</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+            </nav>
+			
+			<!-- 
 			<section id="header_title">
 				<h1><a href="../index.php" class="a_header">SportsBook</a></h1>
 			</section>
@@ -41,8 +62,9 @@ $userRow=$res->fetch_assoc();
 					<li class="header_nav_list_item"><a href="_blnak" target="_blank" class="header_nav_list_item_a">About Us</a></li>
 				</ul>
 			</section>
+			 -->
 		</header>
-		<section id="body_main">
+		<div class="container">
 			<section id="main_home_section">
 				<section id="to_post_section">
 					<form id="home_form" name="home_form" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
@@ -88,7 +110,7 @@ $userRow=$res->fetch_assoc();
 					<hr class="sub_hr">
 				</fieldset>
 			</aside>
-		</section>
+		</div>
 		<footer>
 			<p>&copy; SportsBook</p>
 		</footer>
