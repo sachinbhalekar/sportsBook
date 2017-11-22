@@ -1,5 +1,6 @@
 <?php 
 require_once '../connection/dbconnect.php';
+
 function distance($lat1, $lon1, $lat2, $lon2, $unit) {
     
     $theta = $lon1 - $lon2;
@@ -39,15 +40,16 @@ function fetchActivities($lat,$lng,$range)
     $res=$conn->query($query);
     
     $count = $res->num_rows; // if uname/pass correct it returns must be 1 row
-    echo '<script type="text/javascript"> alert(\'Hi\'); </script>';
+   // echo '<script type="text/javascript"> alert(\'Hi\'); </script>';
     if($count > 0 )
     {
         while( $row=$res->fetch_assoc())
         {
             
                 //$errTyp = "success";
-            $tempLat=$row['lng'];
-            $s="<script type='text/javascript'>alert('$tempLat');</script>";
+            $tempLat=$row['lat'];
+            $tempLng=$row['lng'];
+            $s="plot_markers('$tempLat','$tempLng');";
             echo $s;
              //   $_SESSION['user'] = $row['userEmail'];
                 //header("Location: ./account/home.php");

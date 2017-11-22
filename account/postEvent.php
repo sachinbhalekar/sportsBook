@@ -98,7 +98,7 @@ $userRow=$res->fetch_assoc();
                 </div>
                 <ul class="nav navbar-nav">
                   <li><a href="home.php">Home</a></li>
-                  <li><a href="postEvent.php">Post an Event</a></li>
+                  <li><a href="postActivity.php">Post an Activity</a></li>
                   <li class="active"><a href="postEvent.php">Post an Event</a></li>
                   <li><a href="../location/location.php">Location</a></li>
                 </ul>
