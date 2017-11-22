@@ -271,7 +271,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 			<nav class="navbar navbar-inverse navbar-fixed-top">
               <div class="container-fluid">
                 <div class="navbar-header">
-                  <a class="navbar-brand" href="../index.php">SportsBook</a>
+                  <a class="navbar-brand" href="../index.php"><i><strong>SportsBook</strong></i></a>
                 </div>
                 <ul class="nav navbar-nav">
                   <li><a href="#">About Us</a></li>
@@ -283,9 +283,9 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
               </div>
             </nav>
 		</header>
-    	<div class="container">
+    	<div class="container text-center">
 			<section id="main_intro_section">
-				<h2>Join now and never play your favorite sports alone!</h2>
+				<h1>Join now and never play your favorite sports alone!</h1>
 			</section>
 			<hr>
 			<section id="main_signup_section">
@@ -302,7 +302,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
                     <?php
                     }
                     ?>
-					<table id="login_table">
+					<table id="login_table" class="text-left">
 						<tr>
 							<td>First Name <span style="color:red">*</span></td>
 							<td><input id="firstname" name="firstname" class="form-control" type="text" maxlength="50" required placeholder="Enter First Name" value="<?php echo $name ?>" /></td>
@@ -374,14 +374,14 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 							<td>Bio</td>
 							<td><textarea id="bio" name="bio" class="form-control" maxlength="500" rows="4" placeholder="Write somthing about you to let the people know."></textarea></td>
 						</tr>
-						<tr>
-							<td colspan="2" class="td_center"><input id="signup_btn" name="signup_btn" class="btn btn-primary" type="submit" value="Create Account"/></td>
-						</tr>
 					</table>
+					<br/>
+					<input id="signup_btn" name="signup_btn" class="btn btn-primary" type="submit" value="Create Account"/>
 				</form>
+				<br/>
 			</section>
 		</div>
-		<footer>
+		<footer class="container-fluid text-center">
 			<p>&copy; SportsBook</p>
 		</footer>
 	</body>
