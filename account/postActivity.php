@@ -100,7 +100,7 @@ $userRow=$res->fetch_assoc();
                   <li><a href="home.php">Home</a></li>
                   <li class="active"><a href="postActivity.php">Post an Activity</a></li>
                   <li><a href="postEvent.php">Post an Event</a></li>
-                  <li><a href="../location/location.php">Location</a></li>
+                
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Profile <span class="caret"></span></a>

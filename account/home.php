@@ -39,7 +39,7 @@ $userRow=$res->fetch_assoc();
                   <li class="active"><a href="home.php">Home</a></li>
                   <li><a href="postActivity.php">Post an Activity</a></li>
                   <li><a href="postEvent.php">Post an Event</a></li>
-                  <li><a href="../location/location.php">Location</a></li>
+                
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Profile <span class="caret"></span></a>
@@ -61,32 +61,38 @@ $userRow=$res->fetch_assoc();
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
           					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          					  <li><a href="../location/location.php">View Location</a></li>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
           					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          						  <li><a href="../location/location.php">View Location</a></li>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
           					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          						  <li><a href="../location/location.php">View Location</a></li>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
           					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          						  <li><a href="../location/location.php">View Location</a></li>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
           					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          						  <li><a href="../location/location.php">View Location</a></li>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
           					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          						  <li><a href="../location/location.php">View Location</a></li>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				

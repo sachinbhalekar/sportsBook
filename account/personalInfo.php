@@ -35,7 +35,7 @@ $userRow=$res->fetch_assoc();
 			</section>
 			<section id="header_nav_section">
 				<ul>
-					<li class="header_nav_list_item"><a href="../location/location.php" class="header_nav_list_item_a">Location</a></li>
+					
 					<li class="header_nav_list_item"><a href="personalInfo.php" class="header_nav_list_item_a">My details</a></li>
 					<li class="header_nav_list_item"><a href="logout.php?logout" class="header_nav_list_item_a">Log out</a></li>
 					<li class="header_nav_list_item"><a href="_blnak" target="_blank" class="header_nav_list_item_a">About Us</a></li>
