@@ -1,3 +1,12 @@
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) 
+{
+	.container
+	{
+		margin-top:200px;
+	} 
+}
+
 body
 {
 	color: black;
@@ -12,30 +21,6 @@ body
 	background-size: 100% 100%;
 }
 
-#message_div
-{
-	text-align: center;
-}
-
-hr
-{
-	color: white;
-	width: 90%;
-	padding-bottom: 5px;
-	padding-top: 5px;
-}
-
-section
-{
-	padding: 10px;
-}
-
-#main_intro_section h2
-{
-	text-align: center;
-	font-size: xx-large;
-}
-
 #login_table
 {
 	margin: auto;
@@ -48,20 +33,9 @@ section
 	padding: 5px !important;
 }
 
-.td_center
+footer 
 {
-	text-align: center;
-}
-
-#signup_btn
-{
-	width: auto !important;
-}
-
-footer
-{
-	color: white;
-	text-align: center;
-	font-size: small;
-	margin: 5px;
+    background-color: #555;
+    color: white;
+    padding: 15px;
 }

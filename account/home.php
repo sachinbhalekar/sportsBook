@@ -33,85 +33,87 @@ $userRow=$res->fetch_assoc();
 			<nav class="navbar navbar-inverse navbar-fixed-top">
               <div class="container-fluid">
                 <div class="navbar-header">
-                  <a class="navbar-brand" href="../index.php">SportsBook</a>
+                  <a class="navbar-brand" href="../index.php"><i><strong>SportsBook</strong></i></a>
                 </div>
                 <ul class="nav navbar-nav">
                   <li class="active"><a href="home.php">Home</a></li>
+                  <li><a href="#">Post an Activity</a></li>
+                  <li><a href="#">Post an Event</a></li>
                   <li><a href="../location/location.php">Location</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Profile <span class="caret"></span></a>
+                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Profile <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="personalInfo.php">My details</a></li>
-                      <li><a href="logout.php?logout">Log out</a></li>
+                      <li><a href="personalInfo.php">My Profile</a></li>
+                      <li><a href="logout.php?logout">Sign Out</a></li>
                     </ul>
                   </li>
                 </ul>
               </div>
             </nav>
-			
-			<!-- 
-			<section id="header_title">
-				<h1><a href="../index.php" class="a_header">SportsBook</a></h1>
-			</section>
-			<section id="header_nav_section">
-				<ul>
-					<li class="header_nav_list_item"><a href="../location/location.php" class="header_nav_list_item_a">Location</a></li>
-					<li class="header_nav_list_item"><a href="personalInfo.php" class="header_nav_list_item_a">My details</a></li>
-					<li class="header_nav_list_item"><a href="logout.php?logout" class="header_nav_list_item_a">Log out</a></li>
-					<li class="header_nav_list_item"><a href="_blnak" target="_blank" class="header_nav_list_item_a">About Us</a></li>
-				</ul>
-			</section>
-			 -->
 		</header>
 		<div class="container">
-			<section id="main_home_section">
-				<section id="to_post_section">
-					<form id="home_form" name="home_form" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
-						<fieldset>
-							<legend>Post to play</legend>
-							<section id="to_post_section_fields">
-    							<textarea id="to_post_info" name="to_post_info" maxlength="500" rows="3" placeholder="Write your post here..."></textarea>
-    							<br/>
-    							<img id="img_loc" src="../images/location_icon.png" alt="" />&nbsp;<a id="a_loc" href="_blank">Add Location</a>
-    							<br/>
-    							<input id="post_btn" class="button" name="post_btn" type="Submit" value="Post" />
-    						</section>
-						</fieldset>
-					</form>
-				</section>
-				<hr class="main_hr"/>
-				<section id="all_post_section">
-					<fieldset>
-						<legend>Nearby Activities</legend>
-						<section id="all_post_section_fields">
-							<textarea id="all_post_info" name="all_post_info" maxlength="500" rows="10" placeholder="" readonly></textarea>
-							<img id="all_post_img_loc" src="../images/location_icon.png" alt="location" />
-							<br/>
-							<span>Interested : 0</span>
-							<br/>
-							<input id="interested_btn" class="button" name="interested_btn" type="button" value="I'm interested" />
-						</section>
-						<hr class="sub_hr">
-					</fieldset>
-				</section>
-			</section>
-			<div id="div_seperator"></div>
-			<aside>
-				<fieldset id="event_fieldset">
-					<legend>Events</legend>
-					<section id="events_section_fields">
-						<a id="" href="_blank">
-							<img id="events_img" src="../images/location_icon.png" alt="location" />
-							<br/>
-							<span>Click here</span>
-						</a>
-					</section>
-					<hr class="sub_hr">
-				</fieldset>
-			</aside>
+			<div class="row">
+        		<div class="col-sm-8 text-left"> 
+        			<h1>Nearby Activities</h1>
+        			<hr>
+        			<div class="col-sm-11">
+          				<div class="well activity_post">
+          					<p id="all_post_info" >Come lets play!!</p>
+          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+          				</div>
+          				
+          				<div class="well activity_post">
+          					<p id="all_post_info" >Come lets play!!</p>
+          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+          				</div>
+          				<div class="well activity_post">
+          					<p id="all_post_info" >Come lets play!!</p>
+          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+          				</div>
+          				<div class="well activity_post">
+          					<p id="all_post_info" >Come lets play!!</p>
+          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+          				</div>
+          				<div class="well activity_post">
+          					<p id="all_post_info" >Come lets play!!</p>
+          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+          				</div>
+          				<div class="well activity_post">
+          					<p id="all_post_info" >Come lets play!!</p>
+          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+          					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+          				</div>
+          				
+          			</div>
+        		</div>
+ 				
+ 				<div class="col-sm-4 sidenav text-center">
+ 					<h1>Events</h1>
+ 					<hr>
+ 					<div class="thumbnail event_post">
+                    	<p><strong>Event 100:</strong></p>
+                        <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300">
+                        <p>Fri. 27 November 2015</p>
+                        <button class="btn btn-info"><span class="glyphicon glyphicon-info-sign"></span> Info</button>
+                    </div>
+                    
+                    <div class="thumbnail event_post">
+                    	<p><strong>Event 101:</strong></p>
+                        <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300">
+                        <p>Fri. 27 November 2015</p>
+                        <button class="btn btn-info"><span class="glyphicon glyphicon-info-sign"></span> Info</button>
+                    </div>
+                    
+ 				</div>
+			</div>
 		</div>
-		<footer>
+		<footer class="container-fluid text-center">
 			<p>&copy; SportsBook</p>
 		</footer>
 	</body>

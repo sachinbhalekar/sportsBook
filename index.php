@@ -93,7 +93,7 @@ if( isset($_POST['login_btn']) )
     		<nav class="navbar navbar-inverse navbar-fixed-top">
               <div class="container-fluid">
                 <div class="navbar-header">
-                  <a class="navbar-brand" href="index.php">SportsBook</a>
+                  <a class="navbar-brand" href="index.php"><i><strong>SportsBook</strong></i></a>
                 </div>
                 <ul class="nav navbar-nav">
                   <li><a href="#">About Us</a></li>
@@ -105,9 +105,9 @@ if( isset($_POST['login_btn']) )
               </div>
             </nav>
     	</header>
-        <div class="container">
+        <div class="container text-center">
     		<section id="main_intro_section">
-    			<h2>Join now and never play your favorite sports alone!</h2>
+    			<h1>Join now and never play your favorite sports alone!</h1>
     		</section>
     		<hr>
     		<section id="main_login_section">
@@ -124,7 +124,7 @@ if( isset($_POST['login_btn']) )
                     <?php
                     }
                     ?>
-    				<table id="login_table">
+                   <table id="login_table">
     					<tr>
     						<td>
     							<div class="input-group">
@@ -148,14 +148,14 @@ if( isset($_POST['login_btn']) )
     					</tr>
     					<tr>
     						<td class="td_center">
-    							<div class="well well-sm">Not a member yet? <a href="./signup/signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></div>
+    							<div class="well well-sm"><p class="font_black">Not a member yet? </p><a href="./signup/signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></div>
     						</td>
     					</tr>
     				</table>
     			</form>
     		</section>
         </div>
-    	<footer>
+    	<footer class="container-fluid text-center">
     		<p>&copy; SportsBook</p>
     	</footer>
 	</body>
