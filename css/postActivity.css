@@ -1,3 +1,12 @@
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) 
+{
+	.container
+	{
+		margin-top:200px;
+	} 
+}
+
 body
 {
 	color: black;
@@ -6,15 +15,19 @@ body
 
 .container
 {
-	color: white;
 	margin-top:50px;
 	background: black url("../images/bg1.png") no-repeat fixed center;
 	background-size: 100% 100%;
 }
 
-.activity_post,.event_post p
+h1
 {
-	color: black;
+	color: white !important;
+}
+
+textarea
+{
+	resize: none;
 }
 
 footer 

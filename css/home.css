@@ -21,23 +21,10 @@ body
 	background-size: 100% 100%;
 }
 
-#login_table
+.activity_post,.event_post p
 {
-	margin: auto;
-    width: fit-content;
-	border: none;
+	color: black;
 }
-
-#login_table td
-{
-	padding: 5px !important;
-}
-
-textarea
-{
-	resize: none;
-}
-
 
 footer 
 {

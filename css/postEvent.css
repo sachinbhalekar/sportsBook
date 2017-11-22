@@ -15,29 +15,20 @@ body
 
 .container
 {
-	color: white;
 	margin-top:50px;
 	background: black url("../images/bg1.png") no-repeat fixed center;
 	background-size: 100% 100%;
 }
 
-#login_table
+h1
 {
-	margin: auto;
-    width: fit-content;
-	border: none;
-}
-
-#login_table td
-{
-	padding: 5px !important;
+	color: white !important;
 }
 
 textarea
 {
 	resize: none;
 }
-
 
 footer 
 {
