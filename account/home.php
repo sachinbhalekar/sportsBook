@@ -92,7 +92,7 @@ while ($userActivity=$res->fetch_assoc())
                             	<p><strong><?php echo $userActivity['userEmail']; ?></strong></p>
                                 <p id="all_post_info" ><?php echo $userActivity['activityDesc']; ?></p>
                                 <label>Sport:</label><span> <?php echo $userActivity['activitySport']; ?></span><br/>
-                                <a href="activityInfo.php?activityId='<?php echo $userActivity['activityId']; ?>'"><span class="glyphicon glyphicon-info-sign"></span> View post</a>
+                                <a href="activityInfo.php?activityId=<?php echo $userActivity['activityId']; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
                                 <br/>
                                 <a href="#">Interested <span class="badge">5</span></a>
                                 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
@@ -122,7 +122,7 @@ while ($userActivity=$res->fetch_assoc())
                         	<p><strong><?php echo $userEvent['eventTitle']; ?></strong></p>
                             <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300">
                             <p><?php echo $userEvent['eventDate']; ?></p>
-                            <a href="eventInfo.php?eventId='<?php echo $userEvent['eventId']; ?>'"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
+                            <a href="eventInfo.php?eventId=<?php echo $userEvent['eventId']; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
                         </div>
           			<?php
                     }
