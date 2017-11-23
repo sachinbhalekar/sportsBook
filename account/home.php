@@ -61,7 +61,7 @@ $userRow=$res->fetch_assoc();
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
           					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
-          					  <li><a href="../location/location.php">View Location</a></li>
+          					  <li><a href="../location/targetRegions.php">View Location</a></li>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				
