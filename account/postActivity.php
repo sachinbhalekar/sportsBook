@@ -43,7 +43,7 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
     $state = strip_tags($state);
     $state = htmlspecialchars($state);
     
-    $country = trim('');
+    $country = trim($_POST['country']);
     $country = strip_tags($country);
     $country = htmlspecialchars($country);
     
@@ -248,31 +248,39 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="address1">Address Line 1:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="address1" name="address1" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Street Address" /><input id="latitude" name="latitude" type="number" step="any" hidden=""/>
+                                    	<input id="address1" name="address1" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Street Address" />
+                                    	<input id="latitude" name="latitude" type="number" step="any" hidden=""/>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="address2">Address Line 2:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="address2" name="address2" class="form-control" type="text" maxlength="50" required placeholder="Enter Apt/Unit" />
+                                    	<input id="address2" name="address2" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Apt/Unit" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="city">City:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="city" name="city" class="form-control" type="text" maxlength="50" required placeholder="Enter City" />
+                                    	<input id="city" name="city" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter City" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="state">State:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="state" name="state" class="form-control" type="text" maxlength="50" required placeholder="Enter State" />
+                                    	<input id="state" name="state" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter State" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="zipcode">ZipCode:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="zipcode" name="zipcode" class="form-control" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="Enter ZipCode" /><input id="longitude" name="longitude" type="number" step="any" hidden=""/>
+                                    	<input id="zipcode" name="zipcode" class="form-control" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="Enter ZipCode" />
+                                    	<input id="longitude" name="longitude" type="number" step="any" hidden=""/>
+                                  	</div>
+                                </div>
+                                <div class="form-group">
+                                  	<label class="control-label col-sm-2" for="country">Country:</label>
+                                  	<div class="col-sm-8">          
+                                    	<input id="country" name="country" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Country" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
