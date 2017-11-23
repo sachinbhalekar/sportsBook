@@ -60,7 +60,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
     $state = htmlspecialchars($state);
     //echo "<script type='text/javascript'>alert('$state');</script>";
     
-    $country = trim('');
+    $country = trim('country');
     $country = strip_tags($country);
     $country = htmlspecialchars($country);
     //echo "<script type='text/javascript'>alert('$country');</script>";
@@ -354,6 +354,10 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 						<tr>
 							<td>ZipCode <span style="color:red">*</span></td>
 							<td><input id="zipcode" name="zipcode" class="form-control" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="Enter ZipCode" /><input id="longitude" name="longitude" type="number" step="any" hidden=""/></td>
+						</tr>
+						<tr>
+							<td>Country <span style="color:red">*</span></td>
+							<td><input id="country" name="country" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Country" /></td>
 						</tr>
 						<tr>
 							<td>Sports Interested <span style="color:red">*</span></td>
