@@ -59,4 +59,25 @@ function fetchActivities($lat,$lng,$range)
     
 }
 
+function fetchTargetRegion()
+{
+    $Lat=array(37.782551);
+    $Lng=array(-122.445368);
+    
+    $arrlength = count($Lat);
+    
+    for($x = 0; $x < $arrlength; $x++) {
+        $tempLat=$Lat[$x];
+        $tempLng=$Lng[$x];
+    $s="new google.maps.LatLng('$tempLat','$tempLng'),";
+    if($x == ($arrlength-1))
+    {
+        $s="new google.maps.LatLng('$tempLat','$tempLng')";
+    }
+    
+    echo $s;
+    }
+    
+}
+
 ?>
