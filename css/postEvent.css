@@ -29,6 +29,10 @@ textarea
 {
 	resize: none;
 }
+#map{
+	height: 20em;
+	
+}
 
 footer 
 {
