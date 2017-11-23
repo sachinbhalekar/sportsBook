@@ -85,24 +85,65 @@ while ($userActivity=$res->fetch_assoc())
                         //$count = 0;
                         while ($userActivity=$res->fetch_assoc())
                         {
+                            
                             $userActivityEmail = $userActivity['userEmail'];
                             $res1=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userActivityEmail'");
                             $userActivityRow=$res1->fetch_assoc();
                             $name = $userActivityRow['name'];
                             
+                            $userActivityId = $userActivity['activityId'];
+                            $res2=$conn->query("SELECT count(activityId) as actIdCount FROM user_interested_activity WHERE activityId = '$userActivityId'");
+                            $userActivityInterest=$res2->fetch_assoc();
+                            $activityInterestCount = $userActivityInterest['actIdCount'];
+                            
                             //$activityId = $userActivity['activityId'];
                             //$count++;
                             //echo "<script type='text/javascript'>alert('$count');</script>";
-                        ?>
-                            <div class="well activity_post">
+                            ?>
+                            <div class="well activity_post<?php echo $userActivityId; ?>">
                             	<p><strong><?php echo $name; ?></strong></p>
                                 <p id="all_post_info" ><?php echo $userActivity['activityDesc']; ?></p>
                                 <label>Sport:</label><span> <?php echo $userActivity['activitySport']; ?></span><br/>
-                                <a href="activityInfo.php?activityId=<?php echo $userActivity['activityId']; ?>&activityUserName=<?php echo $name; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
+                                <a href="activityInfo.php?activityId=<?php echo $userActivityId; ?>&activityUserName=<?php echo $name; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
                                 <br/>
-                                <a href="#">Interested <span class="badge">5</span></a>
+                                <a id="a_activity_interest<?php echo $userActivityId; ?>" href="#" data-toggle="modal" data-target="#activityModal<?php echo $userActivityId; ?>">Interested <span class="badge"><?php echo $activityInterestCount; ?></span></a>
                                 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
               				</div>
+              				
+              				<div class="modal fade" id="activityModal<?php echo $userActivityId; ?>" role="dialog">
+                                <div class="modal-dialog modal-sm">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                      <h4 class="modal-title">People Interested</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                    <?php 
+                                    if($activityInterestCount >= 1)
+                                    {
+                                        $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_activity WHERE activityId = '$userActivityId')");
+                                        while ($userActivityInterestedName=$res3->fetch_assoc())
+                                        {
+                                            ?>
+                                            <p><strong><?php echo $userActivityInterestedName['name']; ?></strong></p>
+                                            <?php
+                                        }
+                                    }
+                                    else 
+                                    {
+                                        ?>
+                                        <p>No one interested yet.</p>
+                                        <?php
+                                    }
+                                    ?>
+                                      
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+                            </div>
               			<?php
                         }
                         ?>
@@ -121,14 +162,57 @@ while ($userActivity=$res->fetch_assoc())
                     $count = 0;
                     while ($userEvent=$res->fetch_assoc())
                     {
+                        
+                        $userEventId = $userEvent['eventId'];
+                        $res2=$conn->query("SELECT count(eventId) as eventIdCount FROM user_interested_event WHERE eventId = '$userEventId'");
+                        $userEventInterest=$res2->fetch_assoc();
+                        $eventInterestCount = $userEventInterest['eventIdCount'];
                         //$count++;
                         //echo "<script type='text/javascript'>alert('$count');</script>";
-                    ?>
+                        ?>
                         <div class="thumbnail event_post">
                         	<p><strong><?php echo $userEvent['eventTitle']; ?></strong></p>
                             <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300">
                             <p><?php echo $userEvent['eventDate']; ?></p>
                             <a href="eventInfo.php?eventId=<?php echo $userEvent['eventId']; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
+                            <br/>
+                            <a id="a_event_interest<?php echo $userEventId; ?>" href="#" data-toggle="modal" data-target="#eventModal<?php echo $userEventId; ?>">Interested <span class="badge"><?php echo $eventInterestCount; ?></span></a>
+                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+                        </div>
+                        
+                        <div class="modal fade" id="eventModal<?php echo $userEventId; ?>" role="dialog">
+                            <div class="modal-dialog modal-sm">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                  <h4 class="modal-title">People Interested</h4>
+                                </div>
+                                <div class="modal-body">
+                                <?php 
+                                if($eventInterestCount >= 1)
+                                {
+                                    $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_event WHERE eventId = '$userEventId')");
+                                    while ($userEventInterestedName=$res3->fetch_assoc())
+                                    {
+                                        ?>
+                                        <p><strong><?php echo $userEventInterestedName['name']; ?></strong></p>
+                                        <?php
+                                    }
+                                }
+                                else 
+                                {
+                                    ?>
+                                    <p>No one interested yet.</p>
+                                    <?php
+                                }
+                                ?>
+                                  
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+                            </div>
                         </div>
           			<?php
                     }
