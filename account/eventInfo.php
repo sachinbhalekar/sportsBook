@@ -13,6 +13,38 @@ $userEmail = $_SESSION['user'];
 // select loggedin users detail
 $res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
 $userRow=$res->fetch_assoc();
+
+if (isset($_GET['eventId']))
+{
+    //echo "<script type='text/javascript'>alert('Found');</script>";
+    $eventId = trim($_GET['eventId']);
+    $eventId = strip_tags($eventId);
+    $eventId = htmlspecialchars($eventId);
+    //echo "<script type='text/javascript'>alert('$eventId');</script>";
+    $res=$conn->query("SELECT * FROM user_event WHERE eventId='$eventId'");
+    $userEvent=$res->fetch_assoc();
+    
+    $userEventEmail = $userEvent['userEmail'];
+    $res=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userEventEmail'");
+    $userEventRow=$res->fetch_assoc();
+    $name = $userEventRow['name'];
+    //echo "<script type='text/javascript'>alert('$name');</script>";
+    
+    $res=$conn->query("SELECT * FROM event_address WHERE eventId='$eventId'");
+    $userEventAddress=$res->fetch_assoc();
+    
+    $address1 = $userEventAddress['address1'];
+    $address2 = $userEventAddress['address2'];
+    $city = $userEventAddress['city'];
+    $state = $userEventAddress['state'];
+    $zipcode = $userEventAddress['zipcode'];
+    $country = $userEventAddress['country'];
+    
+    $location = '';
+    $location = $address1 . ', ' . $address2 . ', ' . $address1 . ', ' . $city . ', ' . $state . ' - ' . $zipcode . ', ' . $country;
+    
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,87 +97,84 @@ $userRow=$res->fetch_assoc();
                         <div class="panel-body">
                         	<form id="event_form" name="event_form" class="form-horizontal event_form" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
                                 <div class="form-group">
+                                  	<label class="control-label col-sm-2" >Posted By:</label>
+                                  	<div class="col-sm-8">          
+                                    	<p class="form-control" ><?php echo $name; ?></p>
+                                  	</div>
+                                </div>
+                                <div class="form-group">
                                   	<label class="control-label col-sm-2" for="title">Event Title:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="title" name="title" class="form-control" type="text" maxlength="50" required placeholder="Enter a title for the event" />
+                                    	<p class="form-control"><?php echo $userEvent['eventDesc']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="desc">Description:</label>
                                   	<div class="col-sm-8">          
-                                    	<textarea id="desc" name="desc" class="form-control" maxlength="500" rows="4" placeholder="Write your post here..."></textarea>
+                                    	<p class="form-control"><?php echo $userEvent['eventDesc']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2">Sport Category:</label>
                                   	<div class="col-sm-10">
-                                    	<label class="radio-inline"><input id="football" name="sportR" type="radio" onclick="setSports()"/>Football</label>
-										<label class="radio-inline"><input id="tennis" name="sportR" type="radio" onclick="setSports()"/>Tennis</label>
-										<label class="radio-inline"><input id="cricket" name="sportR" type="radio" onclick="setSports()"/>Cricket</label>
-										<input id="sport" name="sport" type="text" hidden="">
+                                    	<label class="radio-inline"><input id="football" name="sportR" type="radio" />Football</label>
+										<label class="radio-inline"><input id="tennis" name="sportR" type="radio" />Tennis</label>
+										<label class="radio-inline"><input id="cricket" name="sportR" type="radio" />Cricket</label>
+										<script type="text/javascript">
+											var sport = '<?php echo $userEvent['eventSport']; ?>';
+											//alert(sport);
+											if( sport == 'football')
+												document.getElementById('football').checked=true;
+											else if( sport == 'tennis')
+												document.getElementById('tennis').checked=true;
+											else if( sport == 'cricket')
+												document.getElementById('cricket').checked=true;
+										</script>
                                   	</div>
                                 </div>
                                 <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="address1">Address Line 1:</label>
+                                  	<label class="control-label col-sm-2" >Location:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="address1" name="address1" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Street Address" /><input id="latitude" name="latitude" type="number" step="any" hidden=""/>
-                                  	</div>
-                                </div>
-                                <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="address2">Address Line 2:</label>
-                                  	<div class="col-sm-8">          
-                                    	<input id="address2" name="address2" class="form-control" type="text" maxlength="50" required placeholder="Enter Apt/Unit" />
-                                  	</div>
-                                </div>
-                                <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="city">City:</label>
-                                  	<div class="col-sm-8">          
-                                    	<input id="city" name="city" class="form-control" type="text" maxlength="50" required placeholder="Enter City" />
-                                  	</div>
-                                </div>
-                                <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="state">State:</label>
-                                  	<div class="col-sm-8">          
-                                    	<input id="state" name="state" class="form-control" type="text" maxlength="50" required placeholder="Enter State" />
-                                  	</div>
-                                </div>
-                                <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="zipcode">ZipCode:</label>
-                                  	<div class="col-sm-8">          
-                                    	<input id="zipcode" name="zipcode" class="form-control" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="Enter ZipCode" /><input id="longitude" name="longitude" type="number" step="any" hidden=""/>
+                                    	<p class="form-control"><?php echo $location; ?></p>
+                                    	
+                                    	<div class="panel panel-default">
+                                            <!-- <div class="panel-heading">Panel Heading</div> -->
+                                            <div class="panel-body" id="map"></div>
+                                        </div>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="landmark">Landmark:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="landmark" name="landmark" class="form-control" type="text" maxlength="50" required placeholder="Enter Landmark" />
+                                    	<p class="form-control"><?php echo $userEventAddress['landmark']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="date">Date:</label>
                                   	<div class="col-sm-2">          
-                                    	<input id="date" name="date" class="form-control datepicker" data-date-format="mm/dd/yyyy" type="date" required  />
+                                    	<p class="form-control"><?php echo $userEvent['eventDate']; ?></p>
                                   	</div>
                                   	
                                   	<label class="control-label col-sm-2" for="occupancy">Max Occupancy:</label>
                                   	<div class="col-sm-2">          
-                                    	<input id="occupancy" name="occupancy" class="form-control" type="number" min="50" required value="50" />
+                                    	<p class="form-control"><?php echo $userEvent['eventOccupancy']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="time_in">Time In:</label>
                                   	<div class="col-sm-2">          
-                                    	<input id="time_in" name="time_in" class="form-control timepicker" type="time" required  />
+                                    	<p class="form-control"><?php echo $userEvent['eventInTime']; ?></p>
                                   	</div>
                                   	
                                   	<label class="control-label col-sm-2" for="time_out">Time Out:</label>
                                   	<div class="col-sm-2">          
-                                    	<input id="time_out" name="time_out" class="form-control timepicker" type="time" required  />
+                                    	<p class="form-control"><?php echo $userEvent['eventOutTime']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">        
                                   	<div class="col-sm-offset-2 col-sm-10">
-                                    	<button type="submit" class="btn btn-primary">Post it</button>
+                                  		<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+                                    	<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
                                   	</div>
                                 </div> 
                         	</form>   
@@ -154,6 +183,57 @@ $userRow=$res->fetch_assoc();
         		</div>
 			</div>
 		</div>
+		
+		<script>
+    
+            var map;
+            function initMap()
+            {
+            	//alert("ffff");
+            	var myLatLng = {lat: 33, lng: 34};
+            	map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 10,
+                    center: myLatLng
+                });
+            	               
+    	        var lat = "<?php echo $userEventAddress['latitude']; ?>";
+        		var lng = "<?php echo $userEventAddress['longitude']; ?>";
+				//alert(lat);
+				//alert(lng);
+        		plot_markers( lat, lng );
+        		//plot_markers(sampleLat[3],sampleLng[3]);
+            	
+            }
+             
+            function plot_markers( arrLat, arrLng ) 
+            {              	
+            	var geocoder = new google.maps.Geocoder;
+                var infowindow = new google.maps.InfoWindow;
+                var latlng = {lat: parseFloat(arrLat), lng: parseFloat(arrLng)};
+                
+                geocoder.geocode({'location': latlng}, function(results, status) {
+                    if (status === 'OK') {
+                      if (results[0]) {
+                        map.setZoom(11);
+                        var marker = new google.maps.Marker({
+                          position: latlng,
+                          map: map
+                        });
+                        infowindow.setContent(results[0].formatted_address);
+                        infowindow.open(map, marker);
+                      } else {
+                        window.alert('No results found');
+                      }
+                    } else {
+                      window.alert('Geocoder failed due to: ' + status);
+                    }
+                  });
+             }     
+    	
+        </script>
+    	 
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"></script>
+        
 		<footer class="container-fluid text-center">
 			<p>&copy; SportsBook</p>
 		</footer>
