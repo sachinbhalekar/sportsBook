@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 22, 2017 at 08:46 AM
+-- Generation Time: Nov 23, 2017 at 03:30 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -41,6 +41,13 @@ CREATE TABLE `activity_address` (
   `longitude` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `activity_address`
+--
+
+INSERT INTO `activity_address` (`userEmail`, `address1`, `address2`, `city`, `state`, `country`, `zipcode`, `landmark`, `latitude`, `longitude`) VALUES
+('sam@gmail.com', '1845 Halsted Street', '108', 'Northridge', 'California', '', 91325, 'Legacy Apt', 34.2449406, -118.52097449999997);
+
 -- --------------------------------------------------------
 
 --
@@ -59,6 +66,13 @@ CREATE TABLE `event_address` (
   `latitude` double NOT NULL,
   `longitude` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `event_address`
+--
+
+INSERT INTO `event_address` (`userEmail`, `address1`, `address2`, `city`, `state`, `country`, `zipcode`, `landmark`, `latitude`, `longitude`) VALUES
+('sam@gmail.com', 'CSUN Matador Stadium', 'CSUN', 'Northridge', 'CA', '', 91311, 'CSUN SRC', 34.2450681, -118.52655549999997);
 
 -- --------------------------------------------------------
 
@@ -103,6 +117,15 @@ CREATE TABLE `user_activity` (
   `activityOutTime` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `user_activity`
+--
+
+INSERT INTO `user_activity` (`userEmail`, `activityDesc`, `activitySport`, `activityDate`, `activityInTime`, `activityOutTime`) VALUES
+('sam@gmail.com', 'Hi', 'tennis', '0000-00-00', '10:00:00', '11:00:00'),
+('sam@gmail.com', 'Hi', 'tennis', '0000-00-00', '10:00:00', '11:00:00'),
+('sam@gmail.com', 'I am playing for 1 hour', 'football', '0000-00-00', '10:00:00', '11:00:00');
+
 -- --------------------------------------------------------
 
 --
@@ -146,9 +169,16 @@ CREATE TABLE `user_event` (
   `eventSport` varchar(30) NOT NULL,
   `eventOccupancy` int(11) NOT NULL,
   `eventDate` date NOT NULL,
-  `eventInTime` date NOT NULL,
-  `eventOutTime` date NOT NULL
+  `eventInTime` time NOT NULL,
+  `eventOutTime` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user_event`
+--
+
+INSERT INTO `user_event` (`userEmail`, `eventTitle`, `eventDesc`, `eventSport`, `eventOccupancy`, `eventDate`, `eventInTime`, `eventOutTime`) VALUES
+('sam@gmail.com', 'CSUN vs CSULB', 'Match between two university football teams...', 'football', 50, '0000-00-00', '00:00:00', '00:00:00');
 
 -- --------------------------------------------------------
 

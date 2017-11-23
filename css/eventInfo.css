@@ -1,0 +1,38 @@
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) 
+{
+	.container
+	{
+		margin-top:200px;
+	} 
+}
+
+body
+{
+	color: black;
+	background-color: black;
+}
+
+.container
+{
+	margin-top:50px;
+	background: black url("../images/bg1.png") no-repeat fixed center;
+	background-size: 100% 100%;
+}
+
+h1
+{
+	color: white !important;
+}
+
+textarea
+{
+	resize: none;
+}
+
+footer 
+{
+    background-color: #555;
+    color: white;
+    padding: 15px;
+}

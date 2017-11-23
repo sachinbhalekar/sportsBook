@@ -83,10 +83,10 @@ function initMap()
         center: myLatLng
       });
 
-	              <?php 
+	               /* <?php 
 	        		require_once './distance.php';
 	        		fetchActivities(33,34,0.85);
-	        		?> 
+	        		?> */
 
 	    	        		var sampleLat=  ['40.82212357516945','40.73581157695217'];
 	        		var sampleLng=['-78.167724609375','-78.52409362792969'];
@@ -121,10 +121,6 @@ var geocoder = new google.maps.Geocoder;
            
             var marker = new google.maps.Marker({
               position: latlng,
-              icon: {
-                  path: google.maps.SymbolPath.CIRCLE,
-                  scale: 10
-                },
               map: map
             });
             infowindow.setContent(results[0].formatted_address);

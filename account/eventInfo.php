@@ -11,167 +11,14 @@ if( !isset($_SESSION['user']) )
 }
 $userEmail = $_SESSION['user'];
 // select loggedin users detail
-//$res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
-//$userRow=$res->fetch_assoc();
-
-$error = false;
-
-if ( isset($_POST['event_form']) || isset($_POST['event_btn']) )
-{
-    //echo "<script type='text/javascript'>alert('inside');</script>";
-    $title = trim($_POST['title']);
-    $title = strip_tags($title);
-    $title = htmlspecialchars($title);
-    
-    $desc = trim($_POST['desc']);
-    $desc = strip_tags($desc);
-    $desc = htmlspecialchars($desc);
-    
-    $sport = trim($_POST['sport']);
-    $sport = strip_tags($sport);
-    $sport = htmlspecialchars($sport);
-    
-    $address1 = trim($_POST['address1']);
-    $address1 = strip_tags($address1);
-    $address1 = htmlspecialchars($address1);
-    
-    $address2 = trim($_POST['address2']);
-    $address2 = strip_tags($address2);
-    $address2 = htmlspecialchars($address2);
-    
-    $city = trim($_POST['city']);
-    $city = strip_tags($city);
-    $city = htmlspecialchars($city);
-    
-    $state = trim($_POST['state']);
-    $state = strip_tags($state);
-    $state = htmlspecialchars($state);
-    
-    $country = trim('');
-    $country = strip_tags($country);
-    $country = htmlspecialchars($country);
-    
-    $zipcode = trim($_POST['zipcode']);
-    $zipcode = strip_tags($zipcode);
-    $zipcode = htmlspecialchars($zipcode);
-    
-    $landmark = trim($_POST['landmark']);
-    $landmark = strip_tags($landmark);
-    $landmark = htmlspecialchars($landmark);
-    
-    $date = trim($_POST['date']);
-    $date = strip_tags($date);
-    $date = htmlspecialchars($date);
-    
-    $occupancy = trim($_POST['occupancy']);
-    $occupancy = strip_tags($occupancy);
-    $occupancy = htmlspecialchars($occupancy);
-    
-    $time_in = trim($_POST['time_in']);
-    $time_in = strip_tags($time_in);
-    $time_in = htmlspecialchars($time_in);
-    
-    $time_out = trim($_POST['time_out']);
-    $time_out = strip_tags($time_out);
-    $time_out = htmlspecialchars($time_out);
-    
-    $latitude = trim($_POST['latitude']);
-    $latitude = strip_tags($latitude);
-    $latitude = htmlspecialchars($latitude);
-    //echo "<script type='text/javascript'>alert('$latitude');</script>";
-    
-    $longitude = trim($_POST['longitude']);
-    $longitude = strip_tags($longitude);
-    $longitude = htmlspecialchars($longitude);
-    
-    //echo "<script type='text/javascript'>alert('$time_out');</script>";
-    
-    // if there's no error, continue to post
-    if( !$error )
-    {
-        $query = "INSERT INTO user_event(userEmail,eventTitle,eventDesc,eventSport,eventOccupancy,eventDate,eventInTime,eventOutTime) VALUES('$userEmail','$title','$desc','$sport','$occupancy','$date','$time_in','$time_out')";
-        
-        $query1 = "INSERT INTO event_address(userEmail,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
-        
-        if($conn->query($query) === TRUE && $conn->query($query1) === TRUE)
-        {
-            $errTyp = "success";
-            $message = "Your event successfully posted!";
-        }
-        else
-        {
-            $errTyp = "danger";
-            $message = "Something went wrong, try again later...";
-        }
-    }
-    
-    unset($_POST['event_form']);
-    unset($_POST['event_btn']);
-}
-
+$res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
+$userRow=$res->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap" async defer></script>
 	<script>
-    function getLatLong()
-    {
-        //alert('getLatLong');
-        //var vLat = 0;
-        //var vLong = 0;
-    	var vAddress1 = document.getElementById('address1').value.trim();
-    	var vAddress2 = document.getElementById('address2').value.trim();
-    	var vCity = document.getElementById('city').value.trim();
-    	var vState = document.getElementById('state').value.trim();
-    	var vZipcode = document.getElementById('zipcode').value.trim();
-    	
-    	var geocoder = new google.maps.Geocoder();
-    	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
-    	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
-    	{
-            geocoder.geocode( { 'address': address}, function(results, status) {
-              if (status == 'OK') 
-              {
-         		 //vLat = results[0].geometry.location.lat();
-         		 document.getElementById('latitude').value = results[0].geometry.location.lat();
-        	  	 //vLong = results[0].geometry.location.lng();
-        	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
-        	   	 //alert(vLat);
-        	   	 //alert( typeof vLat );
-        	   	 //alert( typeof vLat.toString() );
-        	   	 //alert(vLong);
-              } 
-            });
-    	}
-    	
-    	//document.getElementById('latitude').value = vLat;
-    	//document.getElementById('longitude').value = vLong;
-    	//alert(document.getElementById('latitude').value);
-    	//alert(document.getElementById('longitude').value);
-    	//alert('before submit');
-    	//document.getElementById('signup_form').submit();
-    }
-
-    function setSports()
-    {
-    	//alert(document.getElementById('sport').value);
-    	if( document.getElementById('football').checked ) 
-    	{
-			//Football radio button is checked
-    		document.getElementById('sport').value = 'football';
-		}
-		else if( document.getElementById('tennis').checked ) 
-		{
-			//Tennis radio button is checked
-			document.getElementById('sport').value = 'tennis';
-		}
-		else if( document.getElementById('cricket').checked ) 
-		{
-			//Cricket radio button is checked
-			document.getElementById('sport').value = 'cricket';
-		}
-		//alert(document.getElementById('sport').value);
-    }
+    
     </script>
 	<head>
 		<meta charset="utf-8">
@@ -195,7 +42,7 @@ if ( isset($_POST['event_form']) || isset($_POST['event_btn']) )
                 <ul class="nav navbar-nav">
                   <li><a href="home.php">Home</a></li>
                   <li><a href="postActivity.php">Post an Activity</a></li>
-                  <li class="active"><a href="postEvent.php">Post an Event</a></li>
+                  <li><a href="postEvent.php">Post an Event</a></li>
                 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -217,18 +64,6 @@ if ( isset($_POST['event_form']) || isset($_POST['event_btn']) )
         			<div class="panel panel-default text-left">
                         <div class="panel-body">
                         	<form id="event_form" name="event_form" class="form-horizontal event_form" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
-                                <?php
-                                if ( isset($message) ) 
-                                {
-                                ?>
-                                	<div class="form-group">
-                                    	<div id="message_div" class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
-                                			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $message; ?>
-                                    	</div>
-                                    </div>
-                                <?php
-                                }
-                                ?>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="title">Event Title:</label>
                                   	<div class="col-sm-8">          
@@ -238,7 +73,7 @@ if ( isset($_POST['event_form']) || isset($_POST['event_btn']) )
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="desc">Description:</label>
                                   	<div class="col-sm-8">          
-                                    	<textarea id="desc" name="desc" class="form-control" maxlength="500" rows="4" required placeholder="Write your post here..."></textarea>
+                                    	<textarea id="desc" name="desc" class="form-control" maxlength="500" rows="4" placeholder="Write your post here..."></textarea>
                                   	</div>
                                 </div>
                                 <div class="form-group">
@@ -308,18 +143,9 @@ if ( isset($_POST['event_form']) || isset($_POST['event_btn']) )
                                     	<input id="time_out" name="time_out" class="form-control timepicker" type="time" required  />
                                   	</div>
                                 </div>
-                                <div class="form-group">
-                                	<label class="control-label col-sm-2" for="">Area to scan:</label>
-                                  	<div class="col-sm-8">          
-                                    	<div class="panel panel-default">
-                                            <!-- <div class="panel-heading">Panel Heading</div> -->
-                                            <div class="panel-body" id="map"></div>
-                                        </div>
-                                  	</div>
-                                </div>
                                 <div class="form-group">        
                                   	<div class="col-sm-offset-2 col-sm-10">
-                                    	<button id="event_btn" name="event_btn" type="submit" class="btn btn-primary">Post it</button>
+                                    	<button type="submit" class="btn btn-primary">Post it</button>
                                   	</div>
                                 </div> 
                         	</form>   

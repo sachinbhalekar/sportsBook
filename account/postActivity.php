@@ -11,8 +11,96 @@ if( !isset($_SESSION['user']) )
 }
 $userEmail = $_SESSION['user'];
 // select loggedin users detail
-$res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
-$userRow=$res->fetch_assoc();
+//$res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
+//$userRow=$res->fetch_assoc();
+
+$error = false;
+
+if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
+{
+    //echo "<script type='text/javascript'>alert('inside');</script>";
+    $desc = trim($_POST['desc']);
+    $desc = strip_tags($desc);
+    $desc = htmlspecialchars($desc);
+    
+    $sport = trim($_POST['sport']);
+    $sport = strip_tags($sport);
+    $sport = htmlspecialchars($sport);
+    
+    $address1 = trim($_POST['address1']);
+    $address1 = strip_tags($address1);
+    $address1 = htmlspecialchars($address1);
+    
+    $address2 = trim($_POST['address2']);
+    $address2 = strip_tags($address2);
+    $address2 = htmlspecialchars($address2);
+    
+    $city = trim($_POST['city']);
+    $city = strip_tags($city);
+    $city = htmlspecialchars($city);
+    
+    $state = trim($_POST['state']);
+    $state = strip_tags($state);
+    $state = htmlspecialchars($state);
+    
+    $country = trim('');
+    $country = strip_tags($country);
+    $country = htmlspecialchars($country);
+    
+    $zipcode = trim($_POST['zipcode']);
+    $zipcode = strip_tags($zipcode);
+    $zipcode = htmlspecialchars($zipcode);
+    
+    $landmark = trim($_POST['landmark']);
+    $landmark = strip_tags($landmark);
+    $landmark = htmlspecialchars($landmark);
+    
+    $date = trim($_POST['date']);
+    $date = strip_tags($date);
+    $date = htmlspecialchars($date);
+    
+    $time_in = trim($_POST['time_in']);
+    $time_in = strip_tags($time_in);
+    $time_in = htmlspecialchars($time_in);
+    
+    $time_out = trim($_POST['time_out']);
+    $time_out = strip_tags($time_out);
+    $time_out = htmlspecialchars($time_out);
+    
+    $latitude = trim($_POST['latitude']);
+    $latitude = strip_tags($latitude);
+    $latitude = htmlspecialchars($latitude);
+    //echo "<script type='text/javascript'>alert('$latitude');</script>";
+    
+    $longitude = trim($_POST['longitude']);
+    $longitude = strip_tags($longitude);
+    $longitude = htmlspecialchars($longitude);
+    
+    //echo "<script type='text/javascript'>alert('$time_out');</script>";
+    
+    // if there's no error, continue to post
+    if( !$error )
+    {
+        $query = "INSERT INTO user_activity(userEmail,activityDesc,activitySport,activityDate,activityInTime,activityOutTime) VALUES('$userEmail','$desc','$sport','$date','$time_in','$time_out')";
+        
+        $query1 = "INSERT INTO activity_address(userEmail,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
+        
+        if($conn->query($query) === TRUE && $conn->query($query1) === TRUE)
+        {
+            $errTyp = "success";
+            $message = "Your activity successfully posted!";
+        }
+        else
+        {
+            $errTyp = "danger";
+            $message = "Something went wrong, try again later...";
+        }
+    }
+    
+    unset($_POST['activity_form']);
+    unset($_POST['activity_btn']);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -121,10 +209,22 @@ $userRow=$res->fetch_assoc();
         			<div class="panel panel-default text-left">
                         <div class="panel-body">
                         	<form id="activity_form" name="activity_form" class="form-horizontal activity_form" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
+                                <?php
+                                if ( isset($message) ) 
+                                {
+                                ?>
+                                	<div class="form-group">
+                                    	<div id="message_div" class="alert alert-<?php echo ($errTyp=="success") ? "success" : $errTyp; ?>">
+                                			<span class="glyphicon glyphicon-info-sign"></span> <?php echo $message; ?>
+                                    	</div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="desc">Description:</label>
                                   	<div class="col-sm-8">          
-                                    	<textarea id="desc" name="desc" class="form-control" maxlength="500" rows="4" placeholder="Write your post here..."></textarea>
+                                    	<textarea id="desc" name="desc" class="form-control" maxlength="500" rows="4" required placeholder="Write your post here..."></textarea>
                                   	</div>
                                 </div>
                                 <div class="form-group">
@@ -191,7 +291,7 @@ $userRow=$res->fetch_assoc();
                                 </div>
                                 <div class="form-group">        
                                   	<div class="col-sm-offset-2 col-sm-10">
-                                    	<button type="submit" class="btn btn-primary">Post it</button>
+                                    	<button id="activity_btn" name="activity_btn" type="submit" class="btn btn-primary">Post it</button>
                                   	</div>
                                 </div> 
                         	</form>   

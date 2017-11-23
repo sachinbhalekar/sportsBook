@@ -10,9 +10,9 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 {
     //echo "<script type='text/javascript'>alert('inside');</script>";
     // clean user inputs to prevent sql injections
-    $name = trim($_POST['firstname']);
-    $name = strip_tags($name);
-    $name = htmlspecialchars($name);
+    $desc = trim($_POST['firstname']);
+    $desc = strip_tags($desc);
+    $desc = htmlspecialchars($desc);
     //echo "<script type='text/javascript'>alert('$name');</script>";
     
     $lastname = trim($_POST['lastname']);
@@ -124,7 +124,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
         $password = hash('sha256', $pass);
         //echo "<script type='text/javascript'>alert('$password');</script>";
         
-        $query = "INSERT INTO users(userName,userEmail,userPass,userLastName,userGender,userDoB,userBio) VALUES('$name','$email','$password','$lastname','$gender','$userDOB','$userbio')";
+        $query = "INSERT INTO users(userName,userEmail,userPass,userLastName,userGender,userDoB,userBio) VALUES('$desc','$email','$password','$lastname','$gender','$userDOB','$userbio')";
         //echo "<script type='text/javascript'>alert(Query : '$query');</script>";
         $query1 = "INSERT INTO user_address(userEmail,address1,address2,city,state,country,zipcode,latitude,longitude) VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode',$latitude,$longitude)";        
         //echo "<script type='text/javascript'>alert(Query1 : '$query1');</script>";
@@ -151,7 +151,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
             {
                 $errTyp = "success";
                 $message = "Successfully registered, you may login now!";
-                unset($name);
+                unset($desc);
                 unset($email);
                 unset($pass);
             }
@@ -305,7 +305,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 					<table id="login_table" class="text-left">
 						<tr>
 							<td>First Name <span style="color:red">*</span></td>
-							<td><input id="firstname" name="firstname" class="form-control" type="text" maxlength="50" required placeholder="Enter First Name" value="<?php echo $name ?>" /></td>
+							<td><input id="firstname" name="firstname" class="form-control" type="text" maxlength="50" required placeholder="Enter First Name" value="<?php echo $desc ?>" /></td>
 						</tr>
 						<tr>
 							<td>Last Name</td>
