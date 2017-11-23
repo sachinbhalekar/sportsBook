@@ -60,7 +60,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
     $state = htmlspecialchars($state);
     //echo "<script type='text/javascript'>alert('$state');</script>";
     
-    $country = trim('country');
+    $country = trim($_POST['country']);
     $country = strip_tags($country);
     $country = htmlspecialchars($country);
     //echo "<script type='text/javascript'>alert('$country');</script>";
