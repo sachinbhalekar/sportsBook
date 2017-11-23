@@ -104,9 +104,9 @@ while ($userActivity=$res->fetch_assoc())
                             	<p><strong><?php echo $name; ?></strong></p>
                                 <p id="all_post_info" ><?php echo $userActivity['activityDesc']; ?></p>
                                 <label>Sport:</label><span> <?php echo $userActivity['activitySport']; ?></span><br/>
-                                <a href="activityInfo.php?activityId=<?php echo $userActivityId; ?>&activityUserName=<?php echo $name; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
+                                <a href="activityInfo.php?activityId=<?php echo $userActivityId; ?>&activityUserName=<?php echo $name; ?>&activityInterestCount=<?php echo $activityInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
                                 <br/>
-                                <a id="a_activity_interest<?php echo $userActivityId; ?>" href="#" data-toggle="modal" data-target="#activityModal<?php echo $userActivityId; ?>">Interested <span class="badge"><?php echo $activityInterestCount; ?></span></a>
+                                <a href="#" data-toggle="modal" data-target="#activityModal<?php echo $userActivityId; ?>">Interested <span class="badge"><?php echo $activityInterestCount; ?></span></a>
                                 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
               				</div>
               				
@@ -176,7 +176,7 @@ while ($userActivity=$res->fetch_assoc())
                             <p><?php echo $userEvent['eventDate']; ?></p>
                             <a href="eventInfo.php?eventId=<?php echo $userEvent['eventId']; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
                             <br/>
-                            <a id="a_event_interest<?php echo $userEventId; ?>" href="#" data-toggle="modal" data-target="#eventModal<?php echo $userEventId; ?>">Interested <span class="badge"><?php echo $eventInterestCount; ?></span></a>
+                            <a href="#" data-toggle="modal" data-target="#eventModal<?php echo $userEventId; ?>">Interested <span class="badge"><?php echo $eventInterestCount; ?></span></a>
                             <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
                         </div>
                         
