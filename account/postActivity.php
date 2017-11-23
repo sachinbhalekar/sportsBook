@@ -11,8 +11,8 @@ if( !isset($_SESSION['user']) )
 }
 $userEmail = $_SESSION['user'];
 // select loggedin users detail
-//$res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
-//$userRow=$res->fetch_assoc();
+$res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
+$userRow=$res->fetch_assoc();
 
 $error = false;
 
@@ -81,9 +81,17 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
     // if there's no error, continue to post
     if( !$error )
     {
-        $query = "INSERT INTO user_activity(userEmail,activityDesc,activitySport,activityDate,activityInTime,activityOutTime) VALUES('$userEmail','$desc','$sport','$date','$time_in','$time_out')";
+        $query = "SELECT max(activityId) FROM user_activity";
+        $res = $conn->query("SELECT max(activityId) FROM user_activity");
+        $userActivity = $res->fetch_assoc();
+        $seqId = $userActivity['max(activityId)'];
+        //echo "<script type='text/javascript'>alert('$seqId');</script>";
+        $seqId = $seqId+1;
+        //echo "<script type='text/javascript'>alert('$seqId');</script>";
         
-        $query1 = "INSERT INTO activity_address(userEmail,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
+        $query = "INSERT INTO user_activity(userEmail,activityId,activityDesc,activitySport,activityDate,activityInTime,activityOutTime) VALUES('$userEmail','$seqId','$desc','$sport','$date','$time_in','$time_out')";
+        
+        $query1 = "INSERT INTO activity_address(userEmail,activityId,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$seqId','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
         
         if($conn->query($query) === TRUE && $conn->query($query1) === TRUE)
         {
@@ -95,6 +103,7 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
             $errTyp = "danger";
             $message = "Something went wrong, try again later...";
         }
+        
     }
     
     unset($_POST['activity_form']);
