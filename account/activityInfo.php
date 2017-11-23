@@ -106,7 +106,7 @@ if (isset($_GET['activityId']))
                         <div class="panel-body">
                         	<form id="activityInfo_form" name="activityInfo_form" class="form-horizontal" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
                                 <div class="form-group">
-                                  	<label class="control-label col-sm-2" >Name:</label>
+                                  	<label class="control-label col-sm-2" >Posted By:</label>
                                   	<div class="col-sm-8">          
                                     	<p class="form-control" ><?php echo $name; ?></p>
                                   	</div>
