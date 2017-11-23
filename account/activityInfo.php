@@ -13,6 +13,39 @@ $userEmail = $_SESSION['user'];
 // select loggedin users detail
 $res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
 $userRow=$res->fetch_assoc();
+
+if (isset($_GET['activityId']))
+{
+    //echo "<script type='text/javascript'>alert('Found');</script>";
+    $activityId = trim($_GET['activityId']);
+    $activityId = strip_tags($activityId);
+    $activityId = htmlspecialchars($activityId);
+    //echo "<script type='text/javascript'>alert('$activityId');</script>";
+    $res=$conn->query("SELECT * FROM user_activity WHERE activityId='$activityId'");
+    $userActivity=$res->fetch_assoc();
+    
+    $userActivityEmail = $userActivity['userEmail'];
+    $res=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userActivityEmail'");
+    $userActivityRow=$res->fetch_assoc();
+    $name = $userActivityRow['name'];
+    //echo "<script type='text/javascript'>alert('$name');</script>";
+    
+    $res=$conn->query("SELECT * FROM activity_address WHERE activityId='$activityId'");
+    $userActivityAddress=$res->fetch_assoc();
+    
+    $address1 = $userActivityAddress['address1'];
+    $address2 = $userActivityAddress['address2'];
+    $city = $userActivityAddress['city'];
+    $state = $userActivityAddress['state'];
+    $zipcode = $userActivityAddress['zipcode'];
+    $country = $userActivityAddress['country'];
+    
+    $location = '';
+    $location = $address1 . ', ' . $address2 . ', ' . $address1 . ', ' . $city . ', ' . $state . ' - ' . $zipcode . ', ' . $country;
+    
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -73,30 +106,39 @@ $userRow=$res->fetch_assoc();
                         <div class="panel-body">
                         	<form id="activityInfo_form" name="activityInfo_form" class="form-horizontal" method="post" action="<?php $_SERVER['PHP_SELF']; ?>">
                                 <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="desc">Name:</label>
+                                  	<label class="control-label col-sm-2" >Name:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control" >Sumit Jawale</p>
+                                    	<p class="form-control" ><?php echo $name; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="desc">Description:</label>
+                                  	<label class="control-label col-sm-2" >Description:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control">I am going to play for an hour. Let me know if anybody interested.</p>
+                                    	<p class="form-control"><?php echo $userActivity['activityDesc']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2">Sport Category:</label>
                                   	<div class="col-sm-10">
                                     	<label class="radio-inline"><input id="football" name="sportR" type="radio"  disabled/>Football</label>
-										<label class="radio-inline"><input id="tennis" name="sportR" type="radio"  disabled checked/>Tennis</label>
+										<label class="radio-inline"><input id="tennis" name="sportR" type="radio"  disabled />Tennis</label>
 										<label class="radio-inline"><input id="cricket" name="sportR" type="radio"  disabled/>Cricket</label>
-										<input id="sport" name="sport" type="text" hidden="">
+										<script type="text/javascript">
+											var sport = '<?php echo $userActivity['activitySport']; ?>';
+											//alert(sport);
+											if( sport == 'football')
+												document.getElementById('football').checked=true;
+											else if( sport == 'tennis')
+												document.getElementById('tennis').checked=true;
+											else if( sport == 'cricket')
+												document.getElementById('cricket').checked=true;
+										</script>
                                   	</div>
                                 </div>
                                 <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="address1">Location:</label>
+                                  	<label class="control-label col-sm-2" >Location:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control">4250-4800 State Rte1003, Mcconnellsburg, PA 17233, USA</p>
+                                    	<p class="form-control"><?php echo $location; ?></p>
                                     	
                                     	<div class="panel panel-default">
                                             <!-- <div class="panel-heading">Panel Heading</div> -->
@@ -105,26 +147,26 @@ $userRow=$res->fetch_assoc();
                                   	</div>
                                 </div>
                                 <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="landmark">Landmark:</label>
+                                  	<label class="control-label col-sm-2" >Landmark:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control">Near USPS office</p>
+                                    	<p class="form-control"><?php echo $userActivityAddress['landmark']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="date">Date:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control">27th November 2017</p>
+                                    	<p class="form-control"><?php echo $userActivity['activityDate']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="time_in">Time In:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control">5:00 PM</p>
+                                    	<p class="form-control"><?php echo $userActivity['activityInTime']; ?></p>
                                   	</div>
                                   	
                                   	<label class="control-label col-sm-2" for="time_out">Time Out:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control">6:00 PM</p>
+                                    	<p class="form-control"><?php echo $userActivity['activityOutTime']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">        
@@ -140,71 +182,55 @@ $userRow=$res->fetch_assoc();
 			</div>
 		</div>
 		
-		
         <script>
     
-                var map;
+            var map;
             function initMap()
             {
             	//alert("ffff");
             	var myLatLng = {lat: 33, lng: 34};
-            	      map = new google.maps.Map(document.getElementById('map'), {
+            	map = new google.maps.Map(document.getElementById('map'), {
                     zoom: 10,
                     center: myLatLng
-                  });
-            
+                });
             	               
-            	    	        		var sampleLat=  ['40.82212357516945','40.73581157695217'];
-            	        		var sampleLng=['-78.167724609375','-78.52409362792969'];
-            
-            	        		var ran=Math.random()*1;
-            	        		//alert(ran.toFixed(0));
-            	        		plot_markers(sampleLat[ran.toFixed(0)],sampleLng[ran.toFixed(0)]);
-            	        		//plot_markers(sampleLat[3],sampleLng[3]);
+    	        var lat = "<?php echo $userActivityAddress['latitude']; ?>";
+        		var lng = "<?php echo $userActivityAddress['longitude']; ?>";
+				//alert(lat);
+				//alert(lng);
+        		plot_markers( lat, lng );
+        		//plot_markers(sampleLat[3],sampleLng[3]);
             	
             }
              
-                  function plot_markers(arrLat,arrLng) {
-            
-                	
-            var geocoder = new google.maps.Geocoder;
-                      var infowindow = new google.maps.InfoWindow;
-            
-                      
-                      var latlng = {lat: parseInt(arrLat), lng: parseInt(arrLng)};
+            function plot_markers( arrLat, arrLng ) 
+            {              	
+            	var geocoder = new google.maps.Geocoder;
+                var infowindow = new google.maps.InfoWindow;
+                var latlng = {lat: parseFloat(arrLat), lng: parseFloat(arrLng)};
                 
-            		//var marker = new google.maps.Marker({
-                  //  position: myLatLng,
-                  //  map: map,
-                  //  title: 'Hello World!'
-                  //});
-            		
-            		geocoder.geocode({'location': latlng}, function(results, status) {
-                    
-                      if (!results[0]) {
-            			results[0]="Address Unknown";
-            			}
-                       
+                geocoder.geocode({'location': latlng}, function(results, status) {
+                    if (status === 'OK') {
+                      if (results[0]) {
+                        map.setZoom(11);
                         var marker = new google.maps.Marker({
                           position: latlng,
                           map: map
                         });
                         infowindow.setContent(results[0].formatted_address);
                         infowindow.open(map, marker);
-                       
-                     
+                      } else {
+                        window.alert('No results found');
+                      }
+                    } else {
+                      window.alert('Geocoder failed due to: ' + status);
+                    }
                   });
-            		
-            		
-                  }
-    	  
-       
+             }     
     	
         </script>
     	 
-        <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap">
-        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"></script>
 		
 		<footer class="container-fluid text-center">
 			<p>&copy; SportsBook</p>
