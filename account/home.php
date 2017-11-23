@@ -4,7 +4,7 @@ session_start();
 require_once '../connection/dbconnect.php';
 
 // if session is not set this will redirect to login page
-if( !isset($_SESSION['user']) ) 
+if( !isset($_SESSION['user']) )
 {
     header("Location: ../index.php");
     exit;
@@ -60,39 +60,45 @@ $userRow=$res->fetch_assoc();
         			<div class="col-sm-11">
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
-          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
-          					  <li><a href="../location/targetRegions.php">View Location</a></li>
+          					<a href="activityInfo.php"><span class="glyphicon glyphicon-info-sign"></span> View post</a>
+          					<br/>
+          					<a href="#">Interested <span class="badge">5</span></a>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
-          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
-          						  <li><a href="../location/location.php">View Location</a></li>
+          					<a href="activityInfo.php"><span class="glyphicon glyphicon-info-sign"></span> View post</a>
+          					<br/>
+          					<a href="#">Interested <span class="badge">5</span></a>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
-          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
-          						  <li><a href="../location/location.php">View Location</a></li>
+          					<a href="activityInfo.php"><span class="glyphicon glyphicon-info-sign"></span> View post</a>
+          					<br/>
+          					<a href="#">Interested <span class="badge">5</span></a>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
-          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
-          						  <li><a href="../location/location.php">View Location</a></li>
+          					<a href="activityInfo.php"><span class="glyphicon glyphicon-info-sign"></span> View post</a>
+          					<br/>
+          					<a href="#">Interested <span class="badge">5</span></a>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
-          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
-          						  <li><a href="../location/location.php">View Location</a></li>
+          					<a href="activityInfo.php"><span class="glyphicon glyphicon-info-sign"></span> View post</a>
+          					<br/>
+          					<a href="#">Interested <span class="badge">5</span></a>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				<div class="well activity_post">
           					<p id="all_post_info" >Come lets play!!</p>
-          					<a href="#">Interested <span class="badge">5</span></a><br/><br/>
-          						  <li><a href="../location/location.php">View Location</a></li>
+          					<a href="activityInfo.php"><span class="glyphicon glyphicon-info-sign"></span> View post</a>
+          					<br/>
+          					<a href="#">Interested <span class="badge">5</span></a>
           					<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
           				</div>
           				
@@ -106,14 +112,14 @@ $userRow=$res->fetch_assoc();
                     	<p><strong>Event 100:</strong></p>
                         <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300">
                         <p>Fri. 27 November 2015</p>
-                        <button class="btn btn-info"><span class="glyphicon glyphicon-info-sign"></span> Info</button>
+                        <button class="btn btn-info"><span class="glyphicon glyphicon-info-sign"></span> View Event</button>
                     </div>
                     
                     <div class="thumbnail event_post">
                     	<p><strong>Event 101:</strong></p>
                         <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300">
                         <p>Fri. 27 November 2015</p>
-                        <button class="btn btn-info"><span class="glyphicon glyphicon-info-sign"></span> Info</button>
+                        <button class="btn btn-info"><span class="glyphicon glyphicon-info-sign"></span> View Event</button>
                     </div>
                     
  				</div>
