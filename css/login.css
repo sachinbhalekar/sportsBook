@@ -9,16 +9,19 @@
 
 body
 {
-	color: black;
-	background-color: black;
+	background-color: #333;
 }
 
 .container
 {
-	color: white;
 	margin-top:50px;
 	background: black url("../images/index_1.jpg") no-repeat fixed center;
 	background-size: 100% 100%;
+}
+
+h1
+{
+	color: white !important;
 }
 
 #login_table
@@ -31,11 +34,6 @@ body
 #login_table td
 {
 	padding: 5px !important;
-}
-
-.font_black
-{
-	color: black;
 }
 
 footer 

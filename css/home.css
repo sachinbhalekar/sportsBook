@@ -9,21 +9,19 @@
 
 body
 {
-	color: black;
-	background-color: black;
+	background-color: #333;
 }
 
 .container
 {
-	color: white;
 	margin-top:50px;
 	background: black url("../images/bg1.png") no-repeat fixed center;
 	background-size: 100% 100%;
 }
 
-.activity_post,.event_post p
+h1
 {
-	color: black;
+	color: white !important;
 }
 
 footer 
