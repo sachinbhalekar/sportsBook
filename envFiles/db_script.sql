@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2017 at 04:59 AM
+-- Generation Time: Nov 23, 2017 at 06:43 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `activity_address` (
   `userEmail` varchar(60) NOT NULL,
+  `activityId` int(11) NOT NULL,
   `address1` varchar(25) NOT NULL,
   `address2` varchar(25) DEFAULT NULL,
   `city` varchar(20) NOT NULL,
@@ -40,13 +41,6 @@ CREATE TABLE `activity_address` (
   `latitude` double NOT NULL,
   `longitude` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `activity_address`
---
-
-INSERT INTO `activity_address` (`userEmail`, `address1`, `address2`, `city`, `state`, `country`, `zipcode`, `landmark`, `latitude`, `longitude`) VALUES
-('sam@gmail.com', '1845 Halsted Street', '108', 'Northridge', 'California', '', 91325, 'Legacy Apt', 34.2449406, -118.52097449999997);
 
 -- --------------------------------------------------------
 
@@ -56,6 +50,7 @@ INSERT INTO `activity_address` (`userEmail`, `address1`, `address2`, `city`, `st
 
 CREATE TABLE `event_address` (
   `userEmail` varchar(60) NOT NULL,
+  `eventId` int(11) NOT NULL,
   `address1` varchar(25) NOT NULL,
   `address2` varchar(25) DEFAULT NULL,
   `city` varchar(20) NOT NULL,
@@ -66,14 +61,6 @@ CREATE TABLE `event_address` (
   `latitude` double NOT NULL,
   `longitude` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `event_address`
---
-
-INSERT INTO `event_address` (`userEmail`, `address1`, `address2`, `city`, `state`, `country`, `zipcode`, `landmark`, `latitude`, `longitude`) VALUES
-('sam@gmail.com', 'CSUN Matador Stadium', 'CSUN', 'Northridge', 'CA', '', 91311, 'CSUN SRC', 34.2450681, -118.52655549999997),
-('sam@gmail.com', 'CSUN Matador Stadium', 'CSUN', 'Northridge', 'CA', '', 91311, 'CSUN SRC', 34.2450681, -118.52655549999997);
 
 -- --------------------------------------------------------
 
@@ -118,15 +105,6 @@ CREATE TABLE `user_activity` (
   `activityInTime` time NOT NULL,
   `activityOutTime` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `user_activity`
---
-
-INSERT INTO `user_activity` (`userEmail`, `activityId`, `activityDesc`, `activitySport`, `activityDate`, `activityInTime`, `activityOutTime`) VALUES
-('sam@gmail.com', 1, 'Hi', 'tennis', '0000-00-00', '10:00:00', '11:00:00'),
-('sam@gmail.com', 2, 'Hi', 'tennis', '0000-00-00', '10:00:00', '11:00:00'),
-('sam@gmail.com', 3, 'I am playing for 1 hour', 'football', '0000-00-00', '10:00:00', '11:00:00');
 
 -- --------------------------------------------------------
 
@@ -176,14 +154,6 @@ CREATE TABLE `user_event` (
   `eventOutTime` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `user_event`
---
-
-INSERT INTO `user_event` (`userEmail`, `eventId`, `eventTitle`, `eventDesc`, `eventSport`, `eventOccupancy`, `eventDate`, `eventInTime`, `eventOutTime`) VALUES
-('sam@gmail.com', 1, 'CSUN vs CSULB', 'Match between two university football teams...', 'football', 50, '0000-00-00', '00:00:00', '00:00:00'),
-('sam@gmail.com', 2, 'CSUN vs CSULB', 'Match between two university football teams...', 'football', 50, '0000-00-00', '10:00:00', '10:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -218,13 +188,15 @@ INSERT INTO `user_sports` (`userEmail`, `sports_activity`) VALUES
 -- Indexes for table `activity_address`
 --
 ALTER TABLE `activity_address`
-  ADD KEY `Key_userEmail` (`userEmail`);
+  ADD KEY `Key_userEmail` (`userEmail`),
+  ADD KEY `FK_userEmail7` (`activityId`);
 
 --
 -- Indexes for table `event_address`
 --
 ALTER TABLE `event_address`
-  ADD KEY `Key_userEmail` (`userEmail`);
+  ADD KEY `Key_userEmail` (`userEmail`),
+  ADD KEY `FK_userEmail8` (`eventId`);
 
 --
 -- Indexes for table `users`
@@ -266,13 +238,13 @@ ALTER TABLE `user_sports`
 -- AUTO_INCREMENT for table `user_activity`
 --
 ALTER TABLE `user_activity`
-  MODIFY `activityId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `activityId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user_event`
 --
 ALTER TABLE `user_event`
-  MODIFY `eventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `eventId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -282,13 +254,15 @@ ALTER TABLE `user_event`
 -- Constraints for table `activity_address`
 --
 ALTER TABLE `activity_address`
-  ADD CONSTRAINT `FK_userEmail2` FOREIGN KEY (`userEmail`) REFERENCES `users` (`userEmail`);
+  ADD CONSTRAINT `FK_userEmail2` FOREIGN KEY (`userEmail`) REFERENCES `users` (`userEmail`),
+  ADD CONSTRAINT `FK_userEmail7` FOREIGN KEY (`activityId`) REFERENCES `user_activity` (`activityId`);
 
 --
 -- Constraints for table `event_address`
 --
 ALTER TABLE `event_address`
-  ADD CONSTRAINT `FK_userEmail3` FOREIGN KEY (`userEmail`) REFERENCES `users` (`userEmail`);
+  ADD CONSTRAINT `FK_userEmail3` FOREIGN KEY (`userEmail`) REFERENCES `users` (`userEmail`),
+  ADD CONSTRAINT `FK_userEmail8` FOREIGN KEY (`eventId`) REFERENCES `user_event` (`eventId`);
 
 --
 -- Constraints for table `user_activity`
