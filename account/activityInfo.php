@@ -26,6 +26,10 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
     $name = strip_tags($name);
     $name = htmlspecialchars($name);
     
+    $activityInterestCount = trim($_GET['activityInterestCount']);
+    $activityInterestCount = strip_tags($activityInterestCount);
+    $activityInterestCount = htmlspecialchars($activityInterestCount);
+    
     $res=$conn->query("SELECT * FROM user_activity WHERE activityId='$activityId'");
     $userActivity=$res->fetch_assoc();
     
@@ -178,10 +182,50 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                                 </div>
                                 <div class="form-group">        
                                   	<div class="col-sm-offset-2 col-sm-10">
-                                  		<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+                                  		<a href="#" data-toggle="modal" data-target="#activityModal">Interested <span class="badge"><?php echo $activityInterestCount; ?></span></a>
                                     	<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
                                   	</div>
-                                </div> 
+                                </div>
+                                
+                                <div class="modal fade" id="activityModal" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                          <h4 class="modal-title">People Interested</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        <?php 
+                                        if($activityInterestCount >= 1)
+                                        {
+                                            //echo "<script type='text/javascript'>alert('If');</script>";
+                                            $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_activity WHERE activityId = '$activityId')");
+                                            //echo "<script type='text/javascript'>alert('$res3');</script>";
+                                            while ($userActivityInterestedName=$res3->fetch_assoc())
+                                            {
+                                                
+                                                ?>
+                                                <p><strong><?php echo $userActivityInterestedName['name']; ?></strong></p>
+                                                <?php
+                                            }
+                                        }
+                                        else 
+                                        {
+                                            echo "<script type='text/javascript'>alert('else');</script>";
+                                            ?>
+                                            <p>No one interested yet.</p>
+                                            <?php
+                                        }
+                                        ?>
+                                          
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                
                         	</form>   
                         </div>
                     </div>

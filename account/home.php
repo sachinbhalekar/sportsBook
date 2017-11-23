@@ -116,29 +116,29 @@ while ($userActivity=$res->fetch_assoc())
                                     <div class="modal-header">
                                       <button type="button" class="close" data-dismiss="modal">&times;</button>
                                       <h4 class="modal-title">People Interested</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                    <?php 
-                                    if($activityInterestCount >= 1)
-                                    {
-                                        $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_activity WHERE activityId = '$userActivityId')");
-                                        while ($userActivityInterestedName=$res3->fetch_assoc())
+                                        </div>
+                                        <div class="modal-body">
+                                        <?php 
+                                        if($activityInterestCount >= 1)
+                                        {
+                                            $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_activity WHERE activityId = '$userActivityId')");
+                                            while ($userActivityInterestedName=$res3->fetch_assoc())
+                                            {
+                                                ?>
+                                                <p><strong><?php echo $userActivityInterestedName['name']; ?></strong></p>
+                                                <?php
+                                            }
+                                        }
+                                        else 
                                         {
                                             ?>
-                                            <p><strong><?php echo $userActivityInterestedName['name']; ?></strong></p>
+                                            <p>No one interested yet.</p>
                                             <?php
                                         }
-                                    }
-                                    else 
-                                    {
                                         ?>
-                                        <p>No one interested yet.</p>
-                                        <?php
-                                    }
-                                    ?>
-                                      
-                                    </div>
-                                    <div class="modal-footer">
+                                          
+                                        </div>
+                                        <div class="modal-footer">
                                       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     </div>
                                   </div>
@@ -174,7 +174,7 @@ while ($userActivity=$res->fetch_assoc())
                         	<p><strong><?php echo $userEvent['eventTitle']; ?></strong></p>
                             <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300">
                             <p><?php echo $userEvent['eventDate']; ?></p>
-                            <a href="eventInfo.php?eventId=<?php echo $userEvent['eventId']; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
+                            <a href="eventInfo.php?eventId=<?php echo $userEvent['eventId']; ?>&eventInterestCount=<?php echo $eventInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
                             <br/>
                             <a href="#" data-toggle="modal" data-target="#eventModal<?php echo $userEventId; ?>">Interested <span class="badge"><?php echo $eventInterestCount; ?></span></a>
                             <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>

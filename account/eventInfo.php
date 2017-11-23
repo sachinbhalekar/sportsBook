@@ -20,6 +20,10 @@ if (isset($_GET['eventId']))
     $eventId = trim($_GET['eventId']);
     $eventId = strip_tags($eventId);
     $eventId = htmlspecialchars($eventId);
+    
+    $eventInterestCount = trim($_GET['eventInterestCount']);
+    $eventInterestCount = strip_tags($eventInterestCount);
+    $eventInterestCount = htmlspecialchars($eventInterestCount);
     //echo "<script type='text/javascript'>alert('$eventId');</script>";
     $res=$conn->query("SELECT * FROM user_event WHERE eventId='$eventId'");
     $userEvent=$res->fetch_assoc();
@@ -173,10 +177,46 @@ if (isset($_GET['eventId']))
                                 </div>
                                 <div class="form-group">        
                                   	<div class="col-sm-offset-2 col-sm-10">
-                                  		<a href="#">Interested <span class="badge">5</span></a><br/><br/>
+                                  		<a href="#" data-toggle="modal" data-target="#eventModal">Interested <span class="badge"><?php echo $eventInterestCount; ?></span></a>
                                     	<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
                                   	</div>
                                 </div> 
+                                
+                                <div class="modal fade" id="eventModal" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                          <h4 class="modal-title">People Interested</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                        <?php 
+                                        if($eventInterestCount >= 1)
+                                        {
+                                            $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_event WHERE eventId = '$eventId')");
+                                            while ($userEventInterestedName=$res3->fetch_assoc())
+                                            {
+                                                ?>
+                                                <p><strong><?php echo $userEventInterestedName['name']; ?></strong></p>
+                                                <?php
+                                            }
+                                        }
+                                        else 
+                                        {
+                                            ?>
+                                            <p>No one interested yet.</p>
+                                            <?php
+                                        }
+                                        ?>
+                                          
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                
                         	</form>   
                         </div>
                     </div>
