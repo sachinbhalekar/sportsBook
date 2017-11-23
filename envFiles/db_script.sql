@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 23, 2017 at 03:30 AM
+-- Generation Time: Nov 23, 2017 at 04:59 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -72,6 +72,7 @@ CREATE TABLE `event_address` (
 --
 
 INSERT INTO `event_address` (`userEmail`, `address1`, `address2`, `city`, `state`, `country`, `zipcode`, `landmark`, `latitude`, `longitude`) VALUES
+('sam@gmail.com', 'CSUN Matador Stadium', 'CSUN', 'Northridge', 'CA', '', 91311, 'CSUN SRC', 34.2450681, -118.52655549999997),
 ('sam@gmail.com', 'CSUN Matador Stadium', 'CSUN', 'Northridge', 'CA', '', 91311, 'CSUN SRC', 34.2450681, -118.52655549999997);
 
 -- --------------------------------------------------------
@@ -110,6 +111,7 @@ INSERT INTO `users` (`userName`, `userLastName`, `userEmail`, `userPass`, `userG
 
 CREATE TABLE `user_activity` (
   `userEmail` varchar(60) NOT NULL,
+  `activityId` int(11) NOT NULL,
   `activityDesc` text NOT NULL,
   `activitySport` varchar(30) NOT NULL,
   `activityDate` date NOT NULL,
@@ -121,10 +123,10 @@ CREATE TABLE `user_activity` (
 -- Dumping data for table `user_activity`
 --
 
-INSERT INTO `user_activity` (`userEmail`, `activityDesc`, `activitySport`, `activityDate`, `activityInTime`, `activityOutTime`) VALUES
-('sam@gmail.com', 'Hi', 'tennis', '0000-00-00', '10:00:00', '11:00:00'),
-('sam@gmail.com', 'Hi', 'tennis', '0000-00-00', '10:00:00', '11:00:00'),
-('sam@gmail.com', 'I am playing for 1 hour', 'football', '0000-00-00', '10:00:00', '11:00:00');
+INSERT INTO `user_activity` (`userEmail`, `activityId`, `activityDesc`, `activitySport`, `activityDate`, `activityInTime`, `activityOutTime`) VALUES
+('sam@gmail.com', 1, 'Hi', 'tennis', '0000-00-00', '10:00:00', '11:00:00'),
+('sam@gmail.com', 2, 'Hi', 'tennis', '0000-00-00', '10:00:00', '11:00:00'),
+('sam@gmail.com', 3, 'I am playing for 1 hour', 'football', '0000-00-00', '10:00:00', '11:00:00');
 
 -- --------------------------------------------------------
 
@@ -164,6 +166,7 @@ INSERT INTO `user_address` (`userEmail`, `address1`, `address2`, `city`, `state`
 
 CREATE TABLE `user_event` (
   `userEmail` varchar(60) NOT NULL,
+  `eventId` int(11) NOT NULL,
   `eventTitle` varchar(30) NOT NULL,
   `eventDesc` text,
   `eventSport` varchar(30) NOT NULL,
@@ -177,8 +180,9 @@ CREATE TABLE `user_event` (
 -- Dumping data for table `user_event`
 --
 
-INSERT INTO `user_event` (`userEmail`, `eventTitle`, `eventDesc`, `eventSport`, `eventOccupancy`, `eventDate`, `eventInTime`, `eventOutTime`) VALUES
-('sam@gmail.com', 'CSUN vs CSULB', 'Match between two university football teams...', 'football', 50, '0000-00-00', '00:00:00', '00:00:00');
+INSERT INTO `user_event` (`userEmail`, `eventId`, `eventTitle`, `eventDesc`, `eventSport`, `eventOccupancy`, `eventDate`, `eventInTime`, `eventOutTime`) VALUES
+('sam@gmail.com', 1, 'CSUN vs CSULB', 'Match between two university football teams...', 'football', 50, '0000-00-00', '00:00:00', '00:00:00'),
+('sam@gmail.com', 2, 'CSUN vs CSULB', 'Match between two university football teams...', 'football', 50, '0000-00-00', '10:00:00', '10:00:00');
 
 -- --------------------------------------------------------
 
@@ -232,6 +236,7 @@ ALTER TABLE `users`
 -- Indexes for table `user_activity`
 --
 ALTER TABLE `user_activity`
+  ADD PRIMARY KEY (`activityId`),
   ADD KEY `Key_userEmail` (`userEmail`);
 
 --
@@ -244,6 +249,7 @@ ALTER TABLE `user_address`
 -- Indexes for table `user_event`
 --
 ALTER TABLE `user_event`
+  ADD PRIMARY KEY (`eventId`),
   ADD KEY `Key_userEmail` (`userEmail`);
 
 --
@@ -251,6 +257,22 @@ ALTER TABLE `user_event`
 --
 ALTER TABLE `user_sports`
   ADD KEY `Key_userEmail` (`userEmail`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `user_activity`
+--
+ALTER TABLE `user_activity`
+  MODIFY `activityId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `user_event`
+--
+ALTER TABLE `user_event`
+  MODIFY `eventId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
