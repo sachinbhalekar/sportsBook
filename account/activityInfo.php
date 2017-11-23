@@ -14,20 +14,27 @@ $userEmail = $_SESSION['user'];
 $res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
 $userRow=$res->fetch_assoc();
 
-if (isset($_GET['activityId']))
+if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
 {
     //echo "<script type='text/javascript'>alert('Found');</script>";
     $activityId = trim($_GET['activityId']);
     $activityId = strip_tags($activityId);
     $activityId = htmlspecialchars($activityId);
     //echo "<script type='text/javascript'>alert('$activityId');</script>";
+    
+    $name = trim($_GET['activityUserName']);
+    $name = strip_tags($name);
+    $name = htmlspecialchars($name);
+    
     $res=$conn->query("SELECT * FROM user_activity WHERE activityId='$activityId'");
     $userActivity=$res->fetch_assoc();
     
+    /*
     $userActivityEmail = $userActivity['userEmail'];
     $res=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userActivityEmail'");
     $userActivityRow=$res->fetch_assoc();
     $name = $userActivityRow['name'];
+    */
     //echo "<script type='text/javascript'>alert('$name');</script>";
     
     $res=$conn->query("SELECT * FROM activity_address WHERE activityId='$activityId'");

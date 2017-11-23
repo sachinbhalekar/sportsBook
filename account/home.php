@@ -85,14 +85,20 @@ while ($userActivity=$res->fetch_assoc())
                         //$count = 0;
                         while ($userActivity=$res->fetch_assoc())
                         {
+                            $userActivityEmail = $userActivity['userEmail'];
+                            $res1=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userActivityEmail'");
+                            $userActivityRow=$res1->fetch_assoc();
+                            $name = $userActivityRow['name'];
+                            
+                            //$activityId = $userActivity['activityId'];
                             //$count++;
                             //echo "<script type='text/javascript'>alert('$count');</script>";
                         ?>
                             <div class="well activity_post">
-                            	<p><strong><?php echo $userActivity['userEmail']; ?></strong></p>
+                            	<p><strong><?php echo $name; ?></strong></p>
                                 <p id="all_post_info" ><?php echo $userActivity['activityDesc']; ?></p>
                                 <label>Sport:</label><span> <?php echo $userActivity['activitySport']; ?></span><br/>
-                                <a href="activityInfo.php?activityId=<?php echo $userActivity['activityId']; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
+                                <a href="activityInfo.php?activityId=<?php echo $userActivity['activityId']; ?>&activityUserName=<?php echo $name; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
                                 <br/>
                                 <a href="#">Interested <span class="badge">5</span></a>
                                 <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
