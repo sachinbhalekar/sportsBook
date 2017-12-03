@@ -95,7 +95,7 @@ if (isset($_GET['eventId']))
 		<div class="container">
 			<div class="row">
         		<div class="col-sm-12 text-left">
-        			<h1>Post your Event here...</h1>
+        			<h1>Event Info</h1>
         			<hr>
         			<div class="panel panel-default text-left">
                         <div class="panel-body">

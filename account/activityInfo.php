@@ -111,7 +111,7 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
 	
 			<div class="row">
         		<div class="col-sm-12 text-left">
-        			<h1>Activity Info...</h1>
+        			<h1>Activity Info</h1>
         			<hr>
         			<div class="panel panel-default text-left">
                         <div class="panel-body">
@@ -211,7 +211,7 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                                         }
                                         else 
                                         {
-                                            echo "<script type='text/javascript'>alert('else');</script>";
+                                            //echo "<script type='text/javascript'>alert('else');</script>";
                                             ?>
                                             <p>No one interested yet.</p>
                                             <?php
