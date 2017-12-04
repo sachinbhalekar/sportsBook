@@ -8,11 +8,14 @@ $error = false;
 
 if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) ) 
 {
+    $message = "";
+    $errTyp = "";
+    
     //echo "<script type='text/javascript'>alert('inside');</script>";
     // clean user inputs to prevent sql injections
-    $desc = trim($_POST['firstname']);
-    $desc = strip_tags($desc);
-    $desc = htmlspecialchars($desc);
+    $firstname = trim($_POST['firstname']);
+    $firstname = strip_tags($firstname);
+    $firstname = htmlspecialchars($firstname);
     //echo "<script type='text/javascript'>alert('$name');</script>";
     
     $lastname = trim($_POST['lastname']);
@@ -20,9 +23,9 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
     $lastname = htmlspecialchars($lastname);
     //echo "<script type='text/javascript'>alert('$lastname');</script>";
     
-    $userDOB = trim($_POST['dob']);
-    $userDOB = strip_tags($userDOB);
-    $userDOB = htmlspecialchars($userDOB);
+    $DOB = trim($_POST['dob']);
+    $DOB = strip_tags($DOB);
+    $DOB = htmlspecialchars($DOB);
     //echo "<script type='text/javascript'>alert('$userDOB');</script>";
     
     $gender = trim($_POST['gender']);
@@ -75,9 +78,9 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
     $sports = htmlspecialchars($sports);
     //echo "<script type='text/javascript'>alert('$sports');</script>";
     
-    $userbio = trim($_POST['bio']);
-    $userbio = strip_tags($userbio);
-    $userbio = htmlspecialchars($userbio);
+    $bio = trim($_POST['bio']);
+    $bio = strip_tags($bio);
+    $bio = htmlspecialchars($bio);
     //echo "<script type='text/javascript'>alert('$userbio');</script>";
     
     $latitude = trim($_POST['latitude']);
@@ -96,7 +99,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
         $error = true;
         $errTyp = "danger";
         $message = "Please enter valid email address.";
-        echo "<script type='text/javascript'>alert('$message');</script>";
+        //echo "<script type='text/javascript'>alert('$message');</script>";
     } 
     else 
     {
@@ -111,7 +114,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
             $error = true;
             $errTyp = "danger";
             $message = "Email address already registered.";
-            echo "<script type='text/javascript'>alert(conunt = '$message');</script>";
+            //echo "<script type='text/javascript'>alert(conunt = '$message');</script>";
         }
     }
     
@@ -124,7 +127,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
         $password = hash('sha256', $pass);
         //echo "<script type='text/javascript'>alert('$password');</script>";
         
-        $query = "INSERT INTO users(userName,userEmail,userPass,userLastName,userGender,userDoB,userBio) VALUES('$desc','$email','$password','$lastname','$gender','$userDOB','$userbio')";
+        $query = "INSERT INTO users(userName,userEmail,userPass,userLastName,userGender,userDoB,userBio) VALUES('$firstname','$email','$password','$lastname','$gender','$DOB','$bio')";
         //echo "<script type='text/javascript'>alert(Query : '$query');</script>";
         $query1 = "INSERT INTO user_address(userEmail,address1,address2,city,state,country,zipcode,latitude,longitude) VALUES('$email','$address1','$address2','$city','$state','$country','$zipcode',$latitude,$longitude)";        
         //echo "<script type='text/javascript'>alert(Query1 : '$query1');</script>";
@@ -140,6 +143,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
                     $query2 = "INSERT INTO user_sports(userEmail,sports_activity) VALUES('$email','$value')";
                     if( $conn->query($query2) === FALSE )
                     {
+                        //echo "<script type='text/javascript'>alert('false');</script>";
                         $error = true;
                         $errTyp = "danger";
                         $message = "Something went wrong, try again later...";
@@ -151,13 +155,15 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
             {
                 $errTyp = "success";
                 $message = "Successfully registered, you may login now!";
-                unset($desc);
+                unset($firstname);
                 unset($email);
                 unset($pass);
             }
         } 
         else
         {
+            //echo "<script type='text/javascript'>alert('false all');</script>";
+            $error = true;
             $errTyp = "danger";
             $message = "Something went wrong, try again later...";
         }
@@ -173,12 +179,32 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
             $conn->query($queryD1);          
         }
     }
+    
+    unset($_POST['firstname']);
+    unset($_POST['$lastname']);
+    unset($_POST['$DOB']);
+    unset($_POST['$gender']);
+    unset($_POST['$email']);
+    unset($_POST['$pass']);
+    unset($_POST['$address1']);
+    unset($_POST['$address2']);
+    unset($_POST['$city']);
+    unset($_POST['$state']);
+    unset($_POST['$country']);
+    unset($_POST['$zipcode']);
+    unset($_POST['$sports']);
+    unset($_POST['$bio']);
+    unset($_POST['$latitude']);
+    unset($_POST['$longitude']);
+    
+    unset($_POST['$signup_form']);
+    unset($_POST['$signup_btn']);
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80"></script>
 	<script>
     function getLatLong()
     {
@@ -304,11 +330,11 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 					<table id="login_table" class="text-left">
 						<tr>
 							<td>First Name <span style="color:red">*</span></td>
-							<td><input id="firstname" name="firstname" class="form-control" type="text" maxlength="50" required placeholder="Enter First Name" value="<?php echo $desc ?>" /></td>
+							<td><input id="firstname" name="firstname" class="form-control" type="text" maxlength="50" required placeholder="Enter First Name" /></td>
 						</tr>
 						<tr>
-							<td>Last Name</td>
-							<td><input id="lastname" name="lastname" class="form-control" type="text" maxlength="50" placeholder="Enter Last Name" /></td>
+							<td>Last Name <span style="color:red">*</span></td>
+							<td><input id="lastname" name="lastname" class="form-control" type="text" maxlength="50" required placeholder="Enter Last Name" /></td>
 						</tr>
 						<tr>
 							<td>Date of Birth <span style="color:red">*</span></td>
@@ -324,7 +350,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 						</tr>
 						<tr>
 							<td>E-mail <span style="color:red">*</span></td>
-							<td><input id="username" name="username" class="form-control" type="text" maxlength="50" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Set your username" value="<?php echo $email ?>" /></td>
+							<td><input id="username" name="username" class="form-control" type="text" maxlength="50" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Set your username" /></td>
 						</tr>
 						<tr>
 							<td>Set Password <span style="color:red">*</span></td>
