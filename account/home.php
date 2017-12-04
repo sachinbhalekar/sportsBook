@@ -229,7 +229,8 @@ while ($userActivity=$res->fetch_assoc())
                         ?>
                         <div class="thumbnail event_post">
                         	<p><strong><?php echo $eventRow['eventTitle']; ?></strong></p>
-                            <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300">
+                            <!-- <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300"> -->
+                            <p><?php echo $eventRow['eventDesc']; ?></p>
                             <p><?php echo $eventRow['eventDate']; ?></p>
                             <a href="eventInfo.php?eventId=<?php echo $eventRow['eventId']; ?>&eventInterestCount=<?php echo $eventInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
                             <br/>
