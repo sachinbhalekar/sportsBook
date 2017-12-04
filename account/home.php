@@ -35,6 +35,62 @@ while ($userActivity=$res->fetch_assoc())
 ?>
 <!DOCTYPE html>
 <html lang="en">
+	<script>
+    	var xmlhttp;
+    	var vSelectedPost;
+    	var vSelectedPostId;
+    	
+    	function respond() 
+    	{
+    		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+    		{
+    			if(xmlhttp.responseText === 'success')
+    			{
+    				var vInterested;
+    				if(vSelectedPost === 'activity')
+    				{
+        				vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
+    					document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML = vInterested;
+    				}
+    				else if(vSelectedPost === 'event')
+    				{
+        				vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
+    					document.getElementById('event_post_interested'+vSelectedPostId).innerHTML = vInterested;
+    				}
+    			}
+    		}
+    	}
+    	
+    	function addInterested( vPost, vPostId )
+    	{
+    		vSelectedPost = vPost;
+    		vSelectedPostId = vPostId;
+    		
+    		var vObj = {
+    				userEmail: '<?php echo $userEmail; ?>',
+    				postId: vPostId,
+    			 	post: vPost
+    			};
+    		
+    		var vJSONObj = JSON.stringify(vObj);
+    		//console.log(vJSONObj);
+    		
+    		if (window.XMLHttpRequest) 
+    		{
+    			xmlhttp = new XMLHttpRequest();
+    		}
+    		else 
+    		{
+    			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    		}
+    		
+    		xmlhttp.onreadystatechange = respond;
+    		xmlhttp.open("POST", "addInterested.php", true);
+    		xmlhttp.send(vJSONObj);
+    	  
+    		return false;
+    	}
+	</script>
 	<head>
 		<meta charset="utf-8">
 		<meta name="description" content="SportsBook">
@@ -106,8 +162,8 @@ while ($userActivity=$res->fetch_assoc())
                                 <label>Sport:</label><span> <?php echo $userActivity['activitySport']; ?></span><br/>
                                 <a href="activityInfo.php?activityId=<?php echo $userActivityId; ?>&activityUserName=<?php echo $name; ?>&activityInterestCount=<?php echo $activityInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
                                 <br/>
-                                <a href="#" data-toggle="modal" data-target="#activityModal<?php echo $userActivityId; ?>">Interested <span class="badge"><?php echo $activityInterestCount; ?></span></a>
-                                <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+                                <a href="#" data-toggle="modal" data-target="#activityModal<?php echo $userActivityId; ?>">Interested <span id="activity_post_interested<?php echo $userActivityId; ?>" class="badge"><?php echo $activityInterestCount; ?></span></a>
+                                <button type="button" class="btn btn-primary" onclick="addInterested('activity', '<?php echo $userActivityId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
               				</div>
               				
               				<div class="modal fade" id="activityModal<?php echo $userActivityId; ?>" role="dialog">
@@ -176,8 +232,8 @@ while ($userActivity=$res->fetch_assoc())
                             <p><?php echo $userEvent['eventDate']; ?></p>
                             <a href="eventInfo.php?eventId=<?php echo $userEvent['eventId']; ?>&eventInterestCount=<?php echo $eventInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
                             <br/>
-                            <a href="#" data-toggle="modal" data-target="#eventModal<?php echo $userEventId; ?>">Interested <span class="badge"><?php echo $eventInterestCount; ?></span></a>
-                            <button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+                            <a href="#" data-toggle="modal" data-target="#eventModal<?php echo $userEventId; ?>">Interested <span id="event_post_interested<?php echo $userEventId; ?>" class="badge"><?php echo $eventInterestCount; ?></span></a>
+                            <button type="button" class="btn btn-primary" onclick="addInterested('event', '<?php echo $userEventId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
                         </div>
                         
                         <div class="modal fade" id="eventModal<?php echo $userEventId; ?>" role="dialog">

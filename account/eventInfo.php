@@ -54,7 +54,60 @@ if (isset($_GET['eventId']))
 <html lang="en">
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap" async defer></script>
 	<script>
-    
+    	var xmlhttp;
+    	var vSelectedPost;
+    	var vSelectedPostId;
+    	
+    	function respond() 
+    	{
+    		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+    		{
+    			if(xmlhttp.responseText === 'success')
+    			{
+    				var vInterested;
+    				if(vSelectedPost === 'activity')
+    				{
+        				vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
+    					document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML = vInterested;
+    				}
+    				else if(vSelectedPost === 'event')
+    				{
+        				vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
+    					document.getElementById('event_post_interested'+vSelectedPostId).innerHTML = vInterested;
+    				}
+    			}
+    		}
+    	}
+    	
+    	function addInterested( vPost, vPostId )
+    	{
+    		vSelectedPost = vPost;
+    		vSelectedPostId = vPostId;
+    		
+    		var vObj = {
+    				userEmail: '<?php echo $userEmail; ?>',
+    				postId: vPostId,
+    			 	post: vPost
+    			};
+    		
+    		var vJSONObj = JSON.stringify(vObj);
+    		//console.log(vJSONObj);
+    		
+    		if (window.XMLHttpRequest) 
+    		{
+    			xmlhttp = new XMLHttpRequest();
+    		}
+    		else 
+    		{
+    			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    		}
+    		
+    		xmlhttp.onreadystatechange = respond;
+    		xmlhttp.open("POST", "addInterested.php", true);
+    		xmlhttp.send(vJSONObj);
+    	  
+    		return false;
+    	}
     </script>
 	<head>
 		<meta charset="utf-8">
@@ -177,8 +230,8 @@ if (isset($_GET['eventId']))
                                 </div>
                                 <div class="form-group">        
                                   	<div class="col-sm-offset-2 col-sm-10">
-                                  		<a href="#" data-toggle="modal" data-target="#eventModal">Interested <span class="badge"><?php echo $eventInterestCount; ?></span></a>
-                                    	<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+                                  		<a href="#" data-toggle="modal" data-target="#eventModal">Interested <span id="event_post_interested<?php echo $eventId; ?>" class="badge"><?php echo $eventInterestCount; ?></span></a>
+                                    	<button type="button" class="btn btn-primary" onclick="addInterested('event', '<?php echo $eventId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
                                   	</div>
                                 </div> 
                                 

@@ -84,14 +84,14 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
         $query = "SELECT max(activityId) FROM user_activity";
         $res = $conn->query("SELECT max(activityId) FROM user_activity");
         $userActivity = $res->fetch_assoc();
-        $seqId = $userActivity['max(activityId)'];
+        $count = $userActivity['max(activityId)'];
         //echo "<script type='text/javascript'>alert('$seqId');</script>";
-        $seqId = $seqId+1;
+        $count = $count+1;
         //echo "<script type='text/javascript'>alert('$seqId');</script>";
         
-        $query = "INSERT INTO user_activity(userEmail,activityId,activityDesc,activitySport,activityDate,activityInTime,activityOutTime) VALUES('$userEmail','$seqId','$desc','$sport','$date','$time_in','$time_out')";
+        $query = "INSERT INTO user_activity(userEmail,activityId,activityDesc,activitySport,activityDate,activityInTime,activityOutTime) VALUES('$userEmail','$count','$desc','$sport','$date','$time_in','$time_out')";
         
-        $query1 = "INSERT INTO activity_address(userEmail,activityId,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$seqId','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
+        $query1 = "INSERT INTO activity_address(userEmail,activityId,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$count','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
         
         if($conn->query($query) === TRUE && $conn->query($query1) === TRUE)
         {

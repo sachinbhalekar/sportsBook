@@ -92,14 +92,14 @@ if ( isset($_POST['event_btn']) )
         $query = "SELECT max(eventId) FROM user_event";
         $res = $conn->query("SELECT max(eventId) FROM user_event");
         $userActivity = $res->fetch_assoc();
-        $seqId = $userActivity['max(eventId)'];
+        $count = $userActivity['max(eventId)'];
         //echo "<script type='text/javascript'>alert('$seqId');</script>";
-        $seqId = $seqId+1;
+        $count = $count+1;
         //echo "<script type='text/javascript'>alert('$seqId');</script>";
         
-        $query = "INSERT INTO user_event(userEmail,eventId,eventTitle,eventDesc,eventSport,eventOccupancy,eventDate,eventInTime,eventOutTime) VALUES('$userEmail','$seqId','$title','$desc','$sport','$occupancy','$date','$time_in','$time_out')";
+        $query = "INSERT INTO user_event(userEmail,eventId,eventTitle,eventDesc,eventSport,eventOccupancy,eventDate,eventInTime,eventOutTime) VALUES('$userEmail','$count','$title','$desc','$sport','$occupancy','$date','$time_in','$time_out')";
         
-        $query1 = "INSERT INTO event_address(userEmail,eventId,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$seqId','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
+        $query1 = "INSERT INTO event_address(userEmail,eventId,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$count','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
         
         if($conn->query($query) === TRUE && $conn->query($query1) === TRUE)
         {
@@ -270,16 +270,41 @@ function showUser() {
 
      
       // Heatmap data: 500 Points
+     
       function getPoints() {
         return [
-        	<?php 
+        	<?php /*
         			require_once '../location/distance.php';
-        			$q = intval($_POST['occupancy']);
+        			$q = intval($_GET['q']);
         			if($q>0)
         			{
         			fetchTargetRegion();
-        			}
+        			}*/
         			?> 
+        	 new google.maps.LatLng(37.782551, -122.445368),
+             new google.maps.LatLng(37.782745, -122.444586),
+             new google.maps.LatLng(37.782842, -122.443688),
+             new google.maps.LatLng(37.782919, -122.442815),
+             new google.maps.LatLng(37.782992, -122.442112),
+             new google.maps.LatLng(37.783100, -122.441461),
+             new google.maps.LatLng(37.783206, -122.440829),
+             new google.maps.LatLng(37.783273, -122.440324),
+             new google.maps.LatLng(37.783316, -122.440023),
+             new google.maps.LatLng(37.783357, -122.439794),
+             new google.maps.LatLng(37.783371, -122.439687),
+             new google.maps.LatLng(37.783368, -122.439666),
+             new google.maps.LatLng(37.783383, -122.439594),
+             new google.maps.LatLng(37.783508, -122.439525),
+             new google.maps.LatLng(37.783842, -122.439591),
+             new google.maps.LatLng(37.784147, -122.439668),
+             new google.maps.LatLng(37.784206, -122.439686),
+             new google.maps.LatLng(37.784386, -122.439790),
+             new google.maps.LatLng(37.784701, -122.439902),
+             new google.maps.LatLng(37.784965, -122.439938),
+             new google.maps.LatLng(37.785010, -122.439947),
+             new google.maps.LatLng(37.785360, -122.439952),
+             new google.maps.LatLng(37.785715, -122.440030),
+             new google.maps.LatLng(37.786117, -122.440119)
         ];
       }
     </script>

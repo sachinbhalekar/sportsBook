@@ -4,7 +4,7 @@ session_start();
 require_once '../connection/dbconnect.php';
 
 // if session is not set this will redirect to login page
-if( !isset($_SESSION['user']) ) 
+if( !isset($_SESSION['user']) )
 {
     header("Location: ../index.php");
     exit;
@@ -34,11 +34,11 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
     $userActivity=$res->fetch_assoc();
     
     /*
-    $userActivityEmail = $userActivity['userEmail'];
-    $res=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userActivityEmail'");
-    $userActivityRow=$res->fetch_assoc();
-    $name = $userActivityRow['name'];
-    */
+     $userActivityEmail = $userActivity['userEmail'];
+     $res=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userActivityEmail'");
+     $userActivityRow=$res->fetch_assoc();
+     $name = $userActivityRow['name'];
+     */
     //echo "<script type='text/javascript'>alert('$name');</script>";
     
     $res=$conn->query("SELECT * FROM activity_address WHERE activityId='$activityId'");
@@ -61,14 +61,60 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
 <!DOCTYPE html>
 <html lang="en">
 	<script>
-		/*
-		function openLocWin()
-		{
-			var locWindow = window.open('location.php', 'location', 'width=300,height=250');
-			locWindow.focus();
-            return true;
-		}
-		*/
+    	var xmlhttp;
+    	var vSelectedPost;
+    	var vSelectedPostId;
+    	
+    	function respond() 
+    	{
+    		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+    		{
+    			if(xmlhttp.responseText === 'success')
+    			{
+    				var vInterested;
+    				if(vSelectedPost === 'activity')
+    				{
+        				vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
+    					document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML = vInterested;
+    				}
+    				else if(vSelectedPost === 'event')
+    				{
+        				vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
+    					document.getElementById('event_post_interested'+vSelectedPostId).innerHTML = vInterested;
+    				}
+    			}
+    		}
+    	}
+    	
+    	function addInterested( vPost, vPostId )
+    	{
+    		vSelectedPost = vPost;
+    		vSelectedPostId = vPostId;
+    		
+    		var vObj = {
+    				userEmail: '<?php echo $userEmail; ?>',
+    				postId: vPostId,
+    			 	post: vPost
+    			};
+    		
+    		var vJSONObj = JSON.stringify(vObj);
+    		//console.log(vJSONObj);
+    		
+    		if (window.XMLHttpRequest) 
+    		{
+    			xmlhttp = new XMLHttpRequest();
+    		}
+    		else 
+    		{
+    			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    		}
+    		
+    		xmlhttp.onreadystatechange = respond;
+    		xmlhttp.open("POST", "addInterested.php", true);
+    		xmlhttp.send(vJSONObj);
+    	  
+    		return false;
+    	}
     </script>
 	<head>
 		<meta charset="utf-8">
@@ -182,8 +228,8 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                                 </div>
                                 <div class="form-group">        
                                   	<div class="col-sm-offset-2 col-sm-10">
-                                  		<a href="#" data-toggle="modal" data-target="#activityModal">Interested <span class="badge"><?php echo $activityInterestCount; ?></span></a>
-                                    	<button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+                                  		<a href="#" data-toggle="modal" data-target="#activityModal">Interested <span id="activity_post_interested<?php echo $activityId; ?>" class="badge"><?php echo $activityInterestCount; ?></span></a>
+                                    	<button type="button" class="btn btn-primary" onclick="addInterested('activity', '<?php echo $activityId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
                                   	</div>
                                 </div>
                                 
