@@ -1,6 +1,6 @@
 <?php 
 require_once '../connection/dbconnect.php';
-
+//
 function distance($lat1, $lon1, $lat2, $lon2, $unit) {
     
     $theta = $lon1 - $lon2;
