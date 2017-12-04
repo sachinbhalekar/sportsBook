@@ -122,28 +122,71 @@ if ( isset($_POST['event_btn']) )
 <html lang="en">
 	
 	<script>
-function showUser() {
-	str=document.getElementById("occupancy").value;
-    if (str == "") {
-        
-        return;
-    } else { 
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-             
-            }
-        };
-        xmlhttp.open("GET","postEvent.php?q="+str,true);
-        xmlhttp.send();
-    }
-}
+	var xmlhttp;
+
+	function respond() 
+	{
+		
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+		{
+			//alert(xmlhttp.responseText);
+			 var JSONObject = JSON.parse(xmlhttp.responseText);
+			  console.log(JSONObject);     
+			
+			 var location =new Array(JSONObject.length);
+			 for (var i = 0; i <JSONObject.length; i++) {
+				 location.push(new google.maps.LatLng(JSONObject[i][0], JSONObject[i][1]));
+			 }
+			initMap1(location);
+			
+			
+		}
+	}
+
+	function showUser() 
+	{
+		'use strict';
+		
+		//var vFirstName = document.getElementById("first_name").value;
+		//var vLastName = document.getElementById("last_name").value;
+		//var vDepartment = document.getElementById("department").value;
+	  
+		//var vEmployee = {
+		//	first: vFirstName,
+		//	last: vLastName,
+		//	dept: vDepartment
+		 
+		//};
+
+		var vOccupancy = document.getElementById("occupancy").value;
+
+		var nearByRegion ={
+			occupancy: vOccupancy
+
+		}
+
+		
+		var vJSONObj = JSON.stringify(nearByRegion);
+		console.log(vJSONObj);
+		
+		if (window.XMLHttpRequest) 
+		{
+			xmlhttp = new XMLHttpRequest();
+		}
+		else 
+		{
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		xmlhttp.onreadystatechange = respond;
+		xmlhttp.open("POST", "nearbyTargetUsers.php", true);
+		xmlhttp.send(vJSONObj);
+	  
+		return false;
+	}
+
+
+
 </script>
 	
 	<script>
@@ -262,49 +305,55 @@ function showUser() {
           
         });
 
-        heatmap = new google.maps.visualization.HeatmapLayer({
+      /*   heatmap = new google.maps.visualization.HeatmapLayer({
           data: getPoints(),
           map: map
         });
-      }
+ */      }
 
+
+function initMap1(location) {
+    	  
+          map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: {lat: 37.775, lng: -122.434},
+          
+        });
+
+        heatmap = new google.maps.visualization.HeatmapLayer({
+          data: location,
+          map: map
+        });
+      }
      
       // Heatmap data: 500 Points
      
       function getPoints() {
-        return [
-        	<?php /*
-        			require_once '../location/distance.php';
-        			$q = intval($_GET['q']);
-        			if($q>0)
-        			{
-        			fetchTargetRegion();
-        			}*/
-        			?> 
-        	 new google.maps.LatLng(37.782551, -122.445368),
-             new google.maps.LatLng(37.782745, -122.444586),
-             new google.maps.LatLng(37.782842, -122.443688),
-             new google.maps.LatLng(37.782919, -122.442815),
-             new google.maps.LatLng(37.782992, -122.442112),
-             new google.maps.LatLng(37.783100, -122.441461),
-             new google.maps.LatLng(37.783206, -122.440829),
-             new google.maps.LatLng(37.783273, -122.440324),
-             new google.maps.LatLng(37.783316, -122.440023),
-             new google.maps.LatLng(37.783357, -122.439794),
-             new google.maps.LatLng(37.783371, -122.439687),
-             new google.maps.LatLng(37.783368, -122.439666),
-             new google.maps.LatLng(37.783383, -122.439594),
-             new google.maps.LatLng(37.783508, -122.439525),
-             new google.maps.LatLng(37.783842, -122.439591),
-             new google.maps.LatLng(37.784147, -122.439668),
-             new google.maps.LatLng(37.784206, -122.439686),
-             new google.maps.LatLng(37.784386, -122.439790),
-             new google.maps.LatLng(37.784701, -122.439902),
-             new google.maps.LatLng(37.784965, -122.439938),
-             new google.maps.LatLng(37.785010, -122.439947),
-             new google.maps.LatLng(37.785360, -122.439952),
-             new google.maps.LatLng(37.785715, -122.440030),
-             new google.maps.LatLng(37.786117, -122.440119)
+        return [ new google.maps.LatLng(37.782551, -122.445368),
+            new google.maps.LatLng(37.782745, -122.444586),
+            new google.maps.LatLng(37.782842, -122.443688),
+            new google.maps.LatLng(37.782919, -122.442815),
+            new google.maps.LatLng(37.782992, -122.442112),
+            new google.maps.LatLng(37.783100, -122.441461),
+            new google.maps.LatLng(37.783206, -122.440829),
+            new google.maps.LatLng(37.783273, -122.440324),
+            new google.maps.LatLng(37.783316, -122.440023),
+            new google.maps.LatLng(37.783357, -122.439794),
+            new google.maps.LatLng(37.783371, -122.439687),
+            new google.maps.LatLng(37.783368, -122.439666),
+            new google.maps.LatLng(37.783383, -122.439594),
+            new google.maps.LatLng(37.783508, -122.439525),
+            new google.maps.LatLng(37.783842, -122.439591),
+            new google.maps.LatLng(37.784147, -122.439668),
+            new google.maps.LatLng(37.784206, -122.439686),
+            new google.maps.LatLng(37.784386, -122.439790),
+            new google.maps.LatLng(37.784701, -122.439902),
+            new google.maps.LatLng(37.784965, -122.439938),
+            new google.maps.LatLng(37.785010, -122.439947),
+            new google.maps.LatLng(37.785360, -122.439952),
+            new google.maps.LatLng(37.785715, -122.440030),
+            new google.maps.LatLng(37.786117, -122.440119)
+        	
         ];
       }
     </script>
@@ -439,6 +488,7 @@ function showUser() {
         		</div>
 			</div>
 		</div>
+		
 		<footer class="container-fluid text-center">
 			<p>&copy; SportsBook</p>
 		</footer>
