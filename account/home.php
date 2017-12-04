@@ -35,11 +35,12 @@ while ($userActivity=$res->fetch_assoc())
 ?>
 <!DOCTYPE html>
 <html lang="en">
+	<!-- <script src="../scripts/addInterest.js"></script> -->
 	<script>
     	var xmlhttp;
     	var vSelectedPost;
     	var vSelectedPostId;
-    	
+    
     	function respond() 
     	{
     		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
@@ -49,18 +50,18 @@ while ($userActivity=$res->fetch_assoc())
     				var vInterested;
     				if(vSelectedPost === 'activity')
     				{
-        				vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
+    					vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
     					document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML = vInterested;
     				}
     				else if(vSelectedPost === 'event')
     				{
-        				vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
+    					vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
     					document.getElementById('event_post_interested'+vSelectedPostId).innerHTML = vInterested;
     				}
     			}
     		}
     	}
-    	
+    
     	function addInterested( vPost, vPostId )
     	{
     		vSelectedPost = vPost;
@@ -85,7 +86,7 @@ while ($userActivity=$res->fetch_assoc())
     		}
     		
     		xmlhttp.onreadystatechange = respond;
-    		xmlhttp.open("POST", "addInterested.php", true);
+    		xmlhttp.open("POST", "addInterest.php", true);
     		xmlhttp.send(vJSONObj);
     	  
     		return false;

@@ -102,7 +102,7 @@ if (isset($_GET['eventId']))
     		}
     		
     		xmlhttp.onreadystatechange = respond;
-    		xmlhttp.open("POST", "addInterested.php", true);
+    		xmlhttp.open("POST", "addInterest.php", true);
     		xmlhttp.send(vJSONObj);
     	  
     		return false;

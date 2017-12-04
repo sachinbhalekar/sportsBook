@@ -110,7 +110,7 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
     		}
     		
     		xmlhttp.onreadystatechange = respond;
-    		xmlhttp.open("POST", "addInterested.php", true);
+    		xmlhttp.open("POST", "addInterest.php", true);
     		xmlhttp.send(vJSONObj);
     	  
     		return false;
