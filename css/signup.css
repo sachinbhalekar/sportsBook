@@ -3,7 +3,7 @@
 {
 	.container
 	{
-		margin-top:200px;
+		margin-top:225px !important;
 	} 
 }
 
@@ -14,7 +14,7 @@ body
 
 .container
 {
-	color: white;
+	color: white !important;
 	margin-top:50px;
 	background: black url("../images/bg1.png") no-repeat fixed center;
 	background-size: 100% 100%;
