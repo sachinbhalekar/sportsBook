@@ -83,8 +83,8 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
     {
         $query = "SELECT max(activityId) FROM user_activity";
         $res = $conn->query("SELECT max(activityId) FROM user_activity");
-        $userActivity = $res->fetch_assoc();
-        $count = $userActivity['max(activityId)'];
+        $activityRow = $res->fetch_assoc();
+        $count = $activityRow['max(activityId)'];
         //echo "<script type='text/javascript'>alert('$seqId');</script>";
         $count = $count+1;
         //echo "<script type='text/javascript'>alert('$seqId');</script>";
@@ -113,7 +113,7 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap" async defer></script>
+	
 	<script>
     function getLatLong()
     {

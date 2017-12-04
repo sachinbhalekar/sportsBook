@@ -26,12 +26,12 @@ if (isset($_GET['eventId']))
     $eventInterestCount = htmlspecialchars($eventInterestCount);
     //echo "<script type='text/javascript'>alert('$eventId');</script>";
     $res=$conn->query("SELECT * FROM user_event WHERE eventId='$eventId'");
-    $userEvent=$res->fetch_assoc();
+    $eventRow=$res->fetch_assoc();
     
-    $userEventEmail = $userEvent['userEmail'];
-    $res=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userEventEmail'");
-    $userEventRow=$res->fetch_assoc();
-    $name = $userEventRow['name'];
+    $eventUserEmail = $eventRow['userEmail'];
+    $res=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$eventUserEmail'");
+    $userRow1=$res->fetch_assoc();
+    $eventUserName = $userRow1['name'];
     //echo "<script type='text/javascript'>alert('$name');</script>";
     
     $res=$conn->query("SELECT * FROM event_address WHERE eventId='$eventId'");
@@ -52,7 +52,6 @@ if (isset($_GET['eventId']))
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap" async defer></script>
 	<script>
     	var xmlhttp;
     	var vSelectedPost;
@@ -156,19 +155,19 @@ if (isset($_GET['eventId']))
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Posted By:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control" ><?php echo $name; ?></p>
+                                    	<p class="form-control" ><?php echo $eventUserName; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="title">Event Title:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $userEvent['eventDesc']; ?></p>
+                                    	<p class="form-control"><?php echo $eventRow['eventDesc']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="desc">Description:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $userEvent['eventDesc']; ?></p>
+                                    	<p class="form-control"><?php echo $eventRow['eventDesc']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
@@ -178,7 +177,7 @@ if (isset($_GET['eventId']))
 										<label class="radio-inline"><input id="tennis" name="sportR" type="radio" />Tennis</label>
 										<label class="radio-inline"><input id="cricket" name="sportR" type="radio" />Cricket</label>
 										<script type="text/javascript">
-											var sport = '<?php echo $userEvent['eventSport']; ?>';
+											var sport = '<?php echo $eventRow['eventSport']; ?>';
 											//alert(sport);
 											if( sport == 'football')
 												document.getElementById('football').checked=true;
@@ -209,23 +208,23 @@ if (isset($_GET['eventId']))
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="date">Date:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $userEvent['eventDate']; ?></p>
+                                    	<p class="form-control"><?php echo $eventRow['eventDate']; ?></p>
                                   	</div>
                                   	
                                   	<label class="control-label col-sm-2" for="occupancy">Max Occupancy:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $userEvent['eventOccupancy']; ?></p>
+                                    	<p class="form-control"><?php echo $eventRow['eventOccupancy']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="time_in">Time In:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $userEvent['eventInTime']; ?></p>
+                                    	<p class="form-control"><?php echo $eventRow['eventInTime']; ?></p>
                                   	</div>
                                   	
                                   	<label class="control-label col-sm-2" for="time_out">Time Out:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $userEvent['eventOutTime']; ?></p>
+                                    	<p class="form-control"><?php echo $eventRow['eventOutTime']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">        

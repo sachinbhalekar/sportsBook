@@ -22,16 +22,16 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
     $activityId = htmlspecialchars($activityId);
     //echo "<script type='text/javascript'>alert('$activityId');</script>";
     
-    $name = trim($_GET['activityUserName']);
-    $name = strip_tags($name);
-    $name = htmlspecialchars($name);
+    $activityUserName = trim($_GET['activityUserName']);
+    $activityUserName = strip_tags($activityUserName);
+    $activityUserName = htmlspecialchars($activityUserName);
     
     $activityInterestCount = trim($_GET['activityInterestCount']);
     $activityInterestCount = strip_tags($activityInterestCount);
     $activityInterestCount = htmlspecialchars($activityInterestCount);
     
     $res=$conn->query("SELECT * FROM user_activity WHERE activityId='$activityId'");
-    $userActivity=$res->fetch_assoc();
+    $activityRow=$res->fetch_assoc();
     
     /*
      $userActivityEmail = $userActivity['userEmail'];
@@ -42,14 +42,14 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
     //echo "<script type='text/javascript'>alert('$name');</script>";
     
     $res=$conn->query("SELECT * FROM activity_address WHERE activityId='$activityId'");
-    $userActivityAddress=$res->fetch_assoc();
+    $activityAddressRow=$res->fetch_assoc();
     
-    $address1 = $userActivityAddress['address1'];
-    $address2 = $userActivityAddress['address2'];
-    $city = $userActivityAddress['city'];
-    $state = $userActivityAddress['state'];
-    $zipcode = $userActivityAddress['zipcode'];
-    $country = $userActivityAddress['country'];
+    $address1 = $activityAddressRow['address1'];
+    $address2 = $activityAddressRow['address2'];
+    $city = $activityAddressRow['city'];
+    $state = $activityAddressRow['state'];
+    $zipcode = $activityAddressRow['zipcode'];
+    $country = $activityAddressRow['country'];
     
     $location = '';
     $location = $address1 . ', ' . $address2 . ', ' . $address1 . ', ' . $city . ', ' . $state . ' - ' . $zipcode . ', ' . $country;
@@ -165,13 +165,13 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Posted By:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control" ><?php echo $name; ?></p>
+                                    	<p class="form-control" ><?php echo $activityUserName; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Description:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $userActivity['activityDesc']; ?></p>
+                                    	<p class="form-control"><?php echo $activityRow['activityDesc']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
@@ -181,7 +181,7 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
 										<label class="radio-inline"><input id="tennis" name="sportR" type="radio"  disabled />Tennis</label>
 										<label class="radio-inline"><input id="cricket" name="sportR" type="radio"  disabled/>Cricket</label>
 										<script type="text/javascript">
-											var sport = '<?php echo $userActivity['activitySport']; ?>';
+											var sport = '<?php echo $activityRow['activitySport']; ?>';
 											//alert(sport);
 											if( sport == 'football')
 												document.getElementById('football').checked=true;
@@ -206,24 +206,24 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Landmark:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $userActivityAddress['landmark']; ?></p>
+                                    	<p class="form-control"><?php echo $activityAddressRow['landmark']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="date">Date:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $userActivity['activityDate']; ?></p>
+                                    	<p class="form-control"><?php echo $activityRow['activityDate']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="time_in">Time In:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $userActivity['activityInTime']; ?></p>
+                                    	<p class="form-control"><?php echo $activityRow['activityInTime']; ?></p>
                                   	</div>
                                   	
                                   	<label class="control-label col-sm-2" for="time_out">Time Out:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $userActivity['activityOutTime']; ?></p>
+                                    	<p class="form-control"><?php echo $activityRow['activityOutTime']; ?></p>
                                   	</div>
                                 </div>
                                 <div class="form-group">        
@@ -247,11 +247,11 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                                             //echo "<script type='text/javascript'>alert('If');</script>";
                                             $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_activity WHERE activityId = '$activityId')");
                                             //echo "<script type='text/javascript'>alert('$res3');</script>";
-                                            while ($userActivityInterestedName=$res3->fetch_assoc())
+                                            while ($activityInterestedRow=$res3->fetch_assoc())
                                             {
                                                 
                                                 ?>
-                                                <p><strong><?php echo $userActivityInterestedName['name']; ?></strong></p>
+                                                <p><strong><?php echo $activityInterestedRow['name']; ?></strong></p>
                                                 <?php
                                             }
                                         }
@@ -291,8 +291,8 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                     center: myLatLng
                 });
             	               
-    	        var lat = "<?php echo $userActivityAddress['latitude']; ?>";
-        		var lng = "<?php echo $userActivityAddress['longitude']; ?>";
+    	        var lat = "<?php echo $activityAddressRow['latitude']; ?>";
+        		var lng = "<?php echo $activityAddressRow['longitude']; ?>";
 				//alert(lat);
 				//alert(lng);
         		plot_markers( lat, lng );

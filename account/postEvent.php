@@ -91,8 +91,8 @@ if ( isset($_POST['event_btn']) )
     {
         $query = "SELECT max(eventId) FROM user_event";
         $res = $conn->query("SELECT max(eventId) FROM user_event");
-        $userActivity = $res->fetch_assoc();
-        $count = $userActivity['max(eventId)'];
+        $eventRow = $res->fetch_assoc();
+        $count = $eventRow['max(eventId)'];
         //echo "<script type='text/javascript'>alert('$seqId');</script>";
         $count = $count+1;
         //echo "<script type='text/javascript'>alert('$seqId');</script>";
@@ -308,6 +308,7 @@ function showUser() {
         ];
       }
     </script>
+    
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback&libraries=visualization&callback=initMap">
     </script>

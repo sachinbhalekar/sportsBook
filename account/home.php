@@ -139,34 +139,34 @@ while ($userActivity=$res->fetch_assoc())
           				$res=$conn->query("SELECT * FROM user_activity");
 
                         //$count = 0;
-                        while ($userActivity=$res->fetch_assoc())
+                        while ($activityRow=$res->fetch_assoc())
                         {
                             
-                            $userActivityEmail = $userActivity['userEmail'];
-                            $res1=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userActivityEmail'");
-                            $userActivityRow=$res1->fetch_assoc();
-                            $name = $userActivityRow['name'];
+                            $activityUserEmail = $activityRow['userEmail'];
+                            $res1=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$activityUserEmail'");
+                            $userRow=$res1->fetch_assoc();
+                            $activityUserName = $userRow['name'];
                             
-                            $userActivityId = $userActivity['activityId'];
-                            $res2=$conn->query("SELECT count(activityId) as actIdCount FROM user_interested_activity WHERE activityId = '$userActivityId'");
-                            $userActivityInterest=$res2->fetch_assoc();
-                            $activityInterestCount = $userActivityInterest['actIdCount'];
+                            $activityId = $activityRow['activityId'];
+                            $res2=$conn->query("SELECT count(activityId) as actIdCount FROM user_interested_activity WHERE activityId = '$activityId'");
+                            $activityInterestRow=$res2->fetch_assoc();
+                            $activityInterestCount = $activityInterestRow['actIdCount'];
                             
                             //$activityId = $userActivity['activityId'];
                             //$count++;
                             //echo "<script type='text/javascript'>alert('$count');</script>";
                             ?>
-                            <div class="well activity_post<?php echo $userActivityId; ?>">
-                            	<p><strong><?php echo $name; ?></strong></p>
-                                <p id="all_post_info" ><?php echo $userActivity['activityDesc']; ?></p>
-                                <label>Sport:</label><span> <?php echo $userActivity['activitySport']; ?></span><br/>
-                                <a href="activityInfo.php?activityId=<?php echo $userActivityId; ?>&activityUserName=<?php echo $name; ?>&activityInterestCount=<?php echo $activityInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
+                            <div class="well activity_post<?php echo $activityId; ?>">
+                            	<p><strong><?php echo $activityUserName; ?></strong></p>
+                                <p id="all_post_info" ><?php echo $activityRow['activityDesc']; ?></p>
+                                <label>Sport:</label><span> <?php echo $activityRow['activitySport']; ?></span><br/>
+                                <a href="activityInfo.php?activityId=<?php echo $activityId; ?>&activityUserName=<?php echo $activityUserName; ?>&activityInterestCount=<?php echo $activityInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
                                 <br/>
-                                <a href="#" data-toggle="modal" data-target="#activityModal<?php echo $userActivityId; ?>">Interested <span id="activity_post_interested<?php echo $userActivityId; ?>" class="badge"><?php echo $activityInterestCount; ?></span></a>
-                                <button type="button" class="btn btn-primary" onclick="addInterested('activity', '<?php echo $userActivityId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+                                <a href="#" data-toggle="modal" data-target="#activityModal<?php echo $activityId; ?>">Interested <span id="activity_post_interested<?php echo $activityId; ?>" class="badge"><?php echo $activityInterestCount; ?></span></a>
+                                <button type="button" class="btn btn-primary" onclick="addInterested('activity', '<?php echo $activityId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
               				</div>
               				
-              				<div class="modal fade" id="activityModal<?php echo $userActivityId; ?>" role="dialog">
+              				<div class="modal fade" id="activityModal<?php echo $activityId; ?>" role="dialog">
                                 <div class="modal-dialog modal-sm">
                                   <div class="modal-content">
                                     <div class="modal-header">
@@ -177,11 +177,11 @@ while ($userActivity=$res->fetch_assoc())
                                         <?php 
                                         if($activityInterestCount >= 1)
                                         {
-                                            $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_activity WHERE activityId = '$userActivityId')");
-                                            while ($userActivityInterestedName=$res3->fetch_assoc())
+                                            $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_activity WHERE activityId = '$activityId')");
+                                            while ($activityInterestedRow=$res3->fetch_assoc())
                                             {
                                                 ?>
-                                                <p><strong><?php echo $userActivityInterestedName['name']; ?></strong></p>
+                                                <p><strong><?php echo $activityInterestedRow['name']; ?></strong></p>
                                                 <?php
                                             }
                                         }
@@ -216,27 +216,27 @@ while ($userActivity=$res->fetch_assoc())
                     $res=$conn->query("SELECT * FROM user_event");
                     
                     $count = 0;
-                    while ($userEvent=$res->fetch_assoc())
+                    while ($eventRow=$res->fetch_assoc())
                     {
                         
-                        $userEventId = $userEvent['eventId'];
-                        $res2=$conn->query("SELECT count(eventId) as eventIdCount FROM user_interested_event WHERE eventId = '$userEventId'");
-                        $userEventInterest=$res2->fetch_assoc();
-                        $eventInterestCount = $userEventInterest['eventIdCount'];
+                        $eventId = $eventRow['eventId'];
+                        $res2=$conn->query("SELECT count(eventId) as eventIdCount FROM user_interested_event WHERE eventId = '$eventId'");
+                        $eventInterestRow=$res2->fetch_assoc();
+                        $eventInterestCount = $eventInterestRow['eventIdCount'];
                         //$count++;
                         //echo "<script type='text/javascript'>alert('$count');</script>";
                         ?>
                         <div class="thumbnail event_post">
-                        	<p><strong><?php echo $userEvent['eventTitle']; ?></strong></p>
+                        	<p><strong><?php echo $eventRow['eventTitle']; ?></strong></p>
                             <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300">
-                            <p><?php echo $userEvent['eventDate']; ?></p>
-                            <a href="eventInfo.php?eventId=<?php echo $userEvent['eventId']; ?>&eventInterestCount=<?php echo $eventInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
+                            <p><?php echo $eventRow['eventDate']; ?></p>
+                            <a href="eventInfo.php?eventId=<?php echo $eventRow['eventId']; ?>&eventInterestCount=<?php echo $eventInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
                             <br/>
-                            <a href="#" data-toggle="modal" data-target="#eventModal<?php echo $userEventId; ?>">Interested <span id="event_post_interested<?php echo $userEventId; ?>" class="badge"><?php echo $eventInterestCount; ?></span></a>
-                            <button type="button" class="btn btn-primary" onclick="addInterested('event', '<?php echo $userEventId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+                            <a href="#" data-toggle="modal" data-target="#eventModal<?php echo $eventId; ?>">Interested <span id="event_post_interested<?php echo $eventId; ?>" class="badge"><?php echo $eventInterestCount; ?></span></a>
+                            <button type="button" class="btn btn-primary" onclick="addInterested('event', '<?php echo $eventId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
                         </div>
                         
-                        <div class="modal fade" id="eventModal<?php echo $userEventId; ?>" role="dialog">
+                        <div class="modal fade" id="eventModal<?php echo $eventId; ?>" role="dialog">
                             <div class="modal-dialog modal-sm">
                               <div class="modal-content">
                                 <div class="modal-header">
@@ -247,11 +247,11 @@ while ($userActivity=$res->fetch_assoc())
                                 <?php 
                                 if($eventInterestCount >= 1)
                                 {
-                                    $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_event WHERE eventId = '$userEventId')");
-                                    while ($userEventInterestedName=$res3->fetch_assoc())
+                                    $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_event WHERE eventId = '$eventId')");
+                                    while ($eventInterestedRow=$res3->fetch_assoc())
                                     {
                                         ?>
-                                        <p><strong><?php echo $userEventInterestedName['name']; ?></strong></p>
+                                        <p><strong><?php echo $eventInterestedRow['name']; ?></strong></p>
                                         <?php
                                     }
                                 }
