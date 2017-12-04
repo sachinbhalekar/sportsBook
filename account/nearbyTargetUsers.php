@@ -18,23 +18,27 @@ function findRegion($nearByRegion) {
     $obj = json_decode($nearByRegion);
     
     $occupancy = $obj->{'occupancy'};
-     
+    $latitude = $obj->{'latitude'};
+    $longitude = $obj->{'longitude'};
+    
+    
     $locationArray= array();;
-    $lat=37.782551;
-    $lng=-122.445368;
+    
+    $lat= $latitude;
+    $lng=$longitude;
     
  
-   
+   if($lat!=null && $lng!=null)
+   {
     for ($x = 0; $x < $occupancy; $x++) {
         array_push($locationArray,array( $lat, $lng));
-        $lat=$lat+0.000010;
-        $lng=$lng+0.000010;
+        $lat=$lat+(mt_rand(-100,100)/10000);
+        $lng=$lng+(mt_rand(-100,100)/10000);
  } 
+   }
  $someJSON = json_encode($locationArray);
  echo $someJSON; 
- 
-    
-    
+  
 }
 
 ?>
