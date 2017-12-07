@@ -2,10 +2,12 @@
 ob_start();
 session_start();
 
+//including for DB connection
 include_once '../connection/dbconnect.php';
 
 $error = false;
 
+//check when form is submitted
 if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) ) 
 {
     $message = "";
@@ -135,7 +137,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
         if($conn->query($query) === TRUE && $conn->query($query1) === TRUE) 
         {
             $arrSports = explode("|", $sports);
-            foreach ($arrSports as &$value)
+            foreach ($arrSports as &$value)// Inserting the selected sports 1 by 1...
             {
                 if(!empty($value))
                 {
@@ -160,7 +162,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
                 unset($pass);
             }
         } 
-        else
+        else// error while inserting in DB
         {
             //echo "<script type='text/javascript'>alert('false all');</script>";
             $error = true;
@@ -180,25 +182,6 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
         }
     }
     
-    unset($_POST['firstname']);
-    unset($_POST['$lastname']);
-    unset($_POST['$DOB']);
-    unset($_POST['$gender']);
-    unset($_POST['$email']);
-    unset($_POST['$pass']);
-    unset($_POST['$address1']);
-    unset($_POST['$address2']);
-    unset($_POST['$city']);
-    unset($_POST['$state']);
-    unset($_POST['$country']);
-    unset($_POST['$zipcode']);
-    unset($_POST['$sports']);
-    unset($_POST['$bio']);
-    unset($_POST['$latitude']);
-    unset($_POST['$longitude']);
-    
-    unset($_POST['$signup_form']);
-    unset($_POST['$signup_btn']);
 }
 ?>
 
@@ -206,45 +189,32 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 <html lang="en">
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80"></script>
 	<script>
-    function getLatLong()
+    function getLatLong()//to set the latitude and longitude for the address entered by user
     {
         //alert('getLatLong');
-        //var vLat = 0;
-        //var vLong = 0;
-    	var vAddress1 = document.getElementById('address1').value.trim();
+        var vAddress1 = document.getElementById('address1').value.trim();
     	var vAddress2 = document.getElementById('address2').value.trim();
     	var vCity = document.getElementById('city').value.trim();
     	var vState = document.getElementById('state').value.trim();
     	var vZipcode = document.getElementById('zipcode').value.trim();
     	
-    	var geocoder = new google.maps.Geocoder();
+    	var geocoder = new google.maps.Geocoder();// using google object
     	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
     	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
     	{
-            geocoder.geocode( { 'address': address}, function(results, status) {
+            geocoder.geocode( { 'address': address}, function(results, status) {//Google API to find the latitude and longitude
               if (status == 'OK') 
               {
          		 //vLat = results[0].geometry.location.lat();
          		 document.getElementById('latitude').value = results[0].geometry.location.lat();
         	  	 //vLong = results[0].geometry.location.lng();
         	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
-        	   	 //alert(vLat);
-        	   	 //alert( typeof vLat );
-        	   	 //alert( typeof vLat.toString() );
-        	   	 //alert(vLong);
               } 
             });
     	}
-    	
-    	//document.getElementById('latitude').value = vLat;
-    	//document.getElementById('longitude').value = vLong;
-    	//alert(document.getElementById('latitude').value);
-    	//alert(document.getElementById('longitude').value);
-    	//alert('before submit');
-    	//document.getElementById('signup_form').submit();
     }
 
-    function setGender()
+    function setGender()//To set hidden gender field
     {
         //alert('setGender');
     	if( document.getElementById('male').checked ) 
@@ -260,7 +230,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 		//alert(document.getElementById('gender').value);
     }
 
-    function setSports()
+    function setSports()//to set and append all sports in 1 hidden field
     {
     	var vSports = '';
     	if(document.getElementById('football').checked) 

@@ -1,6 +1,8 @@
 <?php
 ob_start();
 session_start();
+
+//including for DB connection
 require_once './connection/dbconnect.php';
 
 // it will never let you open index(login) page if session is set
