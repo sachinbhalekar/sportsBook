@@ -133,7 +133,6 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Profile <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="personalInfo.php">My Profile</a></li>
                       <li><a href="logout.php?logout">Sign Out</a></li>
                     </ul>
                   </li>
