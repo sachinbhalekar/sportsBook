@@ -165,13 +165,13 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Posted By:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control" ><?php echo $activityUserName; ?></p>
+                                    	<input class="form-control" value="<?php echo $activityUserName; ?>" readonly />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Description:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $activityRow['activityDesc']; ?></p>
+                                    	<textarea class="form-control" readonly ><?php echo $activityRow['activityDesc']; ?></textarea>
                                   	</div>
                                 </div>
                                 <div class="form-group">
@@ -195,8 +195,8 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Location:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $location; ?></p>
-                                    	
+                                    	<input class="form-control" value="<?php echo $location; ?>" readonly />
+                                    	<br/>
                                     	<div class="panel panel-default">
                                             <!-- <div class="panel-heading">Panel Heading</div> -->
                                             <div class="panel-body" id="map"></div>
@@ -206,24 +206,24 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Landmark:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $activityAddressRow['landmark']; ?></p>
+                                    	<input class="form-control" value="<?php echo $activityAddressRow['landmark']; ?>" readonly />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="date">Date:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $activityRow['activityDate']; ?></p>
+                                    	<input class="form-control" value="<?php echo $activityRow['activityDate']; ?>" readonly />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="time_in">Time In:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $activityRow['activityInTime']; ?></p>
+                                    	<input class="form-control" value="<?php echo $activityRow['activityInTime']; ?>" readonly />
                                   	</div>
                                   	
                                   	<label class="control-label col-sm-2" for="time_out">Time Out:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $activityRow['activityOutTime']; ?></p>
+                                    	<input class="form-control" value="<?php echo $activityRow['activityOutTime']; ?>" readonly />
                                   	</div>
                                 </div>
                                 <div class="form-group">        

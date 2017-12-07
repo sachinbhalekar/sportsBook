@@ -147,7 +147,7 @@ if (isset($_GET['eventId']))
 		<div class="container">
 			<div class="row">
         		<div class="col-sm-12 text-left">
-        			<h1>Event Info</h1>
+        			<h1><?php echo $eventRow['eventTitle']; ?></h1>
         			<hr>
         			<div class="panel panel-default text-left">
                         <div class="panel-body">
@@ -155,19 +155,13 @@ if (isset($_GET['eventId']))
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Posted By:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control" ><?php echo $eventUserName; ?></p>
-                                  	</div>
-                                </div>
-                                <div class="form-group">
-                                  	<label class="control-label col-sm-2" for="title">Event Title:</label>
-                                  	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $eventRow['eventDesc']; ?></p>
+                                    	<input class="form-control" value="<?php echo $eventUserName; ?>" readonly />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="desc">Description:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $eventRow['eventDesc']; ?></p>
+                                    	<textarea class="form-control" readonly><?php echo $eventRow['eventDesc']; ?></textarea>
                                   	</div>
                                 </div>
                                 <div class="form-group">
@@ -191,8 +185,8 @@ if (isset($_GET['eventId']))
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" >Location:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $location; ?></p>
-                                    	
+                                    	<input class="form-control" value="<?php echo $location; ?>" readonly />
+                                    	<br />
                                     	<div class="panel panel-default">
                                             <!-- <div class="panel-heading">Panel Heading</div> -->
                                             <div class="panel-body" id="map"></div>
@@ -202,29 +196,29 @@ if (isset($_GET['eventId']))
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="landmark">Landmark:</label>
                                   	<div class="col-sm-8">          
-                                    	<p class="form-control"><?php echo $userEventAddress['landmark']; ?></p>
+                                    	<input class="form-control" value="<?php echo $userEventAddress['landmark']; ?>" readonly />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="date">Date:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $eventRow['eventDate']; ?></p>
+                                    	<input class="form-control" value="<?php echo $eventRow['eventDate']; ?>" readonly />
                                   	</div>
                                   	
                                   	<label class="control-label col-sm-2" for="occupancy">Max Occupancy:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $eventRow['eventOccupancy']; ?></p>
+                                    	<input class="form-control" value="<?php echo $eventRow['eventOccupancy']; ?>" readonly />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="time_in">Time In:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $eventRow['eventInTime']; ?></p>
+                                    	<input class="form-control" value="<?php echo $eventRow['eventInTime']; ?>" readonly />
                                   	</div>
                                   	
                                   	<label class="control-label col-sm-2" for="time_out">Time Out:</label>
                                   	<div class="col-sm-2">          
-                                    	<p class="form-control"><?php echo $eventRow['eventOutTime']; ?></p>
+                                    	<input class="form-control" value="<?php echo $eventRow['eventOutTime']; ?>" readonly />
                                   	</div>
                                 </div>
                                 <div class="form-group">        
