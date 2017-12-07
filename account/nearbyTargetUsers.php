@@ -2,8 +2,6 @@
 
 ob_start();
 session_start();
-//$err_msg = '';
-//$employees_arr = array();
 
 $nearByRegion=file_get_contents("php://input");
 
