@@ -9,41 +9,24 @@ if( !isset($_SESSION['user']) )
     header("Location: ../index.php");
     exit;
 }
-$userEmail = $_SESSION['user'];
+$userEmail = $_SESSION['user'];//get user from session
+
 // select loggedin users detail
 $res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
 $userRow=$res->fetch_assoc();
-/*
-$res=$conn->query("SELECT * FROM user_activity");
 
-$count = 0;
-while ($userActivity=$res->fetch_assoc())
-{
-    $count++;
-    echo "<script type='text/javascript'>alert('$count');</script>";
-}
-
-$res=$conn->query("SELECT * FROM user_event");
-
-$count = 0;
-while ($userActivity=$res->fetch_assoc())
-{
-    $count++;
-    echo "<script type='text/javascript'>alert('$count');</script>";
-}
-*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	<!-- <script src="../scripts/addInterest.js"></script> -->
 	<script>
     	var xmlhttp;
     	var vSelectedPost;
     	var vSelectedPostId;
-    
+
+    	//respond function for the AJAX call
     	function respond() 
     	{
-    		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
+    		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) //if processing is done and http response is OK
     		{
     			if(xmlhttp.responseText === 'success')
     			{
@@ -61,7 +44,8 @@ while ($userActivity=$res->fetch_assoc())
     			}
     		}
     	}
-    
+
+    	//function to be called when user selects 'I'm interested'
     	function addInterested( vPost, vPostId )
     	{
     		vSelectedPost = vPost;
@@ -76,6 +60,7 @@ while ($userActivity=$res->fetch_assoc())
     		var vJSONObj = JSON.stringify(vObj);
     		//console.log(vJSONObj);
     		
+    		//set XML HTTP request
     		if (window.XMLHttpRequest) 
     		{
     			xmlhttp = new XMLHttpRequest();
@@ -85,9 +70,9 @@ while ($userActivity=$res->fetch_assoc())
     			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     		}
     		
-    		xmlhttp.onreadystatechange = respond;
-    		xmlhttp.open("POST", "addInterest.php", true);
-    		xmlhttp.send(vJSONObj);
+    		xmlhttp.onreadystatechange = respond;//setting return function 
+    		xmlhttp.open("POST", "addInterest.php", true);//calling the php via AJAX
+    		xmlhttp.send(vJSONObj);//send JSON data to the called php
     	  
     		return false;
     	}
@@ -138,7 +123,7 @@ while ($userActivity=$res->fetch_assoc())
           				
           				$res=$conn->query("SELECT * FROM user_activity");
 
-                        //$count = 0;
+                        //displaying all activities dynamically from the database
                         while ($activityRow=$res->fetch_assoc())
                         {
                             
@@ -152,8 +137,6 @@ while ($userActivity=$res->fetch_assoc())
                             $activityInterestRow=$res2->fetch_assoc();
                             $activityInterestCount = $activityInterestRow['actIdCount'];
                             
-                            //$activityId = $userActivity['activityId'];
-                            //$count++;
                             //echo "<script type='text/javascript'>alert('$count');</script>";
                             ?>
                             <div class="well activity_post<?php echo $activityId; ?>">
@@ -215,7 +198,7 @@ while ($userActivity=$res->fetch_assoc())
           				
                     $res=$conn->query("SELECT * FROM user_event");
                     
-                    $count = 0;
+                    //displaying all events dynamically from the database
                     while ($eventRow=$res->fetch_assoc())
                     {
                         
@@ -223,7 +206,7 @@ while ($userActivity=$res->fetch_assoc())
                         $res2=$conn->query("SELECT count(eventId) as eventIdCount FROM user_interested_event WHERE eventId = '$eventId'");
                         $eventInterestRow=$res2->fetch_assoc();
                         $eventInterestCount = $eventInterestRow['eventIdCount'];
-                        //$count++;
+
                         //echo "<script type='text/javascript'>alert('$count');</script>";
                         ?>
                         <div class="thumbnail event_post">
