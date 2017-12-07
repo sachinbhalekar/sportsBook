@@ -95,9 +95,6 @@ if( isset($_POST['login_btn']) )
                 <div class="navbar-header">
                   <a class="navbar-brand" href="index.php"><i><strong>SportsBook</strong></i></a>
                 </div>
-                <ul class="nav navbar-nav">
-                  <li><a href="#">About Us</a></li>
-                </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li><a href="./signup/signup.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
                   <li><a href="#main_login_section"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
