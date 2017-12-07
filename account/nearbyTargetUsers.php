@@ -9,9 +9,6 @@ $nearByRegion=file_get_contents("php://input");
 
 findRegion($nearByRegion);
 
-
-
-
 function findRegion($nearByRegion) {
    
     $obj = json_decode($nearByRegion);
@@ -40,7 +37,5 @@ function findRegion($nearByRegion) {
   
 }
 
+ob_end_flush();
 ?>
-
-
-<?php ob_end_flush(); ?>

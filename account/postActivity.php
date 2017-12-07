@@ -9,15 +9,16 @@ if( !isset($_SESSION['user']) )
     header("Location: ../index.php");
     exit;
 }
-$userEmail = $_SESSION['user'];
+$userEmail = $_SESSION['user'];//get userEmail from the session
+
 // select loggedin users detail
 $res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
 $userRow=$res->fetch_assoc();
 
-$error = false;
-
+//check when form is submitted
 if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
 {
+    // get values from form input tags
     //echo "<script type='text/javascript'>alert('inside');</script>";
     $desc = trim($_POST['desc']);
     $desc = strip_tags($desc);
@@ -77,103 +78,34 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
     $longitude = htmlspecialchars($longitude);
     
     //echo "<script type='text/javascript'>alert('$time_out');</script>";
+
+    $query = "SELECT max(activityId) FROM user_activity";//selecting the max current activityId from DB
+    $res = $conn->query("SELECT max(activityId) FROM user_activity");
+    $activityRow = $res->fetch_assoc();
+    $count = $activityRow['max(activityId)'];
+    //echo "<script type='text/javascript'>alert('$seqId');</script>";
+    $count = $count+1;//Increaing the max activityId by 1 for inserting new activity
+    //echo "<script type='text/javascript'>alert('$seqId');</script>";
     
-    // if there's no error, continue to post
-    if( !$error )
+    $query = "INSERT INTO user_activity(userEmail,activityId,activityDesc,activitySport,activityDate,activityInTime,activityOutTime) VALUES('$userEmail','$count','$desc','$sport','$date','$time_in','$time_out')";
+    
+    $query1 = "INSERT INTO activity_address(userEmail,activityId,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$count','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
+    
+    if($conn->query($query) === TRUE && $conn->query($query1) === TRUE)
     {
-        $query = "SELECT max(activityId) FROM user_activity";
-        $res = $conn->query("SELECT max(activityId) FROM user_activity");
-        $activityRow = $res->fetch_assoc();
-        $count = $activityRow['max(activityId)'];
-        //echo "<script type='text/javascript'>alert('$seqId');</script>";
-        $count = $count+1;
-        //echo "<script type='text/javascript'>alert('$seqId');</script>";
-        
-        $query = "INSERT INTO user_activity(userEmail,activityId,activityDesc,activitySport,activityDate,activityInTime,activityOutTime) VALUES('$userEmail','$count','$desc','$sport','$date','$time_in','$time_out')";
-        
-        $query1 = "INSERT INTO activity_address(userEmail,activityId,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$count','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
-        
-        if($conn->query($query) === TRUE && $conn->query($query1) === TRUE)
-        {
-            $errTyp = "success";
-            $message = "Your activity successfully posted!";
-        }
-        else
-        {
-            $errTyp = "danger";
-            $message = "Something went wrong, try again later...";
-        }
-        
+        $errTyp = "success";
+        $message = "Your activity successfully posted!";
     }
-    
-    unset($_POST['activity_form']);
-    unset($_POST['activity_btn']);
+    else
+    {
+        $errTyp = "danger";
+        $message = "Something went wrong, try again later...";
+    }
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	
-	<script>
-    function getLatLong()
-    {
-        //alert('getLatLong');
-        //var vLat = 0;
-        //var vLong = 0;
-    	var vAddress1 = document.getElementById('address1').value.trim();
-    	var vAddress2 = document.getElementById('address2').value.trim();
-    	var vCity = document.getElementById('city').value.trim();
-    	var vState = document.getElementById('state').value.trim();
-    	var vZipcode = document.getElementById('zipcode').value.trim();
-    	
-    	var geocoder = new google.maps.Geocoder();
-    	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
-    	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
-    	{
-            geocoder.geocode( { 'address': address}, function(results, status) {
-              if (status == 'OK') 
-              {
-         		 //vLat = results[0].geometry.location.lat();
-         		 document.getElementById('latitude').value = results[0].geometry.location.lat();
-        	  	 //vLong = results[0].geometry.location.lng();
-        	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
-        	   	 //alert(vLat);
-        	   	 //alert( typeof vLat );
-        	   	 //alert( typeof vLat.toString() );
-        	   	 //alert(vLong);
-              } 
-            });
-    	}
-    	
-    	//document.getElementById('latitude').value = vLat;
-    	//document.getElementById('longitude').value = vLong;
-    	//alert(document.getElementById('latitude').value);
-    	//alert(document.getElementById('longitude').value);
-    	//alert('before submit');
-    	//document.getElementById('signup_form').submit();
-    }
-
-    function setSports()
-    {
-    	//alert(document.getElementById('sport').value);
-    	if( document.getElementById('football').checked ) 
-    	{
-			//Football radio button is checked
-    		document.getElementById('sport').value = 'football';
-		}
-		else if( document.getElementById('tennis').checked ) 
-		{
-			//Tennis radio button is checked
-			document.getElementById('sport').value = 'tennis';
-		}
-		else if( document.getElementById('cricket').checked ) 
-		{
-			//Cricket radio button is checked
-			document.getElementById('sport').value = 'cricket';
-		}
-		//alert(document.getElementById('sport').value);
-    }
-    </script>
 	<head>
 		<meta charset="utf-8">
 		<meta name="description" content="SportsBook">
@@ -197,7 +129,6 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
                   <li><a href="home.php">Home</a></li>
                   <li class="active"><a href="postActivity.php">Post an Activity</a></li>
                   <li><a href="postEvent.php">Post an Event</a></li>
-                
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> Profile <span class="caret"></span></a>
@@ -320,6 +251,54 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
 		<footer class="container-fluid text-center">
 			<p>&copy; SportsBook</p>
 		</footer>
+		<script>
+        	function getLatLong()//to set the latitude and longitude for the address entered by user
+            {
+                //alert('getLatLong');
+                var vAddress1 = document.getElementById('address1').value.trim();
+            	var vAddress2 = document.getElementById('address2').value.trim();
+            	var vCity = document.getElementById('city').value.trim();
+            	var vState = document.getElementById('state').value.trim();
+            	var vZipcode = document.getElementById('zipcode').value.trim();
+            	
+            	var geocoder = new google.maps.Geocoder();// using google object
+            	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
+            	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
+            	{
+                    geocoder.geocode( { 'address': address}, function(results, status) {//Google API to find the latitude and longitude
+                      if (status == 'OK') 
+                      {
+                 		 //vLat = results[0].geometry.location.lat();
+                 		 document.getElementById('latitude').value = results[0].geometry.location.lat();
+                	  	 //vLong = results[0].geometry.location.lng();
+                	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
+                      } 
+                    });
+            	}
+            }
+        
+            function setSports()//setting value of hidden 'sports' input element
+            {
+            	//alert(document.getElementById('sport').value);
+            	if( document.getElementById('football').checked ) 
+            	{
+        			//Football radio button is checked
+            		document.getElementById('sport').value = 'football';
+        		}
+        		else if( document.getElementById('tennis').checked ) 
+        		{
+        			//Tennis radio button is checked
+        			document.getElementById('sport').value = 'tennis';
+        		}
+        		else if( document.getElementById('cricket').checked ) 
+        		{
+        			//Cricket radio button is checked
+        			document.getElementById('sport').value = 'cricket';
+        		}
+        		//alert(document.getElementById('sport').value);
+            }
+        </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80"></script>
 	</body>
 </html>
 <?php ob_end_flush(); ?>

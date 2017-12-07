@@ -9,13 +9,16 @@ if( !isset($_SESSION['user']) )
     header("Location: ../index.php");
     exit;
 }
-$userEmail = $_SESSION['user'];
+$userEmail = $_SESSION['user'];//get userEmail from the session
+
 // select loggedin users detail
 $res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
 $userRow=$res->fetch_assoc();
 
+//check when form is submitted
 if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
 {
+    //get all varibles from the GET method
     //echo "<script type='text/javascript'>alert('Found');</script>";
     $activityId = trim($_GET['activityId']);
     $activityId = strip_tags($activityId);
@@ -33,12 +36,6 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
     $res=$conn->query("SELECT * FROM user_activity WHERE activityId='$activityId'");
     $activityRow=$res->fetch_assoc();
     
-    /*
-     $userActivityEmail = $userActivity['userEmail'];
-     $res=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail='$userActivityEmail'");
-     $userActivityRow=$res->fetch_assoc();
-     $name = $userActivityRow['name'];
-     */
     //echo "<script type='text/javascript'>alert('$name');</script>";
     
     $res=$conn->query("SELECT * FROM activity_address WHERE activityId='$activityId'");
@@ -52,70 +49,14 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
     $country = $activityAddressRow['country'];
     
     $location = '';
+    //appending all address fields into 1 field to display complete address in one textbox...
     $location = $address1 . ', ' . $address2 . ', ' . $address1 . ', ' . $city . ', ' . $state . ' - ' . $zipcode . ', ' . $country;
     
 }
 
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	<script>
-    	var xmlhttp;
-    	var vSelectedPost;
-    	var vSelectedPostId;
-    	
-    	function respond() 
-    	{
-    		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-    		{
-    			if(xmlhttp.responseText === 'success')
-    			{
-    				var vInterested;
-    				if(vSelectedPost === 'activity')
-    				{
-        				vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
-    					document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML = vInterested;
-    				}
-    				else if(vSelectedPost === 'event')
-    				{
-        				vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
-    					document.getElementById('event_post_interested'+vSelectedPostId).innerHTML = vInterested;
-    				}
-    			}
-    		}
-    	}
-    	
-    	function addInterested( vPost, vPostId )
-    	{
-    		vSelectedPost = vPost;
-    		vSelectedPostId = vPostId;
-    		
-    		var vObj = {
-    				userEmail: '<?php echo $userEmail; ?>',
-    				postId: vPostId,
-    			 	post: vPost
-    			};
-    		
-    		var vJSONObj = JSON.stringify(vObj);
-    		//console.log(vJSONObj);
-    		
-    		if (window.XMLHttpRequest) 
-    		{
-    			xmlhttp = new XMLHttpRequest();
-    		}
-    		else 
-    		{
-    			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    		}
-    		
-    		xmlhttp.onreadystatechange = respond;
-    		xmlhttp.open("POST", "addInterest.php", true);
-    		xmlhttp.send(vJSONObj);
-    	  
-    		return false;
-    	}
-    </script>
 	<head>
 		<meta charset="utf-8">
 		<meta name="description" content="SportsBook">
@@ -278,10 +219,69 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
         		</div>
 			</div>
 		</div>
-		
-        <script>
+		<footer class="container-fluid text-center">
+			<p>&copy; SportsBook</p>
+		</footer>	
+		<script>
+        	var xmlhttp;
+        	var vSelectedPost;
+        	var vSelectedPostId;
     
-            var map;
+        	//respond function for the AJAX call
+        	function respond() 
+        	{
+        		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) //if processing is done and http response is OK
+        		{
+        			if(xmlhttp.responseText === 'success')
+        			{
+        				var vInterested;
+        				if(vSelectedPost === 'activity')
+        				{
+        					vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
+        					document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML = vInterested;
+        				}
+        				else if(vSelectedPost === 'event')
+        				{
+        					vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
+        					document.getElementById('event_post_interested'+vSelectedPostId).innerHTML = vInterested;
+        				}
+        			}
+        		}
+        	}
+    
+        	//function to be called when user selects 'I'm interested'
+        	function addInterested( vPost, vPostId )
+        	{
+        		vSelectedPost = vPost;
+        		vSelectedPostId = vPostId;
+        		
+        		var vObj = {
+        				userEmail: '<?php echo $userEmail; ?>',
+        				postId: vPostId,
+        			 	post: vPost
+        			};
+        		
+        		var vJSONObj = JSON.stringify(vObj);
+        		//console.log(vJSONObj);
+        		
+        		//set XML HTTP request
+        		if (window.XMLHttpRequest) 
+        		{
+        			xmlhttp = new XMLHttpRequest();
+        		}
+        		else 
+        		{
+        			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        		}
+        		
+        		xmlhttp.onreadystatechange = respond;//setting return function 
+        		xmlhttp.open("POST", "addInterest.php", true);//calling the php via AJAX
+        		xmlhttp.send(vJSONObj);//send JSON data to the called php
+        	  
+        		return false;
+        	}
+
+        	var map;
             function initMap()
             {
             	//alert("ffff");
@@ -307,31 +307,23 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
                 var latlng = {lat: parseFloat(arrLat), lng: parseFloat(arrLng)};
                 
                 geocoder.geocode({'location': latlng}, function(results, status) {
-                    if (status === 'OK') {
-                      if (results[0]) {
-                        map.setZoom(11);
-                        var marker = new google.maps.Marker({
-                          position: latlng,
-                          map: map
-                        });
-                        infowindow.setContent(results[0].formatted_address);
-                        infowindow.open(map, marker);
-                      } else {
-                        window.alert('No results found');
-                      }
-                    } else {
-                      window.alert('Geocoder failed due to: ' + status);
+                    if (status === 'OK') 
+                    {    
+                   		if (results[0]) 
+                       	{
+                        	map.setZoom(11);
+                        	var marker = new google.maps.Marker({
+                          		position: latlng,
+                          		map: map
+                        	});
+                        	infowindow.setContent(results[0].formatted_address);
+                        	infowindow.open(map, marker);
+                      	}
                     }
-                  });
-             }     
-    	
-        </script>
-    	 
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"></script>
-		
-		<footer class="container-fluid text-center">
-			<p>&copy; SportsBook</p>
-		</footer>
+                 });
+             }   
+    	</script>
+    	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"></script>
 	</body>
 </html>
 <?php ob_end_flush(); ?>

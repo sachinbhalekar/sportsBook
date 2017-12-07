@@ -9,13 +9,16 @@ if( !isset($_SESSION['user']) )
     header("Location: ../index.php");
     exit;
 }
-$userEmail = $_SESSION['user'];
+$userEmail = $_SESSION['user'];//get userEmail from the session
+
 // select loggedin users detail
 $res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
 $userRow=$res->fetch_assoc();
 
+//check when form is submitted
 if (isset($_GET['eventId']))
 {
+    //get all varibles from the GET method
     //echo "<script type='text/javascript'>alert('Found');</script>";
     $eventId = trim($_GET['eventId']);
     $eventId = strip_tags($eventId);
@@ -35,16 +38,17 @@ if (isset($_GET['eventId']))
     //echo "<script type='text/javascript'>alert('$name');</script>";
     
     $res=$conn->query("SELECT * FROM event_address WHERE eventId='$eventId'");
-    $userEventAddress=$res->fetch_assoc();
+    $eventAddressRow=$res->fetch_assoc();
     
-    $address1 = $userEventAddress['address1'];
-    $address2 = $userEventAddress['address2'];
-    $city = $userEventAddress['city'];
-    $state = $userEventAddress['state'];
-    $zipcode = $userEventAddress['zipcode'];
-    $country = $userEventAddress['country'];
+    $address1 = $eventAddressRow['address1'];
+    $address2 = $eventAddressRow['address2'];
+    $city = $eventAddressRow['city'];
+    $state = $eventAddressRow['state'];
+    $zipcode = $eventAddressRow['zipcode'];
+    $country = $eventAddressRow['country'];
     
     $location = '';
+    //appending all address fields into 1 field to display complete address in one textbox...
     $location = $address1 . ', ' . $address2 . ', ' . $address1 . ', ' . $city . ', ' . $state . ' - ' . $zipcode . ', ' . $country;
     
 }
@@ -52,62 +56,6 @@ if (isset($_GET['eventId']))
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	<script>
-    	var xmlhttp;
-    	var vSelectedPost;
-    	var vSelectedPostId;
-    	
-    	function respond() 
-    	{
-    		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-    		{
-    			if(xmlhttp.responseText === 'success')
-    			{
-    				var vInterested;
-    				if(vSelectedPost === 'activity')
-    				{
-        				vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
-    					document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML = vInterested;
-    				}
-    				else if(vSelectedPost === 'event')
-    				{
-        				vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
-    					document.getElementById('event_post_interested'+vSelectedPostId).innerHTML = vInterested;
-    				}
-    			}
-    		}
-    	}
-    	
-    	function addInterested( vPost, vPostId )
-    	{
-    		vSelectedPost = vPost;
-    		vSelectedPostId = vPostId;
-    		
-    		var vObj = {
-    				userEmail: '<?php echo $userEmail; ?>',
-    				postId: vPostId,
-    			 	post: vPost
-    			};
-    		
-    		var vJSONObj = JSON.stringify(vObj);
-    		//console.log(vJSONObj);
-    		
-    		if (window.XMLHttpRequest) 
-    		{
-    			xmlhttp = new XMLHttpRequest();
-    		}
-    		else 
-    		{
-    			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    		}
-    		
-    		xmlhttp.onreadystatechange = respond;
-    		xmlhttp.open("POST", "addInterest.php", true);
-    		xmlhttp.send(vJSONObj);
-    	  
-    		return false;
-    	}
-    </script>
 	<head>
 		<meta charset="utf-8">
 		<meta name="description" content="SportsBook">
@@ -196,7 +144,7 @@ if (isset($_GET['eventId']))
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="landmark">Landmark:</label>
                                   	<div class="col-sm-8">          
-                                    	<input class="form-control" value="<?php echo $userEventAddress['landmark']; ?>" readonly />
+                                    	<input class="form-control" value="<?php echo $eventAddressRow['landmark']; ?>" readonly />
                                   	</div>
                                 </div>
                                 <div class="form-group">
@@ -240,10 +188,10 @@ if (isset($_GET['eventId']))
                                         if($eventInterestCount >= 1)
                                         {
                                             $res3=$conn->query("SELECT CONCAT(userName,' ',userLastName) as name FROM users WHERE userEmail in (SELECT userEmail FROM user_interested_event WHERE eventId = '$eventId')");
-                                            while ($userEventInterestedName=$res3->fetch_assoc())
+                                            while ($eventInterestedRow=$res3->fetch_assoc())
                                             {
                                                 ?>
-                                                <p><strong><?php echo $userEventInterestedName['name']; ?></strong></p>
+                                                <p><strong><?php echo $eventInterestedRow['name']; ?></strong></p>
                                                 <?php
                                             }
                                         }
@@ -269,10 +217,69 @@ if (isset($_GET['eventId']))
         		</div>
 			</div>
 		</div>
-		
+		<footer class="container-fluid text-center">
+			<p>&copy; SportsBook</p>
+		</footer>
 		<script>
+        	var xmlhttp;
+        	var vSelectedPost;
+        	var vSelectedPostId;
     
-            var map;
+        	//respond function for the AJAX call
+        	function respond() 
+        	{
+        		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) //if processing is done and http response is OK
+        		{
+        			if(xmlhttp.responseText === 'success')
+        			{
+        				var vInterested;
+        				if(vSelectedPost === 'activity')
+        				{
+        					vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
+        					document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML = vInterested;
+        				}
+        				else if(vSelectedPost === 'event')
+        				{
+        					vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
+        					document.getElementById('event_post_interested'+vSelectedPostId).innerHTML = vInterested;
+        				}
+        			}
+        		}
+        	}
+    
+        	//function to be called when user selects 'I'm interested'
+        	function addInterested( vPost, vPostId )
+        	{
+        		vSelectedPost = vPost;
+        		vSelectedPostId = vPostId;
+        		
+        		var vObj = {
+        				userEmail: '<?php echo $userEmail; ?>',
+        				postId: vPostId,
+        			 	post: vPost
+        			};
+        		
+        		var vJSONObj = JSON.stringify(vObj);
+        		//console.log(vJSONObj);
+        		
+        		//set XML HTTP request
+        		if (window.XMLHttpRequest) 
+        		{
+        			xmlhttp = new XMLHttpRequest();
+        		}
+        		else 
+        		{
+        			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        		}
+        		
+        		xmlhttp.onreadystatechange = respond;//setting return function 
+        		xmlhttp.open("POST", "addInterest.php", true);//calling the php via AJAX
+        		xmlhttp.send(vJSONObj);//send JSON data to the called php
+        	  
+        		return false;
+        	}
+
+        	var map;
             function initMap()
             {
             	//alert("ffff");
@@ -282,8 +289,8 @@ if (isset($_GET['eventId']))
                     center: myLatLng
                 });
             	               
-    	        var lat = "<?php echo $userEventAddress['latitude']; ?>";
-        		var lng = "<?php echo $userEventAddress['longitude']; ?>";
+    	        var lat = "<?php echo $eventAddressRow['latitude']; ?>";
+        		var lng = "<?php echo $eventAddressRow['longitude']; ?>";
 				//alert(lat);
 				//alert(lng);
         		plot_markers( lat, lng );
@@ -298,31 +305,23 @@ if (isset($_GET['eventId']))
                 var latlng = {lat: parseFloat(arrLat), lng: parseFloat(arrLng)};
                 
                 geocoder.geocode({'location': latlng}, function(results, status) {
-                    if (status === 'OK') {
-                      if (results[0]) {
-                        map.setZoom(11);
-                        var marker = new google.maps.Marker({
-                          position: latlng,
-                          map: map
-                        });
-                        infowindow.setContent(results[0].formatted_address);
-                        infowindow.open(map, marker);
-                      } else {
-                        window.alert('No results found');
-                      }
-                    } else {
-                      window.alert('Geocoder failed due to: ' + status);
+                    if (status === 'OK') 
+                    {    
+                   		if (results[0]) 
+                       	{
+                        	map.setZoom(11);
+                        	var marker = new google.maps.Marker({
+                          		position: latlng,
+                          		map: map
+                        	});
+                        	infowindow.setContent(results[0].formatted_address);
+                        	infowindow.open(map, marker);
+                      	}
                     }
-                  });
-             }     
-    	
-        </script>
-    	 
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"></script>
-        
-		<footer class="container-fluid text-center">
-			<p>&copy; SportsBook</p>
-		</footer>
+                 });
+             }   
+    	</script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"></script>
 	</body>
 </html>
 <?php ob_end_flush(); ?>

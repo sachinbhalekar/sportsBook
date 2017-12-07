@@ -9,15 +9,16 @@ if( !isset($_SESSION['user']) )
     header("Location: ../index.php");
     exit;
 }
-$userEmail = $_SESSION['user'];
+$userEmail = $_SESSION['user'];//get userEmail from the session
+
 // select loggedin users detail
-//$res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
-//$userRow=$res->fetch_assoc();
+$res=$conn->query("SELECT * FROM users WHERE userEmail='$userEmail'");
+$userRow=$res->fetch_assoc();
 
-$error = false;
-
+//check when form is submitted
 if ( isset($_POST['event_btn']) )
 {
+    // get values from form input tags
     //echo "<script type='text/javascript'>alert('inside');</script>";
     $title = trim($_POST['title']);
     $title = strip_tags($title);
@@ -86,181 +87,34 @@ if ( isset($_POST['event_btn']) )
     
     //echo "<script type='text/javascript'>alert('$time_out');</script>";
     
-    // if there's no error, continue to post
-    if( !$error )
+    $query = "SELECT max(eventId) FROM user_event";//selecting the max current eventId from DB
+    $res = $conn->query("SELECT max(eventId) FROM user_event");
+    $eventRow = $res->fetch_assoc();
+    $count = $eventRow['max(eventId)'];
+    //echo "<script type='text/javascript'>alert('$seqId');</script>";
+    $count = $count+1;//Increaing the max eventId by 1 for inserting new activity
+    //echo "<script type='text/javascript'>alert('$seqId');</script>";
+    
+    $query = "INSERT INTO user_event(userEmail,eventId,eventTitle,eventDesc,eventSport,eventOccupancy,eventDate,eventInTime,eventOutTime) VALUES('$userEmail','$count','$title','$desc','$sport','$occupancy','$date','$time_in','$time_out')";
+    
+    $query1 = "INSERT INTO event_address(userEmail,eventId,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$count','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
+    
+    if($conn->query($query) === TRUE && $conn->query($query1) === TRUE)
     {
-        $query = "SELECT max(eventId) FROM user_event";
-        $res = $conn->query("SELECT max(eventId) FROM user_event");
-        $eventRow = $res->fetch_assoc();
-        $count = $eventRow['max(eventId)'];
-        //echo "<script type='text/javascript'>alert('$seqId');</script>";
-        $count = $count+1;
-        //echo "<script type='text/javascript'>alert('$seqId');</script>";
-        
-        $query = "INSERT INTO user_event(userEmail,eventId,eventTitle,eventDesc,eventSport,eventOccupancy,eventDate,eventInTime,eventOutTime) VALUES('$userEmail','$count','$title','$desc','$sport','$occupancy','$date','$time_in','$time_out')";
-        
-        $query1 = "INSERT INTO event_address(userEmail,eventId,address1,address2,city,state,country,zipcode,landmark,latitude,longitude) VALUES('$userEmail','$count','$address1','$address2','$city','$state','$country','$zipcode','$landmark',$latitude,$longitude)";
-        
-        if($conn->query($query) === TRUE && $conn->query($query1) === TRUE)
-        {
-            $errTyp = "success";
-            $message = "Your event successfully posted!";
-        }
-        else
-        {
-            $errTyp = "danger";
-            $message = "Something went wrong, try again later...";
-        }
+        $errTyp = "success";
+        $message = "Your event successfully posted!";
+    }
+    else
+    {
+        $errTyp = "danger";
+        $message = "Something went wrong, try again later...";
     }
     
-    unset($_POST['event_form']);
-    unset($_POST['event_btn']);
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	
-	<script>
-	var xmlhttp;
-
-	function respond() 
-	{
-		
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) 
-		{
-			//alert(xmlhttp.responseText);
-			console.log(xmlhttp.responseText);   
-			 var JSONObject = JSON.parse(xmlhttp.responseText);
-			  console.log(JSONObject);     
-			
-			 var location =new Array(JSONObject.length);
-			 for (var i = 0; i <JSONObject.length; i++) {
-				 location.push(new google.maps.LatLng(JSONObject[i][0], JSONObject[i][1]));
-			 }
-			initMap1(location,JSONObject[0][0],JSONObject[0][1]);
-			
-			
-		}
-	}
-
-	function showUser() 
-	{
-		'use strict';
-		
-		//var vFirstName = document.getElementById("first_name").value;
-		//var vLastName = document.getElementById("last_name").value;
-		//var vDepartment = document.getElementById("department").value;
-	  
-		//var vEmployee = {
-		//	first: vFirstName,
-		//	last: vLastName,
-		//	dept: vDepartment
-		 
-		//};
-
-		var vOccupancy = document.getElementById("occupancy").value;
-
-
-		getLatLong();
-		var vlat= document.getElementById('latitude').value ;
-	  	
-		var vlng= document.getElementById('longitude').value;
-
-		
-		var nearByRegion ={
-			occupancy: vOccupancy,
-		latitude: vlat,
-		longitude: vlng 
-				
-		}
-
-		
-		var vJSONObj = JSON.stringify(nearByRegion);
-		console.log(vJSONObj);
-		
-		if (window.XMLHttpRequest) 
-		{
-			xmlhttp = new XMLHttpRequest();
-		}
-		else 
-		{
-			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-		}
-		
-		xmlhttp.onreadystatechange = respond;
-		xmlhttp.open("POST", "nearbyTargetUsers.php", true);
-		xmlhttp.send(vJSONObj);
-	  
-		return false;
-	}
-
-
-
-</script>
-	
-	<script>
-    function getLatLong()
-    {
-        //alert('getLatLong');
-        //var vLat = 0;
-        //var vLong = 0;
-    	var vAddress1 = document.getElementById('address1').value.trim();
-    	var vAddress2 = document.getElementById('address2').value.trim();
-    	var vCity = document.getElementById('city').value.trim();
-    	var vState = document.getElementById('state').value.trim();
-    	var vZipcode = document.getElementById('zipcode').value.trim();
-    	
-    	var geocoder = new google.maps.Geocoder();
-    	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
-    	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
-    	{
-            geocoder.geocode( { 'address': address}, function(results, status) {
-              if (status == 'OK') 
-              {
-         		 //vLat = results[0].geometry.location.lat();
-         		 document.getElementById('latitude').value = results[0].geometry.location.lat();
-        	  	 //vLong = results[0].geometry.location.lng();
-        	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
-        	   	 //alert(vLat);
-        	   	 //alert( typeof vLat );
-        	   	 //alert( typeof vLat.toString() );
-        	   	 //alert(vLong);
-              } 
-            });
-    	}
-    	
-    	//document.getElementById('latitude').value = vLat;
-    	//document.getElementById('longitude').value = vLong;
-    	//alert(document.getElementById('latitude').value);
-    	//alert(document.getElementById('longitude').value);
-    	//alert('before submit');
-    	//document.getElementById('signup_form').submit();
-    }
-
-    function setSports()
-    {
-    	//alert(document.getElementById('sport').value);
-    	if( document.getElementById('football').checked ) 
-    	{
-			//Football radio button is checked
-    		document.getElementById('sport').value = 'football';
-		}
-		else if( document.getElementById('tennis').checked ) 
-		{
-			//Tennis radio button is checked
-			document.getElementById('sport').value = 'tennis';
-		}
-		else if( document.getElementById('cricket').checked ) 
-		{
-			//Cricket radio button is checked
-			document.getElementById('sport').value = 'cricket';
-		}
-		//alert(document.getElementById('sport').value);
-    }
-    </script>
-    
-    
 	<head>
 		<meta charset="utf-8">
 		<meta name="description" content="SportsBook">
@@ -298,52 +152,35 @@ if ( isset($_POST['event_btn']) )
             </nav>
 		</header>
 		<div id="myDiv">
-		<script>
-
-              // This example requires the Visualization library. Include the libraries=visualization
-              // parameter when you first load the API. For example:
-              // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
-        
+    		<script>
+            	// This example requires the Visualization library. Include the libraries=visualization
+                // parameter when you first load the API. For example:
+                // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
+                var map, heatmap;
+                function initMap() 
+                {
+                	map = new google.maps.Map(document.getElementById('map'), {
+                    	zoom: 13,
+                        center: {lat: 37.775, lng: -122.434},
+                    });
             
-        
-            var map, heatmap;
-              function initMap() {
-            	  
-                  map = new google.maps.Map(document.getElementById('map'), {
-                  zoom: 13,
-                  center: {lat: 37.775, lng: -122.434},
-                  
-                });
-        
-              /*   heatmap = new google.maps.visualization.HeatmapLayer({
-                  data: getPoints(),
-                  map: map
-                });
-         */      }
-        
-        
-        	function initMap1(location,lat1,lng1) {
-            	  
-                  map = new google.maps.Map(document.getElementById('map'), {
-                  zoom: 13,
-                  center: {lat: parseFloat(lat1), lng: parseFloat(lng1)},
-                  
-                });
-        
-                heatmap = new google.maps.visualization.HeatmapLayer({
-                  data: location,
-                  map: map
-                });
-              }
-             
-              // Heatmap data: 500 Points
-     
-    
-        </script>
-        
-        <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback&libraries=visualization&callback=initMap">
-        </script>
+                }
+            
+            
+            	function initMap1(location,lat1,lng1) 
+            	{	  
+                	map = new google.maps.Map(document.getElementById('map'), {
+                    	zoom: 13,
+                      	center: {lat: parseFloat(lat1), lng: parseFloat(lng1)},
+                    });
+            
+                    heatmap = new google.maps.visualization.HeatmapLayer({
+                    	data: location,
+                      	map: map
+                    });
+                }
+            </script>
+            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"></script>
 		</div>
 		<div class="container">
 			<div class="row">
@@ -471,10 +308,114 @@ if ( isset($_POST['event_btn']) )
         		</div>
 			</div>
 		</div>
-		
 		<footer class="container-fluid text-center">
 			<p>&copy; SportsBook</p>
 		</footer>
+		<script>
+        	var xmlhttp;
+    
+        	//respond function for the AJAX call
+        	function respond() 
+        	{
+        		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) //if processing is done and http response is OK
+        		{
+                    //alert(xmlhttp.responseText);
+                    console.log(xmlhttp.responseText);   
+                    var JSONObject = JSON.parse(xmlhttp.responseText);
+                    console.log(JSONObject);     
+                    
+                    var location =new Array(JSONObject.length);
+                    for (var i = 0; i <JSONObject.length; i++) 
+                    {
+                    	 location.push(new google.maps.LatLng(JSONObject[i][0], JSONObject[i][1]));
+                    }
+                    initMap1(location,JSONObject[0][0],JSONObject[0][1]);
+        		}
+        	}
+        
+        	function showUser() 
+        	{
+        		'use strict';
+        		
+        		var vOccupancy = document.getElementById("occupancy").value;
+        		
+        		getLatLong();
+        		var vlat= document.getElementById('latitude').value ;
+        		var vlng= document.getElementById('longitude').value;
+        		
+        		var nearByRegion ={
+            			occupancy: vOccupancy,
+            			latitude: vlat,
+            			longitude: vlng 		
+        			};
+    
+        		//creating JSON object
+        		var vJSONObj = JSON.stringify(nearByRegion);
+        		console.log(vJSONObj);
+    
+        		//set XML HTTP request
+        		if (window.XMLHttpRequest) 
+        		{
+        			xmlhttp = new XMLHttpRequest();
+        		}
+        		else 
+        		{
+        			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        		}
+        		
+        		xmlhttp.onreadystatechange = respond;//setting return function 
+        		xmlhttp.open("POST", "nearbyTargetUsers.php", true);//calling the php via AJAX
+        		xmlhttp.send(vJSONObj);//send JSON data to the called php
+        	  
+        		return false;
+        	}
+        
+        	function getLatLong()//to set the latitude and longitude for the address entered by user
+            {
+                //alert('getLatLong');
+                var vAddress1 = document.getElementById('address1').value.trim();
+            	var vAddress2 = document.getElementById('address2').value.trim();
+            	var vCity = document.getElementById('city').value.trim();
+            	var vState = document.getElementById('state').value.trim();
+            	var vZipcode = document.getElementById('zipcode').value.trim();
+            	
+            	var geocoder = new google.maps.Geocoder();// using google object
+            	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
+            	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
+            	{
+                    geocoder.geocode( { 'address': address}, function(results, status) {//Google API to find the latitude and longitude
+                      if (status == 'OK') 
+                      {
+                 		 //vLat = results[0].geometry.location.lat();
+                 		 document.getElementById('latitude').value = results[0].geometry.location.lat();
+                	  	 //vLong = results[0].geometry.location.lng();
+                	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
+                      } 
+                    });
+            	}
+            }
+        
+            function setSports()//setting value of hidden 'sports' input element
+            {
+            	//alert(document.getElementById('sport').value);
+            	if( document.getElementById('football').checked ) 
+            	{
+        			//Football radio button is checked
+            		document.getElementById('sport').value = 'football';
+        		}
+        		else if( document.getElementById('tennis').checked ) 
+        		{
+        			//Tennis radio button is checked
+        			document.getElementById('sport').value = 'tennis';
+        		}
+        		else if( document.getElementById('cricket').checked ) 
+        		{
+        			//Cricket radio button is checked
+        			document.getElementById('sport').value = 'cricket';
+        		}
+        		//alert(document.getElementById('sport').value);
+            }
+        </script>
 	</body>
 </html>
 <?php ob_end_flush(); ?>

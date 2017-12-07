@@ -13,6 +13,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
     $message = "";
     $errTyp = "";
     
+    // get values from form input tags
     //echo "<script type='text/javascript'>alert('inside');</script>";
     // clean user inputs to prevent sql injections
     $firstname = trim($_POST['firstname']);
@@ -187,68 +188,6 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 
 <!DOCTYPE html>
 <html lang="en">
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80"></script>
-	<script>
-    function getLatLong()//to set the latitude and longitude for the address entered by user
-    {
-        //alert('getLatLong');
-        var vAddress1 = document.getElementById('address1').value.trim();
-    	var vAddress2 = document.getElementById('address2').value.trim();
-    	var vCity = document.getElementById('city').value.trim();
-    	var vState = document.getElementById('state').value.trim();
-    	var vZipcode = document.getElementById('zipcode').value.trim();
-    	
-    	var geocoder = new google.maps.Geocoder();// using google object
-    	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
-    	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
-    	{
-            geocoder.geocode( { 'address': address}, function(results, status) {//Google API to find the latitude and longitude
-              if (status == 'OK') 
-              {
-         		 //vLat = results[0].geometry.location.lat();
-         		 document.getElementById('latitude').value = results[0].geometry.location.lat();
-        	  	 //vLong = results[0].geometry.location.lng();
-        	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
-              } 
-            });
-    	}
-    }
-
-    function setGender()//To set hidden gender field
-    {
-        //alert('setGender');
-    	if( document.getElementById('male').checked ) 
-    	{
-			//Male radio button is checked
-    		document.getElementById('gender').value = 'M';
-		}
-		else if( document.getElementById('female').checked ) 
-		{
-			//Female radio button is checked
-			document.getElementById('gender').value = 'F';
-		}
-		//alert(document.getElementById('gender').value);
-    }
-
-    function setSports()//to set and append all sports in 1 hidden field
-    {
-    	var vSports = '';
-    	if(document.getElementById('football').checked) 
-    	{
-    		vSports = vSports + 'football|';
-		}
-		if(document.getElementById('tennis').checked) 
-		{
-			vSports = vSports + 'tennis|';
-		}
-		if(document.getElementById('cricket').checked) 
-		{
-			vSports = vSports + 'cricket|';
-		}
-    	document.getElementById('sports').value = vSports;
-    	//alert(document.getElementById('sports').value);
-    }
-    </script>
 	<head>
 		<meta charset="utf-8">
 		<meta name="description" content="SportsBook">
@@ -381,5 +320,67 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 			<p>&copy; SportsBook</p>
 		</footer>
 	</body>
+	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80"></script>
+	<script>
+        function getLatLong()//to set the latitude and longitude for the address entered by user
+        {
+            //alert('getLatLong');
+            var vAddress1 = document.getElementById('address1').value.trim();
+        	var vAddress2 = document.getElementById('address2').value.trim();
+        	var vCity = document.getElementById('city').value.trim();
+        	var vState = document.getElementById('state').value.trim();
+        	var vZipcode = document.getElementById('zipcode').value.trim();
+        	
+        	var geocoder = new google.maps.Geocoder();// using google object
+        	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
+        	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
+        	{
+                geocoder.geocode( { 'address': address}, function(results, status) {//Google API to find the latitude and longitude
+                  if (status == 'OK') 
+                  {
+             		 //vLat = results[0].geometry.location.lat();
+             		 document.getElementById('latitude').value = results[0].geometry.location.lat();
+            	  	 //vLong = results[0].geometry.location.lng();
+            	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
+                  } 
+                });
+        	}
+        }
+    
+        function setGender()//To set hidden gender field
+        {
+            //alert('setGender');
+        	if( document.getElementById('male').checked ) 
+        	{
+    			//Male radio button is checked
+        		document.getElementById('gender').value = 'M';
+    		}
+    		else if( document.getElementById('female').checked ) 
+    		{
+    			//Female radio button is checked
+    			document.getElementById('gender').value = 'F';
+    		}
+    		//alert(document.getElementById('gender').value);
+        }
+    
+        function setSports()//to set and append all sports in 1 hidden field
+        {
+        	var vSports = '';
+        	if(document.getElementById('football').checked) 
+        	{
+        		vSports = vSports + 'football|';
+    		}
+    		if(document.getElementById('tennis').checked) 
+    		{
+    			vSports = vSports + 'tennis|';
+    		}
+    		if(document.getElementById('cricket').checked) 
+    		{
+    			vSports = vSports + 'cricket|';
+    		}
+        	document.getElementById('sports').value = vSports;
+        	//alert(document.getElementById('sports').value);
+        }
+    </script>
 </html>
 <?php ob_end_flush(); ?>
