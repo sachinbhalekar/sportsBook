@@ -121,9 +121,9 @@ $userRow=$res->fetch_assoc();
       function getPoints() {
         return [
         	<?php 
-        			require_once './distance.php';
-        			fetchTargetRegion();
-        			?> 
+        		require_once './distance.php';
+        		fetchTargetRegion();
+        	?> 
         ];
       }
     </script>
