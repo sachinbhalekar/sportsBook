@@ -4,7 +4,7 @@ session_start();
 require_once './connection/dbconnect.php';
 
 // it will never let you open index(login) page if session is set
-if ( isset($_SESSION['user'])!="" ) 
+if ( isset($_SESSION['user'])!="" )
 {
     header("Location: ./account/home.php");
     exit;
@@ -12,7 +12,7 @@ if ( isset($_SESSION['user'])!="" )
 
 $error = false;
 
-if( isset($_POST['login_btn']) ) 
+if( isset($_POST['login_btn']) )
 {
     $email = trim($_POST['username']);
     $email = strip_tags($email);
@@ -22,27 +22,27 @@ if( isset($_POST['login_btn']) )
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
     
-   
-   /*  if(empty($email))
-    {
-        $error = true;
-        $emailError = "Please enter your email address.";
-    } 
-    else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) 
-    {
-        $error = true;
-        $emailError = "Please enter valid email address.";
-    }
     
-    if(empty($pass))
-    {
-        $error = true;
-        $passError = "Please enter your password.";
-    }
+    /*  if(empty($email))
+     {
+     $error = true;
+     $emailError = "Please enter your email address.";
+     }
+     else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) )
+     {
+     $error = true;
+     $emailError = "Please enter valid email address.";
+     }
+     
+     if(empty($pass))
+     {
+     $error = true;
+     $passError = "Please enter your password.";
+     }
      */
     
     // if there's no error, continue to login
-    if (!$error) 
+    if (!$error)
     {
         
         $password = hash('sha256', $pass); // password hashing using SHA256
@@ -56,7 +56,7 @@ if( isset($_POST['login_btn']) )
         {
             while( $row=$res->fetch_assoc())
             {
-                //if($row['userPass']==$password ) 
+                //if($row['userPass']==$password )
                 {
                     $errTyp = "success";
                     //echo "<script type='text/javascript'>alert(Query1 : '$errTyp');</script>";
@@ -65,7 +65,7 @@ if( isset($_POST['login_btn']) )
                 }
             }
         }
-        else 
+        else
         {
             $errTyp = "danger";
             $message = "Incorrect Credentials, Try again...";
@@ -129,7 +129,7 @@ if( isset($_POST['login_btn']) )
     						<td>
     							<div class="input-group">
     								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-    								<input id="username" name="username" class="form-control" type="text" placeholder="Username/Email-ID" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required />
+    								<input id="username" name="username" class="form-control" type="text" placeholder="Username/Email-ID" required />
     							</div>
     						</td>
     					</tr>
