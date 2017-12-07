@@ -29,6 +29,11 @@ textarea
 	resize: none;
 }
 
+#map 
+{
+	height: 20em;
+}
+
 footer 
 {
     background-color: #555;

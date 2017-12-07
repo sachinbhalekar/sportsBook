@@ -24,6 +24,11 @@ h1
 	color: white !important;
 }
 
+textarea
+{
+	resize: none;
+}
+
 #map 
 {
 	height: 20em;
