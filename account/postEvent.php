@@ -151,37 +151,6 @@ if ( isset($_POST['event_btn']) )
               </div>
             </nav>
 		</header>
-		<div id="myDiv">
-    		<script>
-            	// This example requires the Visualization library. Include the libraries=visualization
-                // parameter when you first load the API. For example:
-                // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=visualization">
-                var map, heatmap;
-                function initMap() 
-                {
-                	map = new google.maps.Map(document.getElementById('map'), {
-                    	zoom: 13,
-                        center: {lat: 37.775, lng: -122.434},
-                    });
-            
-                }
-            
-            
-            	function initMap1(location,lat1,lng1) 
-            	{	  
-                	map = new google.maps.Map(document.getElementById('map'), {
-                    	zoom: 13,
-                      	center: {lat: parseFloat(lat1), lng: parseFloat(lng1)},
-                    });
-            
-                    heatmap = new google.maps.visualization.HeatmapLayer({
-                    	data: location,
-                      	map: map
-                    });
-                }
-            </script>
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"></script>
-		</div>
 		<div class="container">
 			<div class="row">
         		<div class="col-sm-12 text-left">
@@ -415,7 +384,32 @@ if ( isset($_POST['event_btn']) )
         		}
         		//alert(document.getElementById('sport').value);
             }
+
+            var map, heatmap;
+            function initMap() 
+            {
+            	map = new google.maps.Map(document.getElementById('map'), {
+                	zoom: 13,
+                    center: {lat: 37.775, lng: -122.434},
+                });
+        
+            }
+        
+        
+        	function initMap1(location,lat1,lng1) 
+        	{	  
+            	map = new google.maps.Map(document.getElementById('map'), {
+                	zoom: 13,
+                  	center: {lat: parseFloat(lat1), lng: parseFloat(lng1)},
+                });
+        
+                heatmap = new google.maps.visualization.HeatmapLayer({
+                	data: location,
+                  	map: map
+                });
+            }
         </script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap&libraries=visualization"></script>
 	</body>
 </html>
 <?php ob_end_flush(); ?>
