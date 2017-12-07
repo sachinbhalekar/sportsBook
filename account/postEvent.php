@@ -279,8 +279,10 @@ if ( isset($_POST['event_btn']) )
 		<footer class="container-fluid text-center">
 			<p>&copy; SportsBook</p>
 		</footer>
+		<script src="../scripts/findLatLong.js"></script>
 		<script>
         	var xmlhttp;
+        	var map, heatmap;
     
         	//respond function for the AJAX call
         	function respond() 
@@ -338,31 +340,6 @@ if ( isset($_POST['event_btn']) )
         		return false;
         	}
         
-        	function getLatLong()//to set the latitude and longitude for the address entered by user
-            {
-                //alert('getLatLong');
-                var vAddress1 = document.getElementById('address1').value.trim();
-            	var vAddress2 = document.getElementById('address2').value.trim();
-            	var vCity = document.getElementById('city').value.trim();
-            	var vState = document.getElementById('state').value.trim();
-            	var vZipcode = document.getElementById('zipcode').value.trim();
-            	
-            	var geocoder = new google.maps.Geocoder();// using google object
-            	var address = vAddress1+", "+vAddress2+", "+vCity+", "+vState+", "+vZipcode;
-            	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
-            	{
-                    geocoder.geocode( { 'address': address}, function(results, status) {//Google API to find the latitude and longitude
-                      if (status == 'OK') 
-                      {
-                 		 //vLat = results[0].geometry.location.lat();
-                 		 document.getElementById('latitude').value = results[0].geometry.location.lat();
-                	  	 //vLong = results[0].geometry.location.lng();
-                	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
-                      } 
-                    });
-            	}
-            }
-        
             function setSports()//setting value of hidden 'sports' input element
             {
             	//alert(document.getElementById('sport').value);
@@ -383,8 +360,7 @@ if ( isset($_POST['event_btn']) )
         		}
         		//alert(document.getElementById('sport').value);
             }
-
-            var map, heatmap;
+            
             function initMap() 
             {
             	map = new google.maps.Map(document.getElementById('map'), {
@@ -393,7 +369,6 @@ if ( isset($_POST['event_btn']) )
                 });
         
             }
-        
         
         	function initMap1(location,lat1,lng1) 
         	{	  

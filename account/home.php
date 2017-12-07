@@ -87,7 +87,7 @@ $userRow=$res->fetch_assoc();
                                 <a href="activityInfo.php?activityId=<?php echo $activityId; ?>&activityUserName=<?php echo $activityUserName; ?>&activityInterestCount=<?php echo $activityInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
                                 <br/>
                                 <a href="#" data-toggle="modal" data-target="#activityModal<?php echo $activityId; ?>">Interested <span id="activity_post_interested<?php echo $activityId; ?>" class="badge"><?php echo $activityInterestCount; ?></span></a>
-                                <button type="button" class="btn btn-primary" onclick="addInterested('activity', '<?php echo $activityId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+                                <button type="button" class="btn btn-primary" onclick="addInterested('activity', '<?php echo $activityId; ?>', '<?php echo $userEmail; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
               				</div>
               				
               				<div class="modal fade" id="activityModal<?php echo $activityId; ?>" role="dialog">
@@ -158,7 +158,7 @@ $userRow=$res->fetch_assoc();
                             <a href="eventInfo.php?eventId=<?php echo $eventRow['eventId']; ?>&eventInterestCount=<?php echo $eventInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
                             <br/>
                             <a href="#" data-toggle="modal" data-target="#eventModal<?php echo $eventId; ?>">Interested <span id="event_post_interested<?php echo $eventId; ?>" class="badge"><?php echo $eventInterestCount; ?></span></a>
-                            <button type="button" class="btn btn-primary" onclick="addInterested('event', '<?php echo $eventId; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
+                            <button type="button" class="btn btn-primary" onclick="addInterested('event', '<?php echo $eventId; ?>', '<?php echo $userEmail; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
                         </div>
                         
                         <div class="modal fade" id="eventModal<?php echo $eventId; ?>" role="dialog">
@@ -205,65 +205,7 @@ $userRow=$res->fetch_assoc();
 		<footer class="container-fluid text-center">
 			<p>&copy; SportsBook</p>
 		</footer>
-		<script>
-        	var xmlhttp;
-        	var vSelectedPost;
-        	var vSelectedPostId;
-    
-        	//respond function for the AJAX call
-        	function respond() 
-        	{
-        		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) //if processing is done and http response is OK
-        		{
-        			if(xmlhttp.responseText === 'success')
-        			{
-        				var vInterested;
-        				if(vSelectedPost === 'activity')
-        				{
-        					vInterested = parseInt(document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML) + 1;
-        					document.getElementById('activity_post_interested'+vSelectedPostId).innerHTML = vInterested;
-        				}
-        				else if(vSelectedPost === 'event')
-        				{
-        					vInterested = parseInt(document.getElementById('event_post_interested'+vSelectedPostId).innerHTML) + 1;
-        					document.getElementById('event_post_interested'+vSelectedPostId).innerHTML = vInterested;
-        				}
-        			}
-        		}
-        	}
-    
-        	//function to be called when user selects 'I'm interested'
-        	function addInterested( vPost, vPostId )
-        	{
-        		vSelectedPost = vPost;
-        		vSelectedPostId = vPostId;
-        		
-        		var vObj = {
-        				userEmail: '<?php echo $userEmail; ?>',
-        				postId: vPostId,
-        			 	post: vPost
-        			};
-        		
-        		var vJSONObj = JSON.stringify(vObj);
-        		//console.log(vJSONObj);
-        		
-        		//set XML HTTP request
-        		if (window.XMLHttpRequest) 
-        		{
-        			xmlhttp = new XMLHttpRequest();
-        		}
-        		else 
-        		{
-        			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        		}
-        		
-        		xmlhttp.onreadystatechange = respond;//setting return function 
-        		xmlhttp.open("POST", "addInterest.php", true);//calling the php via AJAX
-        		xmlhttp.send(vJSONObj);//send JSON data to the called php
-        	  
-        		return false;
-        	}
-    	</script>
+		<script src="../scripts/addInterest.js"></script>
 	</body>
 </html>
 <?php ob_end_flush(); ?>
