@@ -12,8 +12,10 @@ if ( isset($_SESSION['user'])!="" )
 
 $error = false;
 
+//check when form is submitted
 if( isset($_POST['login_btn']) )
 {
+    // get values from form input tags
     $email = trim($_POST['username']);
     $email = strip_tags($email);
     $email = htmlspecialchars($email);
@@ -21,25 +23,6 @@ if( isset($_POST['login_btn']) )
     $pass = trim($_POST['password']);
     $pass = strip_tags($pass);
     $pass = htmlspecialchars($pass);
-    
-    
-    /*  if(empty($email))
-     {
-     $error = true;
-     $emailError = "Please enter your email address.";
-     }
-     else if ( !filter_var($email,FILTER_VALIDATE_EMAIL) )
-     {
-     $error = true;
-     $emailError = "Please enter valid email address.";
-     }
-     
-     if(empty($pass))
-     {
-     $error = true;
-     $passError = "Please enter your password.";
-     }
-     */
     
     // if there's no error, continue to login
     if (!$error)
@@ -50,22 +33,19 @@ if( isset($_POST['login_btn']) )
         $query = "SELECT userEmail, userPass FROM users WHERE userEmail='$email' and userPass='$password'";
         $res=$conn->query($query);
         
-        $count = $res->num_rows; // if uname/pass correct it returns must be 1 row
+        $count = $res->num_rows; // if uname/pass correct it returns 1 row
         //echo $count;
-        if($count == 1 )
+        if($count == 1 )// user found
         {
             while( $row=$res->fetch_assoc())
             {
-                //if($row['userPass']==$password )
-                {
-                    $errTyp = "success";
-                    //echo "<script type='text/javascript'>alert(Query1 : '$errTyp');</script>";
-                    $_SESSION['user'] = $row['userEmail'];
-                    header("Location: ./account/home.php");
-                }
+                $errTyp = "success";
+                //echo "<script type='text/javascript'>alert(Query1 : '$errTyp');</script>";
+                $_SESSION['user'] = $row['userEmail'];
+                header("Location: ./account/home.php");
             }
         }
-        else
+        else// user not present or invalid credentials
         {
             $errTyp = "danger";
             $message = "Incorrect Credentials, Try again...";
