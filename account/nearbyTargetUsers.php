@@ -24,7 +24,9 @@ function findRegion($nearByRegion) {
     
     if($lat!=null && $lng!=null)
     {
-        for ($x = 0; $x < $occupancy; $x++) {
+        //Currently random locations arounnd the target locations are displayed, since there are not enough users in the database.
+        for ($x = 0; $x < $occupancy; $x++) 
+        {
             array_push($locationArray,array( $lat, $lng));
             $lat=$lat+(mt_rand(-100,100)/10000);
             $lng=$lng+(mt_rand(-100,100)/10000);

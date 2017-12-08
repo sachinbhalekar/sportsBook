@@ -44,8 +44,8 @@ function setSports()//to set and append all sports in 1 hidden field
 	}
 	document.getElementById('sports').value = vSports;
 	//alert(document.getElementById('sports').value);
-        }
+}
         
-        window.onload = initSignUp;
+window.onload = initSignUp;
 
    
