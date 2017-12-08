@@ -360,7 +360,8 @@ if ( isset($_POST['event_btn']) )
         		}
         		//alert(document.getElementById('sport').value);
             }
-            
+
+            //Map on which target users will be shown using heat map
             function initMap() 
             {
             	map = new google.maps.Map(document.getElementById('map'), {
@@ -369,7 +370,8 @@ if ( isset($_POST['event_btn']) )
                 });
         
             }
-        
+
+            //Update Map with the heat marked points denoting target users
         	function initMap1(location,lat1,lng1) 
         	{	  
             	map = new google.maps.Map(document.getElementById('map'), {

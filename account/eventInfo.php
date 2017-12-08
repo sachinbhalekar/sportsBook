@@ -24,9 +24,11 @@ if (isset($_GET['eventId']))
     $eventId = strip_tags($eventId);
     $eventId = htmlspecialchars($eventId);
     
-    $eventInterestCount = trim($_GET['eventInterestCount']);
-    $eventInterestCount = strip_tags($eventInterestCount);
-    $eventInterestCount = htmlspecialchars($eventInterestCount);
+ 
+    $res2=$conn->query("SELECT count(eventId) as eventIdCount FROM user_interested_event WHERE eventId = '$eventId'");
+    $eventInterestRow=$res2->fetch_assoc();
+    $eventInterestCount = $eventInterestRow['eventIdCount'];
+    
     //echo "<script type='text/javascript'>alert('$eventId');</script>";
     $res=$conn->query("SELECT * FROM user_event WHERE eventId='$eventId'");
     $eventRow=$res->fetch_assoc();

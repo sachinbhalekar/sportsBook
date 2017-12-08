@@ -84,7 +84,7 @@ $userRow=$res->fetch_assoc();
                             	<p><strong><?php echo $activityUserName; ?></strong></p>
                                 <p id="all_post_info" ><?php echo $activityRow['activityDesc']; ?></p>
                                 <label>Sport:</label><span> <?php echo $activityRow['activitySport']; ?></span><br/>
-                                <a href="activityInfo.php?activityId=<?php echo $activityId; ?>&activityUserName=<?php echo $activityUserName; ?>&activityInterestCount=<?php echo $activityInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
+                                <a href="activityInfo.php?activityId=<?php echo $activityId; ?>&activityUserName=<?php echo $activityUserName; ?>"><span class="glyphicon glyphicon-info-sign"></span> View this post</a>
                                 <br/>
                                 <a href="#" data-toggle="modal" data-target="#activityModal<?php echo $activityId; ?>">Interested <span id="activity_post_interested<?php echo $activityId; ?>" class="badge"><?php echo $activityInterestCount; ?></span></a>
                                 <button type="button" class="btn btn-primary" onclick="addInterested('activity', '<?php echo $activityId; ?>', '<?php echo $userEmail; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>
@@ -155,7 +155,7 @@ $userRow=$res->fetch_assoc();
                             <!-- <img id="events_img" src="../images/location_icon.png" alt="location" width="400" height="300"> -->
                             <p><?php echo $eventRow['eventDesc']; ?></p>
                             <p><?php echo $eventRow['eventDate']; ?></p>
-                            <a href="eventInfo.php?eventId=<?php echo $eventRow['eventId']; ?>&eventInterestCount=<?php echo $eventInterestCount; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
+                            <a href="eventInfo.php?eventId=<?php echo $eventRow['eventId']; ?>"><span class="glyphicon glyphicon-info-sign"></span> Event Details</a>
                             <br/>
                             <a href="#" data-toggle="modal" data-target="#eventModal<?php echo $eventId; ?>">Interested <span id="event_post_interested<?php echo $eventId; ?>" class="badge"><?php echo $eventInterestCount; ?></span></a>
                             <button type="button" class="btn btn-primary" onclick="addInterested('event', '<?php echo $eventId; ?>', '<?php echo $userEmail; ?>')"><span class="glyphicon glyphicon-thumbs-up"></span>  I'm interested!</button>

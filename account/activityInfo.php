@@ -29,9 +29,10 @@ if ( isset($_GET['activityId']) && isset($_GET['activityUserName']) )
     $activityUserName = strip_tags($activityUserName);
     $activityUserName = htmlspecialchars($activityUserName);
     
-    $activityInterestCount = trim($_GET['activityInterestCount']);
-    $activityInterestCount = strip_tags($activityInterestCount);
-    $activityInterestCount = htmlspecialchars($activityInterestCount);
+        
+    $res2=$conn->query("SELECT count(activityId) as actIdCount FROM user_interested_activity WHERE activityId = '$activityId'");
+    $activityInterestRow=$res2->fetch_assoc();
+    $activityInterestCount = $activityInterestRow['actIdCount'];
     
     $res=$conn->query("SELECT * FROM user_activity WHERE activityId='$activityId'");
     $activityRow=$res->fetch_assoc();
