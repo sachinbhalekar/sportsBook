@@ -6,7 +6,7 @@ require_once '../connection/dbconnect.php';
 // if session is not set this will redirect to login page
 if( !isset($_SESSION['user']) )
 {
-    header("Location: ../index.php");
+    header("Location: ../index.php?logout");
     exit;
 }
 $userEmail = $_SESSION['user'];//get userEmail from the session
@@ -103,6 +103,8 @@ if ( isset($_POST['event_btn']) )
     {
         $errTyp = "success";
         $message = "Your event successfully posted!";
+        header("Location: ../index.php");
+        exit;
     }
     else
     {
@@ -173,46 +175,46 @@ if ( isset($_POST['event_btn']) )
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="title">Event Title:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="title" name="title" class="form-control" type="text" maxlength="50" required placeholder="Enter a title for the event" />
+                                    	<input id="title" name="title" class="form-control" type="text" maxlength="30" required placeholder="Enter a title for the event" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="desc">Description:</label>
                                   	<div class="col-sm-8">          
-                                    	<textarea id="desc" name="desc" class="form-control" maxlength="500" rows="4" required placeholder="Write your post here..."></textarea>
+                                    	<textarea id="desc" name="desc" class="form-control" maxlength="200" rows="4" required placeholder="Write your post here..."></textarea>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2">Sport Category:</label>
                                   	<div class="col-sm-10">
-                                    	<label class="radio-inline"><input id="football" name="sportR" type="radio" onclick="setSports()"/>Football</label>
-										<label class="radio-inline"><input id="tennis" name="sportR" type="radio" onclick="setSports()"/>Tennis</label>
-										<label class="radio-inline"><input id="cricket" name="sportR" type="radio" onclick="setSports()"/>Cricket</label>
+                                    	<label class="radio-inline"><input id="football" name="sportR" type="radio" />Football</label>
+										<label class="radio-inline"><input id="tennis" name="sportR" type="radio" />Tennis</label>
+										<label class="radio-inline"><input id="cricket" name="sportR" type="radio" />Cricket</label>
 										<input id="sport" name="sport" type="text" hidden="">
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="address1">Address Line 1:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="address1" name="address1" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Street Address" /><input id="latitude" name="latitude" type="number" step="any" hidden=""/>
+                                    	<input id="address1" name="address1" class="form-control" type="text" maxlength="25" required placeholder="Enter Street Address" /><input id="latitude" name="latitude" type="number" step="any" hidden=""/>
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="address2">Address Line 2:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="address2" name="address2" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Apt/Unit" />
+                                    	<input id="address2" name="address2" class="form-control" type="text" maxlength="25" required placeholder="Enter Building/Area" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="city">City:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="city" name="city" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter City" />
+                                    	<input id="city" name="city" class="form-control" type="text" maxlength="20" required placeholder="Enter City" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="state">State:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="state" name="state" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter State" />
+                                    	<input id="state" name="state" class="form-control" type="text" maxlength="20" required placeholder="Enter State" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
@@ -224,13 +226,13 @@ if ( isset($_POST['event_btn']) )
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="country">Country:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="country" name="country" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Country" />
+                                    	<input id="country" name="country" class="form-control" type="text" maxlength="20" required placeholder="Enter Country" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
                                   	<label class="control-label col-sm-2" for="landmark">Landmark:</label>
                                   	<div class="col-sm-8">          
-                                    	<input id="landmark" name="landmark" class="form-control" type="text" maxlength="50" required placeholder="Enter Landmark" />
+                                    	<input id="landmark" name="landmark" class="form-control" type="text" maxlength="20" required placeholder="Enter Landmark" />
                                   	</div>
                                 </div>
                                 <div class="form-group">
@@ -256,7 +258,7 @@ if ( isset($_POST['event_btn']) )
                                   	</div>
                                 </div>
                                 <div class="form-group">
-                                	<label class="control-label col-sm-2" for="">Area to scan:</label>
+                                	<label class="control-label col-sm-2" for="">Area to target:</label>
                                   	<div class="col-sm-8">          
                                     	<div class="panel panel-default">
                                             <!-- <div class="panel-heading">Panel Heading</div> -->
@@ -280,6 +282,7 @@ if ( isset($_POST['event_btn']) )
 			<p>&copy; SportsBook</p>
 		</footer>
 		<script src="../scripts/findLatLong.js"></script>
+		<script src="../scripts/init.js"></script>
 		<script>
         	var xmlhttp;
         	var map, heatmap;
@@ -384,6 +387,8 @@ if ( isset($_POST['event_btn']) )
                   	map: map
                 });
             }
+
+        	window.onload = initPost;
         </script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap&libraries=visualization"></script>
 	</body>

@@ -6,7 +6,7 @@ require_once '../connection/dbconnect.php';
 // if session is not set this will redirect to login page
 if( !isset($_SESSION['user']) )
 {
-    header("Location: ../index.php");
+    header("Location: ../index.php?logout");
     exit;
 }
 $userEmail = $_SESSION['user'];//get user from session
