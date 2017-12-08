@@ -255,30 +255,8 @@ if ( isset($_POST['activity_form']) || isset($_POST['activity_btn']) )
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80"></script>
 		<script src="../scripts/findLatLong.js"></script>
 		<script src="../scripts/init.js"></script>
-		<script>
-        	function setSports()//setting value of hidden 'sports' input element
-            {
-            	//alert(document.getElementById('sport').value);
-            	if( document.getElementById('football').checked ) 
-            	{
-        			//Football radio button is checked
-            		document.getElementById('sport').value = 'football';
-        		}
-        		else if( document.getElementById('tennis').checked ) 
-        		{
-        			//Tennis radio button is checked
-        			document.getElementById('sport').value = 'tennis';
-        		}
-        		else if( document.getElementById('cricket').checked ) 
-        		{
-        			//Cricket radio button is checked
-        			document.getElementById('sport').value = 'cricket';
-        		}
-        		//alert(document.getElementById('sport').value);
-            }
-
-            window.onload = initPost;
-        </script>
+		<script src="../scripts/post.js"></script>
+		
 	</body>
 </html>
 <?php ob_end_flush(); ?>
