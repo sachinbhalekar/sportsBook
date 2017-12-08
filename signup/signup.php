@@ -331,6 +331,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 	</body>
 	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80"></script>
 	<script src="../scripts/findLatLong.js"></script>
+	<script src="../scripts/init.js"></script>
 	<script>
         function setGender()//To set hidden gender field
         {
@@ -366,29 +367,8 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
         	document.getElementById('sports').value = vSports;
         	//alert(document.getElementById('sports').value);
         }
-
-        function init()
-        {
-            //alert('Hi');
-            //set click event for the radio button...
-            document.getElementById('male').addEventListener("click", function(){setGender();});
-            document.getElementById('female').addEventListener("click", function(){setGender();});
-            
-            //set click event for the checkboxes...
-            document.getElementById('football').addEventListener("click", function(){setSports();});
-            document.getElementById('tennis').addEventListener("click", function(){setSports();});
-            document.getElementById('cricket').addEventListener("click", function(){setSports();});
-
-            //set change event for address fields...
-            document.getElementById('address1').addEventListener("change", function(){getLatLong();});//'change' event
-            document.getElementById('address2').addEventListener("blur", function(){getLatLong();});//'blur' event
-            document.getElementById('city').addEventListener("change", function(){getLatLong();});
-            document.getElementById('state').addEventListener("change", function(){getLatLong();});
-            document.getElementById('zipcode').addEventListener("change", function(){getLatLong();});
-            document.getElementById('country').addEventListener("input", function(){getLatLong();});//'input' event
-        }
-
-        window.onload = init;
+        
+        window.onload = initSignUp;
 
         //to display username/email if already set
  	   <?php
