@@ -222,48 +222,10 @@ if (isset($_GET['eventId']))
 		</footer>
 		<script src="../scripts/addInterest.js"></script>
 		<script>
-        	var map;
-            function initMap()
-            {
-            	//alert("ffff");
-            	var myLatLng = {lat: 33, lng: 34};
-            	map = new google.maps.Map(document.getElementById('map'), {
-                    zoom: 10,
-                    center: myLatLng
-                });
-            	               
-    	        var lat = "<?php echo $eventAddressRow['latitude']; ?>";
-        		var lng = "<?php echo $eventAddressRow['longitude']; ?>";
-				//alert(lat);
-				//alert(lng);
-        		plot_markers( lat, lng );
-        		//plot_markers(sampleLat[3],sampleLng[3]);
-            	
-            }
-             
-            function plot_markers( arrLat, arrLng ) 
-            {              	
-            	var geocoder = new google.maps.Geocoder;
-                var infowindow = new google.maps.InfoWindow;
-                var latlng = {lat: parseFloat(arrLat), lng: parseFloat(arrLng)};
-                
-                geocoder.geocode({'location': latlng}, function(results, status) {
-                    if (status === 'OK') 
-                    {    
-                   		if (results[0]) 
-                       	{
-                        	map.setZoom(11);
-                        	var marker = new google.maps.Marker({
-                          		position: latlng,
-                          		map: map
-                        	});
-                        	infowindow.setContent(results[0].formatted_address);
-                        	infowindow.open(map, marker);
-                      	}
-                    }
-                 });
-             }   
-    	</script>
+		var valLat = "<?php echo $eventAddressRow['latitude']; ?>";
+		var valLng = "<?php echo $eventAddressRow['longitude']; ?>";
+		</script>
+    	<script src="../scripts/markMap.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPSaH_Tq4dlXK_blEM9eD7YuTXPkFQw80&callback=initMap"></script>
 	</body>
 </html>
