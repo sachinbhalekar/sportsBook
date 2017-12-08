@@ -55,6 +55,12 @@ if( isset($_POST['login_btn']) )
     }
     
 }
+
+if (isset($_GET['logout'])) //if user gets logged out
+{
+    $errTyp = "info";
+    $message = "You are successfully logged out";
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

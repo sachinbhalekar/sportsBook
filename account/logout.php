@@ -6,7 +6,7 @@ if (isset($_GET['logout'])) //if user selected logout
     unset($_SESSION['user']);
     session_unset();
     session_destroy();
-    header("Location: ../index.php");// redirect to home page
+    header("Location: ../index.php?logout");// redirect to home page
     exit;
 }
 else if (!isset($_SESSION['user'])) //if no user in session
