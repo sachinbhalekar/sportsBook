@@ -380,12 +380,12 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
             document.getElementById('cricket').addEventListener("click", function(){setSports();});
 
             //set change event for address fields...
-            document.getElementById('address1').addEventListener("change", function(){getLatLong();});
-            document.getElementById('address2').addEventListener("change", function(){getLatLong();});
+            document.getElementById('address1').addEventListener("change", function(){getLatLong();});//'change' event
+            document.getElementById('address2').addEventListener("blur", function(){getLatLong();});//'blur' event
             document.getElementById('city').addEventListener("change", function(){getLatLong();});
             document.getElementById('state').addEventListener("change", function(){getLatLong();});
             document.getElementById('zipcode').addEventListener("change", function(){getLatLong();});
-            document.getElementById('country').addEventListener("change", function(){getLatLong();});
+            document.getElementById('country').addEventListener("input", function(){getLatLong();});//'input' event
         }
 
         window.onload = init;
