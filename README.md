@@ -22,4 +22,5 @@ Technology/Frameworks used:
 Steps to Install:
   1. Setup MySQL DB and use the envFiles/db_script.sql to configure the DataBase.
   2. The DB details are present in connection/dbconnect.php (change respectively)
-  3. Access the site through the index.php
+  3. PHP version recommended is 7.1
+  4. Access the site through the index.php
