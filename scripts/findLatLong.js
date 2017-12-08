@@ -13,13 +13,14 @@ function getLatLong()//to set the latitude and longitude for the address entered
 	if(vAddress1!='' && vCity!='' && vState!='' && vZipcode!='')
 	{
         geocoder.geocode( { 'address': address}, function(results, status) {//Google API to find the latitude and longitude
-          if (status == 'OK') 
-          {
-     		 //vLat = results[0].geometry.location.lat();
-     		 document.getElementById('latitude').value = results[0].geometry.location.lat();
-    	  	 //vLong = results[0].geometry.location.lng();
-    	  	 document.getElementById('longitude').value = results[0].geometry.location.lng();
-          } 
+        	if (status == 'OK') 
+        	{
+        		//vLat = results[0].geometry.location.lat();
+        		document.getElementById('latitude').value = results[0].geometry.location.lat();
+        		//vLong = results[0].geometry.location.lng();
+        		document.getElementById('longitude').value = results[0].geometry.location.lng();
+        		//alert(document.getElementById('longitude').value);
+        	} 
         });
 	}
 }

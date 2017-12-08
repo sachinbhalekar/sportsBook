@@ -96,29 +96,18 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
     $longitude = htmlspecialchars($longitude);
     //echo "<script type='text/javascript'>alert('$longitude');</script>";
     
-    //basic email validation
-    if ( !filter_var($email,FILTER_VALIDATE_EMAIL) ) 
+    // check email exist or not
+    $query = "SELECT userEmail FROM users WHERE userEmail='$email'";
+    //echo "<script type='text/javascript'>alert('$query');</script>";
+    $result = $conn->query($query);
+    $count = $result->num_rows;
+    //echo "<script type='text/javascript'>alert('$count');</script>";
+    if($count==1)
     {
         $error = true;
         $errTyp = "danger";
-        $message = "Please enter valid email address.";
-        //echo "<script type='text/javascript'>alert('$message');</script>";
-    } 
-    else 
-    {
-        // check email exist or not
-        $query = "SELECT userEmail FROM users WHERE userEmail='$email'";
-        //echo "<script type='text/javascript'>alert('$query');</script>";
-        $result = $conn->query($query);
-        $count = $result->num_rows;
-        //echo "<script type='text/javascript'>alert('$count');</script>";
-        if($count==1)
-        {
-            $error = true;
-            $errTyp = "danger";
-            $message = "Email address already registered.";
-            //echo "<script type='text/javascript'>alert(conunt = '$message');</script>";
-        }
+        $message = "Email address already registered.";
+        //echo "<script type='text/javascript'>alert(conunt = '$message');</script>";
     }
     
     //echo "<script type='text/javascript'>alert(Error : '$error');</script>";
@@ -159,8 +148,21 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
                 $errTyp = "success";
                 $message = "Successfully registered, you may login now!";
                 unset($firstname);
+                unset($lastname);
+                unset($DOB);
+                unset($gender);
                 unset($email);
                 unset($pass);
+                unset($address1);
+                unset($address2);
+                unset($city);
+                unset($state);
+                unset($country);
+                unset($zipcode);
+                unset($sports);
+                unset($bio);
+                unset($latitude);
+                unset($longitude);
             }
         } 
         else// error while inserting in DB
@@ -182,7 +184,8 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
             $conn->query($queryD1);          
         }
     }
-    
+    unset($_POST['signup_form']);
+    unset($_POST['signup_btn']);
 }
 ?>
 
@@ -236,11 +239,11 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 					<table id="login_table" class="text-left">
 						<tr>
 							<td>First Name <span style="color:red">*</span></td>
-							<td><input id="firstname" name="firstname" class="form-control" type="text" maxlength="50" required placeholder="Enter First Name" /></td>
+							<td><input id="firstname" name="firstname" class="form-control" type="text" maxlength="30" required placeholder="Enter First Name" /></td>
 						</tr>
 						<tr>
-							<td>Last Name <span style="color:red">*</span></td>
-							<td><input id="lastname" name="lastname" class="form-control" type="text" maxlength="50" required placeholder="Enter Last Name" /></td>
+							<td>Last Name </td>
+							<td><input id="lastname" name="lastname" class="form-control" type="text" maxlength="30" placeholder="Enter Last Name" /></td>
 						</tr>
 						<tr>
 							<td>Date of Birth <span style="color:red">*</span></td>
@@ -249,14 +252,14 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 						<tr>
 							<td>Gender <span style="color:red">*</span></td>
 							<td>
-								<label class="radio-inline"><input id="male" name="genderR" type="radio" class="gender_radio" onclick="setGender()"/>Male</label>
-								<label class="radio-inline"><input id="female" name="genderR" type="radio" class="gender_radio" onclick="setGender()"/>Female</label>	
+								<label class="radio-inline"><input id="male" name="genderR" type="radio" class="gender_radio" required />Male</label>
+								<label class="radio-inline"><input id="female" name="genderR" type="radio" class="gender_radio" />Female</label>	
 								<input id="gender" name="gender" type="text" hidden="">
 							</td>
 						</tr>
 						<tr>
 							<td>E-mail <span style="color:red">*</span></td>
-							<td><input id="username" name="username" class="form-control" type="text" maxlength="50" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Set your username" /></td>
+							<td><input id="username" name="username" class="form-control" type="text" maxlength="60" required pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" placeholder="Set your username" /></td>
 						</tr>
 						<tr>
 							<td>Set Password <span style="color:red">*</span></td>
@@ -268,46 +271,52 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 						</tr>
 						<tr>
 							<td>Address Line 1 <span style="color:red">*</span></td>
-							<td><input id="address1" name="address1" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Street Address" /><input id="latitude" name="latitude" type="number" step="any" hidden=""/></td>
+							<td>
+								<input id="address1" name="address1" class="form-control" type="text" maxlength="25" required placeholder="Enter Street Address" />
+								<input id="latitude" name="latitude" type="number" step="any" hidden=""/>
+							</td>
 						</tr>
 						<tr>
 							<td>Address Line 2</td>
-							<td><input id="address2" name="address2" class="form-control" type="text" maxlength="50" onblur="getLatLong();" placeholder="Enter Apt/Unit"/></td>
+							<td><input id="address2" name="address2" class="form-control" type="text" maxlength="25" placeholder="Enter Apt/Unit"/></td>
 						</tr>
 						<tr>
 							<td>City <span style="color:red">*</span></td>
-							<td><input id="city" name="city" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter City" /></td>
+							<td><input id="city" name="city" class="form-control" type="text" maxlength="20" required placeholder="Enter City" /></td>
 						</tr>
 						<tr>
 							<td>State <span style="color:red">*</span></td>
-							<td><input id="state" name="state" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter State" /></td>
+							<td><input id="state" name="state" class="form-control" type="text" maxlength="20" required placeholder="Enter State" /></td>
 						</tr>
 						<tr>
 							<td>ZipCode <span style="color:red">*</span></td>
-							<td><input id="zipcode" name="zipcode" class="form-control" type="number" min="00001" max="99999" onblur="getLatLong();" required placeholder="Enter ZipCode" /><input id="longitude" name="longitude" type="number" step="any" hidden=""/></td>
+							<td>
+								<input id="zipcode" name="zipcode" class="form-control" type="number" min="00001" max="99999" required placeholder="Enter ZipCode" />
+								<input id="longitude" name="longitude" type="number" step="any" hidden=""/>
+							</td>
 						</tr>
 						<tr>
 							<td>Country <span style="color:red">*</span></td>
-							<td><input id="country" name="country" class="form-control" type="text" maxlength="50" onblur="getLatLong();" required placeholder="Enter Country" /></td>
+							<td><input id="country" name="country" class="form-control" type="text" maxlength="20" required placeholder="Enter Country" /></td>
 						</tr>
 						<tr>
-							<td>Sports Interested <span style="color:red">*</span></td>
+							<td>Sports Interested </td>
 							<td>
 								<div class="checkbox">
-									<label><input id="football" name="football" class="checkbox" type="checkbox" onclick="setSports()"/>Football</label>
+									<label><input id="football" name="sport" class="checkbox" type="checkbox" />Football</label>
 								</div>
 								<div class="checkbox">
-									<label><input id="tennis" name="tennis" class="checkbox" type="checkbox" onclick="setSports()"/>Tennis</label>
+									<label><input id="tennis" name="sport" class="checkbox" type="checkbox" />Tennis</label>
 								</div>
 								<div class="checkbox">
-									<label><input id="cricket" name="cricket" class="checkbox" type="checkbox" onclick="setSports()"/>Cricket</label>
+									<label><input id="cricket" name="sport" class="checkbox" type="checkbox" />Cricket</label>
 								</div>
 								<input id="sports" name="sports" type="text" hidden=""/>
 							</td>
 						</tr>
 						<tr>
 							<td>Bio</td>
-							<td><textarea id="bio" name="bio" class="form-control" maxlength="500" rows="4" placeholder="Write somthing about you to let the people know."></textarea></td>
+							<td><textarea id="bio" name="bio" class="form-control" maxlength="200" rows="4" placeholder="Write somthing about you to let the people know."></textarea></td>
 						</tr>
 					</table>
 					<br/>
@@ -357,6 +366,39 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
         	document.getElementById('sports').value = vSports;
         	//alert(document.getElementById('sports').value);
         }
+
+        function init()
+        {
+            //alert('Hi');
+            //set click event for the radio button...
+            document.getElementById('male').addEventListener("click", function(){setGender();});
+            document.getElementById('female').addEventListener("click", function(){setGender();});
+            
+            //set click event for the checkboxes...
+            document.getElementById('football').addEventListener("click", function(){setSports();});
+            document.getElementById('tennis').addEventListener("click", function(){setSports();});
+            document.getElementById('cricket').addEventListener("click", function(){setSports();});
+
+            //set change event for address fields...
+            document.getElementById('address1').addEventListener("change", function(){getLatLong();});
+            document.getElementById('address2').addEventListener("change", function(){getLatLong();});
+            document.getElementById('city').addEventListener("change", function(){getLatLong();});
+            document.getElementById('state').addEventListener("change", function(){getLatLong();});
+            document.getElementById('zipcode').addEventListener("change", function(){getLatLong();});
+            document.getElementById('country').addEventListener("change", function(){getLatLong();});
+        }
+
+        window.onload = init;
+
+        //to display username/email if already set
+ 	   <?php
+         if ( !empty($email) ) 
+         {
+         ?>
+         	document.getElementById('username').value = '<?php echo $email; ?>';
+         <?php
+         }
+         ?>
     </script>
 </html>
 <?php ob_end_flush(); ?>
