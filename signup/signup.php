@@ -163,7 +163,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
                 unset($bio);
                 unset($latitude);
                 unset($longitude);
-                header("Location: ./account/home.php");
+                header("Location: ../index.php?signup");
                 exit;
             }
         } 
