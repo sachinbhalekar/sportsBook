@@ -1,0 +1,9 @@
+Just sign-up and use the application
+OR
+Follow steps for guidance
+
+1. Create an account from the sign-up link (https://sports-buddy.herokuapp.com/signup/signup.php)
+2. After successfull sign-up, login through your credentials (https://sports-buddy.herokuapp.com/index.php)
+3. Onced logged in you can see posts from other users based on your location and interest
+4. You can post your own activity/event from the 'Post an Activity'/'Post an Event' tab at home page
+5. Have fun!
