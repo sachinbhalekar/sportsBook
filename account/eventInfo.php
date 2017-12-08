@@ -23,8 +23,7 @@ if (isset($_GET['eventId']))
     $eventId = trim($_GET['eventId']);
     $eventId = strip_tags($eventId);
     $eventId = htmlspecialchars($eventId);
-    
- 
+     
     $res2=$conn->query("SELECT count(eventId) as eventIdCount FROM user_interested_event WHERE eventId = '$eventId'");
     $eventInterestRow=$res2->fetch_assoc();
     $eventInterestCount = $eventInterestRow['eventIdCount'];
