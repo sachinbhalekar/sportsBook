@@ -25,6 +25,7 @@ function initAddress()//set change event for address fields...
 function initSignUp()
 {
     //alert('Hi');
+	document.getElementById('password1').addEventListener("change", function(){validatePassword();});
 	initGender();
 	initSports();
 	initAddress();

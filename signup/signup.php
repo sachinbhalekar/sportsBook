@@ -163,6 +163,8 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
                 unset($bio);
                 unset($latitude);
                 unset($longitude);
+                header("Location: ./account/home.php");
+                exit;
             }
         } 
         else// error while inserting in DB
@@ -198,6 +200,7 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>	
 		<link rel="icon" href="../images/favicon.ico" type="image/ico" sizes="16x16" />
 		<title>SportsBook - Sign Up</title>
 		<link rel="stylesheet" type="text/css" href="../css/signup.css">
@@ -333,6 +336,19 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 	<script src="../scripts/findLatLong.js"></script>
 	<script src="../scripts/init.js"></script>
 	<script>
+		function validatePassword()//password match validation
+		{
+			var pass1 = document.getElementById("password").value;
+    		var pass2 = document.getElementById("password1").value;
+    		
+    		if( pass1 != pass2 )
+    		{
+    			document.getElementById("password1").value = "";
+    			alert('Password not matching');
+    			document.getElementById("password1").focus();
+    		}
+		}
+	
         function setGender()//To set hidden gender field
         {
             //alert('setGender');
@@ -372,13 +388,13 @@ if ( isset($_POST['signup_form']) || isset($_POST['signup_btn']) )
 
         //to display username/email if already set
  	   <?php
-         if ( !empty($email) ) 
-         {
-         ?>
-         	document.getElementById('username').value = '<?php echo $email; ?>';
-         <?php
-         }
-         ?>
+        if ( !empty($email) ) 
+        {
+        ?>
+        document.getElementById('username').value = '<?php echo $email; ?>';
+        <?php
+        }
+        ?>
     </script>
 </html>
 <?php ob_end_flush(); ?>
