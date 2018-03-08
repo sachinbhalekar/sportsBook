@@ -24,3 +24,6 @@ Steps to Install:
   2. The DB details are present in connection/dbconnect.php (change respectively)
   3. PHP version recommended is 7.1
   4. Access the site through the index.php
+
+
+Website URL: https://sports-buddy.herokuapp.com/index.php
